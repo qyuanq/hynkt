@@ -1,0 +1,97 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+		    "path" : "pages/public/login",
+		    "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+		    "path" : "pages/public/reg",
+		    "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+		    "path" : "components/form/pic-code",
+		    "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+        
+		{
+            "path" : "pages/public/forget",
+            "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/public/forgets",
+            "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+        }
+        ,{
+            "path" : "pages/public/apk",
+            "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#007AFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar":{
+		"color":"#888",
+		"selectedColor": "#7CC1FE",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"text":"课程学习",
+				"iconPath":"static/icon/myclass.png",
+				"selectedIconPath":"static/icon/myclass_.png"
+			},
+			{
+				"pagePath":"pages/index/index",
+				"text":"课程学习",
+				"iconPath":"static/icon/class.png",
+				"selectedIconPath":"static/icon/class_.png"
+			},
+			{
+				"pagePath":"pages/index/index",
+				"text":"我的直播",
+				"iconPath":"static/icon/my_live.png",
+				"selectedIconPath":"static/icon/my_live_.png"
+			},
+			{
+				"pagePath":"pages/index/index",
+				"text":"我的",
+				"iconPath":"static/icon/my.png",
+				"selectedIconPath":"static/icon/my_.png"
+			}
+		]
+	}
+}
