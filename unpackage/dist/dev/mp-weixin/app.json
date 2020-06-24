@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/category/category",
     "pages/public/login",
     "pages/public/reg",
     "components/form/pic-code",
@@ -26,8 +27,8 @@
         "selectedIconPath": "static/icon/myclass_.png"
       },
       {
-        "pagePath": "pages/index/index",
-        "text": "课程学习",
+        "pagePath": "pages/category/category",
+        "text": "课程分类",
         "iconPath": "static/icon/class.png",
         "selectedIconPath": "static/icon/class_.png"
       },
@@ -45,6 +46,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap21.json"
+  "usingComponents": {}
 }
