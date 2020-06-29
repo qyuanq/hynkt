@@ -56,23 +56,29 @@ page {
 .container .banner .uni-padding-wrap {
   height: 100%;
 }
-.container .banner .uni-padding-wrap .page-section {
+.container .banner .uni-padding-wrap .swiper {
   height: 100%;
 }
-.container .banner .uni-padding-wrap .page-section .page-section-spacing {
+.container .banner .uni-padding-wrap .swiper .page-section-spacing {
   height: 100%;
 }
-.container .banner .uni-padding-wrap .page-section .page-section-spacing .swiper {
+.container .banner .uni-padding-wrap .swiper .page-section-spacing .swiper-item {
   height: 100%;
 }
-.container .banner .uni-padding-wrap .page-section .page-section-spacing .swiper .uni-swiper-wrapper {
-  height: 100%;
-}
-.container .banner .uni-padding-wrap .page-section .page-section-spacing .swiper .uni-swiper-wrapper .swiper-item {
-  height: 100%;
-}
-.container .banner .uni-padding-wrap .page-section .page-section-spacing .swiper .uni-swiper-wrapper .swiper-item image {
+.container .banner .uni-padding-wrap .swiper .page-section-spacing .swiper-item image {
   width: 100%;
   height: 100%;
+}
+.container .tabs {
+  width: 100%;
+  background: #fff;
+  margin-top: 10px;
+}
+.container .tabs .pane {
+  width: 100%;
+  background: #fff;
+  margin-top: 10px;
+  padding-top: 12px;
+  padding-left: 10px;
 }
 

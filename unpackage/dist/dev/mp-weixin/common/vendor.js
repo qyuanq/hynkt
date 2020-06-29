@@ -1693,7 +1693,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 102:
+/***/ 107:
 /*!*****************************************************************************************************************!*\
   !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/node_modules/async-validator/dist-web/index.js ***!
   \*****************************************************************************************************************/
@@ -3145,11 +3145,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 103)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 108)))
 
 /***/ }),
 
-/***/ 103:
+/***/ 108:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -3180,7 +3180,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 104);
+        if (!path) path = __webpack_require__(/*! path */ 109);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -3194,7 +3194,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 104:
+/***/ 109:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -3504,11 +3504,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 103)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 108)))
 
 /***/ }),
 
-/***/ 119:
+/***/ 124:
 /*!************************************************************************************************!*\
   !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/components/uni-icons/icons.js ***!
   \************************************************************************************************/

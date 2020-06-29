@@ -130,7 +130,12 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var shopPane = function shopPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/shop-pane */ "components/shop-pane/shop-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/shop-pane.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
 
 
 
@@ -182,10 +187,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 {
-  components: { uniSearchBar: uniSearchBar, uniSegmentedControl: uniSegmentedControl },
+  components: { uniSearchBar: uniSearchBar, uniSegmentedControl: uniSegmentedControl, shopPane: shopPane },
   data: function data() {
     return {
-      active: 1 };
+      active: 1,
+      picture: "/static/category/pic1.jpg",
+      title: "健康管理师专业技能(三级)精讲班",
+      classes: "课程精讲班",
+      original: 3499,
+      current: 5990 };
 
   },
   methods: {

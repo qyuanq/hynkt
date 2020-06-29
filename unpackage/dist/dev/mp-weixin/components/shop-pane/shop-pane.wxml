@@ -1,0 +1,1 @@
+<view class="carb"><view class="pic"><image src="{{picture}}"></image></view><view class="content"><view class="title">{{title}}</view><view class="classes">{{"["+classes+"]"}}</view><view class="price"><view class="num"><text class="sign">￥</text><text>{{original}}</text><text>{{"￥"+current}}</text></view><button class="btn">课程试听</button></view></view></view>
