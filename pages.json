@@ -22,6 +22,19 @@
 			}
 		},
 		{
+		    "path" : "pages/personal/personal",
+		    "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black",
+				"usingComponents":{
+					"van-cell": "/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
+					"van-icon": "/wxcomponents/vant-weapp/icon/index"
+				}
+			}
+		},
+		{
 		    "path" : "pages/public/login",
 		    "style" : {
 				"navigationBarTitleText": "",
@@ -70,6 +83,25 @@
 				"navigationBarTextStyle": "black"
 			}
         }
+		,{
+		    "path" : "pages/personal/order/my-order",
+		    "style" : {
+				"navigationBarTitleText": "我的订单",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white",
+				"usingComponents":{
+					"van-icon": "/wxcomponents/vant-weapp/icon/index"
+				}
+			}
+		}
+		,{
+		    "path" : "pages/personal/invite/invite",
+		    "style" : {
+				"navigationBarTitleText": "邀请好友",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white"
+			}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
@@ -100,7 +132,7 @@
 				"selectedIconPath":"static/icon/my_live_.png"
 			},
 			{
-				"pagePath":"pages/index/index",
+				"pagePath":"pages/personal/personal",
 				"text":"我的",
 				"iconPath":"static/icon/my.png",
 				"selectedIconPath":"static/icon/my_.png"

@@ -1564,7 +1564,7 @@ uni$1;exports.default = _default;
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /*!**********************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
   \**********************************************************************************************************/
@@ -1693,7 +1693,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 107:
+/***/ 133:
 /*!*****************************************************************************************************************!*\
   !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/node_modules/async-validator/dist-web/index.js ***!
   \*****************************************************************************************************************/
@@ -3145,11 +3145,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 108)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 134)))
 
 /***/ }),
 
-/***/ 108:
+/***/ 134:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -3180,7 +3180,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 109);
+        if (!path) path = __webpack_require__(/*! path */ 135);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -3194,7 +3194,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 109:
+/***/ 135:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -3504,11 +3504,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 108)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 134)))
 
 /***/ }),
 
-/***/ 124:
+/***/ 157:
 /*!************************************************************************************************!*\
   !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/components/uni-icons/icons.js ***!
   \************************************************************************************************/
@@ -9686,7 +9686,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 46:
+/***/ 55:
 /*!************************************************************************************!*\
   !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/utils/mcaptcha.js ***!
   \************************************************************************************/
@@ -9766,6 +9766,19 @@ module.exports = g;
       return "rgb(" + r + "," + g + "," + b + ")";
     } }]);return Mcaptcha;}();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 8:
+/*!******************************************************************************************!*\
+  !*** C:/Users/Administrator/Documents/HBuilderProjects/project1/static/css/iconfont.css ***!
+  \******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+    if(false) { var cssReload; }
+  
 
 /***/ })
 

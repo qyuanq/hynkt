@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/shop-pane/shop-pane":1,"components/uni-search-bar/uni-search-bar":1,"components/uni-segmented-control/uni-segmented-control":1,"components/form/formItem":1,"components/form/y-form":1,"components/form/y-input":1,"components/uni-icons/uni-icons":1};
+/******/ 		var cssChunks = {"components/cate-item/cate-item":1,"components/shop-pane/shop-pane":1,"components/uni-search-bar/uni-search-bar":1,"components/uni-segmented-control/uni-segmented-control":1,"components/form/formItem":1,"components/form/y-form":1,"components/form/y-input":1,"components/shop-pane/order-pane":1,"components/uni-icons/uni-icons":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/shop-pane/shop-pane":"components/shop-pane/shop-pane","components/uni-search-bar/uni-search-bar":"components/uni-search-bar/uni-search-bar","components/uni-segmented-control/uni-segmented-control":"components/uni-segmented-control/uni-segmented-control","components/form/formItem":"components/form/formItem","components/form/y-form":"components/form/y-form","components/form/y-input":"components/form/y-input","components/uni-icons/uni-icons":"components/uni-icons/uni-icons"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/cate-item/cate-item":"components/cate-item/cate-item","components/shop-pane/shop-pane":"components/shop-pane/shop-pane","components/uni-search-bar/uni-search-bar":"components/uni-search-bar/uni-search-bar","components/uni-segmented-control/uni-segmented-control":"components/uni-segmented-control/uni-segmented-control","components/form/formItem":"components/form/formItem","components/form/y-form":"components/form/y-form","components/form/y-input":"components/form/y-input","components/shop-pane/order-pane":"components/shop-pane/order-pane","components/uni-icons/uni-icons":"components/uni-icons/uni-icons"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

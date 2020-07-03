@@ -8,6 +8,7 @@
     "van-search": "/wxcomponents/vant-weapp/search/index",
     "uni-search-bar": "/components/uni-search-bar/uni-search-bar",
     "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
-    "shop-pane": "/components/shop-pane/shop-pane"
+    "shop-pane": "/components/shop-pane/shop-pane",
+    "cate-item": "/components/cate-item/cate-item"
   }
 }

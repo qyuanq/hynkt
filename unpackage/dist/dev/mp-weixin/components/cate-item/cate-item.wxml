@@ -1,0 +1,1 @@
+<view class="item"><view class="title _p">{{title}}</view><view class="content"><block wx:for="{{specialty}}" wx:for-item="item" wx:for-index="__i0__"><label class="specialty _span">{{item}}</label></block></view></view>

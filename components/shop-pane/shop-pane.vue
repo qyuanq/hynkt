@@ -7,7 +7,7 @@
 			<view class="title">{{title}}</view>
 			<view class="classes">[{{classes}}]</view>
 			<view class="price">
-				<view class="num"><text class="sign">￥</text><text>{{original}}</text><text>￥{{current}}</text></view>
+				<view class="num"><text class="sign">￥</text><text class="original">{{original}}</text><text class="current">￥{{current}}</text></view>
 				<button class="btn">课程试听</button>
 			</view>
 		</view>
@@ -57,8 +57,14 @@ export default{
 			.classes{font-size:11px;color:#888;margin-top:5px;}
 			.price{
 				margin-top:10px;
-				.num{float:left;}
-				.btn{float:right;width:60px;height:18px;line-height:18px;text-align: center;background:#FD9801;color:#fff;font-size:12px;border-radius:10px;margin-right:10px;}
+				.num{
+					float:left;
+					.sign{font-size:11px;color:#FD9801;}
+					.original{font-size:17px;color:#FD9801;}
+					.current{font-size:12px;color:#969799;text-decoration: line-through;display:line-height;margin-left:5px;}
+				}
+				button{padding-left:0;padding-right:0;}
+				.btn{float:right;width:60px;height:18px;line-height:18px;text-align: center;background:#FD9801;color:#fff;font-size:12px;border-radius:10px;margin-right:15px;margin-top:5px;}
 			}
 		}
 	}

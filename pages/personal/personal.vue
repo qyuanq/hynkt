@@ -1,0 +1,115 @@
+<template>
+	<view class="container">
+		<view class="user">
+			<view class="user-info">
+				<image class="head-sculpture" src="/static/personal/boy.png"></image>
+				<text class="sex">男</text>
+				<view class="jf"><text>积分</text><text>0</text></view>
+				<image class="editor" src="/static/personal/editor.png"></image>
+			</view>
+		</view>
+		<view class="cell">
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="我的订单" is-link link-type="navigateTo" url="/pages/personal/order/my-order" >
+						<div slot="icon">
+							<!-- <van-icon class="iconfont my-icon-dingdan"></van-icon> -->
+							<van-icon class="iconfont" class-prefix="my-icon" name="dingdan" />
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="邀请好友" is-link link-type="navigateTo" url="/pages/personal/invite/invite" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-yaoqinghaoyou"></van-icon>
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="通知消息" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-tongzhixiaoxi"></van-icon>
+						</div>
+					</van-cell>
+					<van-cell title="我的提问" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-tiwen"></van-icon>
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="咨询" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-zixun"></van-icon>
+						</div>
+					</van-cell>
+					<van-cell title="微信公众号" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-weixin"></van-icon>
+						</div>
+					</van-cell>
+					<van-cell title="电话联系" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-dianhualianxi"></van-icon>
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="APP下载" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-xiazai"></van-icon>
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+</script>
+
+<style lang="scss">
+	page{background-color: #F6F7F8;}
+	.container{
+		.user{
+			width:100%;
+			height:300rpx;
+			background:#41A5FD;
+			padding-top:140rpx;
+			.user-info{
+				width:100%;
+				height:100rpx;
+				position:relative;
+				.head-sculpture{width:100rpx;height:100rpx;}
+				.sex{color:#fff;padding-bottom:15px;display:inline-block;margin-left:15px;}
+				.jf{width:180rpx;height:50rpx;position:absolute;right:0;bottom:0;background:rgba(255,255,255,.6);line-height:50rpx;padding-left:15rpx;border-radius:8rpx 0 0 8rpx;}
+				.editor{width:32rpx;height:32rpx;position:absolute;top:-20px;right:20px;}
+			}
+		}
+		.cell{
+			.cell-group{
+				margin-top:20rpx;
+				.iconfont{font-size:20px;}
+				.my-icon-dingdan{color:#fd9801;}
+				.my-icon-yaoqinghaoyou{color:#35bc6b;}
+				.my-icon-tongzhixiaoxi{color:#41a5fd;}
+				.my-icon-tiwen{color:#ff6600;}
+				.my-icon-zixun{color:#41a5fd;}
+				.my-icon-weixin{color:#07C160;}
+				.my-icon-dianhualianxi{color:#ff6600;}
+				.my-icon-xiazai{color: #35bc6b;}
+				.van-cell__title{margin-left:10px;}
+			}
+		}
+	}
+	
+</style>

@@ -2,12 +2,15 @@
   "pages": [
     "pages/index/index",
     "pages/category/category",
+    "pages/personal/personal",
     "pages/public/login",
     "pages/public/reg",
     "components/form/pic-code",
     "pages/public/forget",
     "pages/public/forgets",
-    "pages/public/apk"
+    "pages/public/apk",
+    "pages/personal/order/my-order",
+    "pages/personal/invite/invite"
   ],
   "subPackages": [],
   "window": {
@@ -39,13 +42,12 @@
         "selectedIconPath": "static/icon/my_live_.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/personal/personal",
         "text": "我的",
         "iconPath": "static/icon/my.png",
         "selectedIconPath": "static/icon/my_.png"
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap55.json"
+  "usingComponents": {}
 }
