@@ -10,6 +10,7 @@
 				我已在慧永诺教育APP里学习<text class="day">198</text>天！ 你快注册慧永诺教育我们一起来学习吧！
 			</view>
 		</view>
+		<button class="save">保存图片</button>
 	</view>
 </template>
 
@@ -47,11 +48,22 @@ page{
 	.user{
 		width:180px;
 		margin:15px auto 0;
-		.icon{color:#2890ff}
+		.icon{width:56px;height:56px;margin:0 auto;color:#2890ff;font-size:56px;}
 		.user-text{
+			margin-top:12px;
 			font-size:12px;
 			color:#999;
 		}
+	}
+	button{
+		width:180px;
+		height:35px;
+		border-radius:20px;
+		margin-top:30px;
+		line-height:35px;
+		text-align:center;
+		color:#fff;
+		background:#fd9801;
 	}
 }
 </style>

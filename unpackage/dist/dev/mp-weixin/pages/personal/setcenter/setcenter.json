@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "设置中心",
+  "navigationBarBackgroundColor": "#2890ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-cell": "/wxcomponents/vant-weapp/cell/index",
+    "van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+    "van-popup": "/wxcomponents/vant-weapp/popup/index",
+    "van-field": "/wxcomponents/vant-weapp/field/index",
+    "van-button": "/wxcomponents/vant-weapp/button/index"
+  }
+}

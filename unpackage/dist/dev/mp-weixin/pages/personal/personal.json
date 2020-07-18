@@ -5,6 +5,7 @@
   "usingComponents": {
     "van-cell": "/wxcomponents/vant-weapp/cell/index",
     "van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
-    "van-icon": "/wxcomponents/vant-weapp/icon/index"
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "van-popup": "/wxcomponents/vant-weapp/popup/index"
   }
 }

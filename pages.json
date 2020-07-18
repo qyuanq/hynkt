@@ -30,7 +30,8 @@
 				"usingComponents":{
 					"van-cell": "/wxcomponents/vant-weapp/cell/index",
 					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
-					"van-icon": "/wxcomponents/vant-weapp/icon/index"
+					"van-icon": "/wxcomponents/vant-weapp/icon/index",
+					"van-popup":"/wxcomponents/vant-weapp/popup/index"
 				}
 			}
 		},
@@ -102,6 +103,72 @@
 				"navigationBarTextStyle": "white"
 			}
 		}
+        ,{
+            "path" : "pages/personal/notice/notice",
+            "style" : {
+				"navigationBarTitleText": "通知消息",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white"
+			}
+        }
+        ,{
+            "path" : "pages/personal/question/question",
+            "style" : {
+				"navigationBarTitleText": "课程提问",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white"
+			}
+        }
+        ,{
+            "path" : "pages/personal/setcenter/setcenter",
+            "style" : {
+				"navigationBarTitleText": "设置中心",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white",
+				"usingComponents":{
+					"van-cell": "/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
+					"van-popup":"/wxcomponents/vant-weapp/popup/index",
+					"van-field":"/wxcomponents/vant-weapp/field/index",
+					"van-button":"/wxcomponents/vant-weapp/button/index"
+				}
+			}
+        }
+        ,{
+            "path" : "pages/public/changePass",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/product/product",
+            "style" : {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#2890ff",
+				"navigationBarTextStyle": "white",
+				"usingComponents":{
+					"van-tab": "/wxcomponents/vant-weapp/tab/index",
+					"van-tabs":"/wxcomponents/vant-weapp/tabs/index",
+					"van-collapse":"/wxcomponents/vant-weapp/collapse/index",
+					"van-collapse-item":"/wxcomponents/vant-weapp/collapse-item/index",
+					"van-cell":"/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
+					"van-goods-action":"/wxcomponents/vant-weapp/goods-action/index",
+					"van-goods-action-icon":"/wxcomponents/vant-weapp/goods-action-icon/index",
+					"van-goods-action-button":"/wxcomponents/vant-weapp/goods-action-button/index",
+					"van-divider":"/wxcomponents/vant-weapp/divider/index"
+				}
+			}
+        }
+        ,{
+            "path" : "pages/product/showProject",
+            "style" : {
+				"navigationBarTitleText": "金融管理专科",
+				"navigationBarBackgroundColor": "#fff",
+				"navigationBarTextStyle": "black",
+				"usingComponents":{
+					"van-icon":"/wxcomponents/vant-weapp/icon/index"
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

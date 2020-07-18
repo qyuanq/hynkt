@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "我的订单",
-  "navigationBarBackgroundColor": "#2890ff",
-  "navigationBarTextStyle": "white",
-  "usingComponents": {
-    "van-icon": "/wxcomponents/vant-weapp/icon/index",
-    "order-pane": "/components/shop-pane/order-pane"
-  }
-}

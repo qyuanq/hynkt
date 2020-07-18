@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "金融管理专科",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "class-pane": "/components/shop-pane/class-pane"
+  }
+}

@@ -57,8 +57,7 @@ page {
   background: rgba(255, 255, 255, 0.6);
   line-height: 50rpx;
   padding-left: 15rpx;
-  -webkit-border-radius: 8rpx 0 0 8rpx;
-          border-radius: 8rpx 0 0 8rpx;
+  border-radius: 8rpx 0 0 8rpx;
 }
 .container .user .user-info .editor {
   width: 32rpx;
@@ -97,7 +96,24 @@ page {
 .container .cell .cell-group .my-icon-xiazai {
   color: #35bc6b;
 }
+.container .cell .cell-group .my-icon-shezhi {
+  color: #41a5fd;
+}
 .container .cell .cell-group .van-cell__title {
   margin-left: 10px;
+}
+.container .van-popup {
+  width: 200px;
+  padding: 20px 10px;
+}
+.container .van-popup .gzh {
+  font-size: 12px;
+  width: 150px;
+  margin: 0 auto;
+  text-align: center;
+}
+.container .van-popup .gzh image {
+  width: 150px;
+  height: 150px;
 }
 

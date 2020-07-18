@@ -10,7 +10,13 @@
     "pages/public/forgets",
     "pages/public/apk",
     "pages/personal/order/my-order",
-    "pages/personal/invite/invite"
+    "pages/personal/invite/invite",
+    "pages/personal/notice/notice",
+    "pages/personal/question/question",
+    "pages/personal/setcenter/setcenter",
+    "pages/public/changePass",
+    "pages/product/product",
+    "pages/product/showProject"
   ],
   "subPackages": [],
   "window": {
@@ -49,5 +55,6 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap14.json"
 }

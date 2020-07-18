@@ -42,8 +42,7 @@
   line-height: 35px;
   border: 1px solid #ccc;
   padding: 0 15px;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   margin-bottom: 15px;
 }
 .container .form1 .input-item .tel-yzm {
@@ -53,8 +52,7 @@
   top: 0;
   right: 0;
   z-index: 9;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   color: #43A3FD;
 }
 .container .form1 .item-pic {
@@ -68,8 +66,7 @@
   line-height: 35px;
   background-color: #43A3FD;
   color: #fff;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   margin-top: 25px;
 }
 

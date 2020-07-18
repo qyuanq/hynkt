@@ -50,8 +50,7 @@
 .container .content .btn {
   background: #0095D3;
   color: #fff;
-  -webkit-border-radius: 16px;
-          border-radius: 16px;
+  border-radius: 16px;
   height: 30px;
   line-height: 30px;
   margin: 20px 0;

@@ -4,6 +4,7 @@
 		<view class="content">
 			<span class="specialty" v-for="item in specialty">{{item}}</span>
 		</view>
+		<view class="divider"></view>
 	</view>
 </template>
 
@@ -35,7 +36,8 @@ export default{
 		.title{font-size:14px;color:#333;font-weight:700;}
 		.content{
 			margin-top:10px;
-			.specialty{display:inline-block;font-size:12px;height:20px;line-height:20px;color:#333;background:#f2f1f1;border-radius:10px;padding-left:7px;padding-right:7px;margin-right:10px;}
+			.specialty{display:inline-block;font-size:12px;height:20px;line-height:20px;color:#333;background:#f2f1f1;border-radius:10px;padding-left:7px;padding-right:7px;margin-right:10px;margin-top:10px;}
 		}
+		.divider{margin-top:10px;height:5px;background:#f6f7f8;}
 	}
 </style>

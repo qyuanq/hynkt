@@ -30,8 +30,7 @@ page {
 .container .wrapper .input-section, .container .wrapper .btn-login, .container .wrapper .btn-try {
   height: 35px;
   line-height: 35px;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -54,14 +53,12 @@ page {
 .container .wrapper .btn-login {
   color: #fff;
   font-size: 14px;
-  background: -webkit-gradient(linear, right top, left top, from(#3ec2ff), to(#258aff));
   background: -webkit-linear-gradient(right, #3ec2ff, #258aff);
   background: linear-gradient(right, #3ec2ff, #258aff);
 }
 .container .wrapper .btn-try {
   color: #fff;
   font-size: 14px;
-  background: -webkit-gradient(linear, right top, left top, from(#ff800f), to(#ff9127));
   background: -webkit-linear-gradient(right, #ff800f, #ff9127);
   background: linear-gradient(right, #ff800f, #ff9127);
 }

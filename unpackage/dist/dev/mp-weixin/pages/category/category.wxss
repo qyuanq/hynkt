@@ -46,8 +46,7 @@ page {
   width: 550rpx;
   height: 30px;
   border: 1px solid #ccc;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
 }
 .container .banner {
   width: 100%;

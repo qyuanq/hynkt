@@ -30,12 +30,12 @@
 			</view>
 			<view class="cell-group">
 				<van-cell-group>
-					<van-cell title="通知消息" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+					<van-cell title="通知消息" is-link link-type="navigateTo" url="/pages/personal/notice/notice" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-tongzhixiaoxi"></van-icon>
 						</div>
 					</van-cell>
-					<van-cell title="我的提问" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+					<van-cell title="我的提问" is-link link-type="navigateTo" url="/pages/personal/question/question" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-tiwen"></van-icon>
 						</div>
@@ -49,12 +49,12 @@
 							<van-icon class="iconfont my-icon-zixun"></van-icon>
 						</div>
 					</van-cell>
-					<van-cell title="微信公众号" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+					<van-cell title="微信公众号" is-link link-type="navigateTo" @click="showPopup" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-weixin"></van-icon>
 						</div>
 					</van-cell>
-					<van-cell title="电话联系" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+					<van-cell title="电话联系" is-link link-type="navigateTo" @tap="makePhoneCall" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-dianhualianxi"></van-icon>
 						</div>
@@ -63,18 +63,60 @@
 			</view>
 			<view class="cell-group">
 				<van-cell-group>
-					<van-cell title="APP下载" is-link link-type="navigateTo" url="/pages/dashboard/index" >
+					<van-cell title="我的缓存" is-link link-type="navigateTo" url="/pages/dashboard/index" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-xiazai"></van-icon>
 						</div>
 					</van-cell>
 				</van-cell-group>
 			</view>
+			<view class="cell-group">
+				<van-cell-group>
+					<van-cell title="设置" is-link link-type="navigateTo" url="/pages/personal/setcenter/setcenter" >
+						<div slot="icon">
+							<van-icon class="iconfont my-icon-shezhi"></van-icon>
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
 		</view>
+		<van-popup :show="show" @close="onClose" closeable>
+			<view class="gzh">
+				<image src="/static/personal/gzh.jpg"></image>
+				<text>扫一扫，关注微信公众号</text>
+			</view>
+		</van-popup>
 	</view>
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				show:false,
+				tel:'022-23789585'
+			};
+		},
+		methods:{
+			showPopup(){
+				this.show = true;
+			},
+			onClose(){
+				this.show = false;
+			},
+			makePhoneCall(){
+				uni.makePhoneCall({
+					phoneNumber:this.tel,
+					success:function(){
+						console.log("拨打成功")
+					},
+					fail:function(){
+						console.log('拨打失败')
+					}
+				})
+			}
+		}
+	}
 </script>
 
 <style lang="scss">
@@ -107,7 +149,19 @@
 				.my-icon-weixin{color:#07C160;}
 				.my-icon-dianhualianxi{color:#ff6600;}
 				.my-icon-xiazai{color: #35bc6b;}
+				.my-icon-shezhi{color:#41a5fd;}
 				.van-cell__title{margin-left:10px;}
+			}
+		}
+		.van-popup{
+			width:200px;
+			padding:20px 10px;
+			.gzh{
+				font-size:12px;
+				width:150px;
+				margin:0 auto;
+				text-align:center;
+				image{width:150px;height:150px;}
 			}
 		}
 	}

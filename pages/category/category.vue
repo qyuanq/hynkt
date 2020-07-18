@@ -39,11 +39,11 @@
 			  <van-tab title="热门推荐">
 				  <view class="pane">
 					  <shopPane 
-					 v-for="item in 8" :picture="picture" :title="title" :classes="classes" :original="original" :current="current"></shopPane>
+					 v-for="item in 8" :picture="picture" :title="title" :classes="classes" :original="original" :current="current" @tap="onCourse"></shopPane>
 				  </view>
 			  </van-tab>
 			  <van-tab title="自学考试">
-				  <cateItem v-for="item in zk_specialty" :title="item.title" :specialty="item.specialty"></cateItem>
+				  <cateItem v-for="item in zk_specialty" :title="item.title" :specialty="item.specialty" @tap="onZikao"></cateItem>
 			  </van-tab>
 			  <van-tab title="成人高考">内容 3</van-tab>
 			  <van-tab title="职业资格">内容 4</van-tab>
@@ -91,6 +91,12 @@
 			      icon: 'none',
 			    });
 			  },
+			onCourse(){
+				uni.navigateTo({url:'../product/product'})
+			},
+			onZikao(){
+				uni.navigateTo({url:'../product/showProject'})
+			}
 		}
 	}
 </script>

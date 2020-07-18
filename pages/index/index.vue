@@ -97,13 +97,43 @@
 			<text class="text">考试时间:--</text>
 			<text class="more">更多</text>
 		</view>
+		<!-- 视频学习 -->
 		<view class="video-text">视频学习</view>
+		<!-- 用户没有课程显示 -->
 		<view class="video-learn">
 			<image src="../../static/no_buy.png"></image>
 			<view class="t1">你还没有购买网校辅导课程</view>
 			<view class="t2">快去选购课程吧~</view>
 			<button class="btn">选购课程</button>
 		</view>
+		<!-- 用户有课程显示 -->
+		<view class="video-class">
+			<view class="img">
+				<image src="/static/index/js1.png" class="video-img"></image>
+			</view>
+			<view class="text-box">
+				<view class="title">班型精讲视频</view>
+				<view class="last-look">上次观看：</view>
+			</view>
+		</view>
+		<!-- 用户有课程显示直播 -->
+		<view class="live-text">
+			<text>直播</text>
+			<text>更多直播</text>
+		</view>
+		<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
+			<view class="live-video">
+				<view class="video-info">
+					<view class="title">2020年小学教师资格证备考直播</view>
+					<view class="timer">2020-06-19 19:15:00-21:00:00</view>
+					<view class="info-bot">
+						<text class="lecturer">杨秀伟</text>
+						
+						<text class="playback">回放</text>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
 		<uni-link :href="href" :text="href"></uni-link>
 	</view>
 </template>
@@ -234,6 +264,21 @@
 			.t1{font-size:24rpx;margin-top:10rpx;}
 			.t2{font-size:20rpx;margin-top:10rpx;color:#888;}
 			.btn{margin-top:20rpx;width:260rpx;height:60rpx;line-height:60rpx;background:#ff6600;text-align:center;color:#fff;border-radius:30rpx;}
+		}
+		.video-class{
+			width:710rpx;
+			height:110rpx;
+			margin:20px auto 0;
+			display:flex;
+			justify-content: space-between;
+			.img{
+				width:150px;
+				height:90px;
+				.video-img{
+					width:100%;
+					border-radius: 10px;
+				}
+			}
 		}
 	}
 </style>

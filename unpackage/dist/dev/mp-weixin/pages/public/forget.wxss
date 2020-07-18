@@ -39,8 +39,7 @@
   line-height: 35px;
   background-color: #43A3FD;
   color: #fff;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   margin-top: 25px;
 }
 .container .tel-yzm {
@@ -50,8 +49,7 @@
   top: 0;
   right: 0;
   z-index: 9;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   color: #43A3FD;
 }
 

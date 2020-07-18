@@ -36,8 +36,7 @@ page {
   height: 180px;
   margin: 0 auto;
   border: 12px solid #fd9801;
-  -webkit-border-radius: 8px;
-          border-radius: 8px;
+  border-radius: 8px;
 }
 .container .int-friend image {
   width: 100%;
@@ -54,10 +53,25 @@ page {
   margin: 15px auto 0;
 }
 .container .user .icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
   color: #2890ff;
+  font-size: 56px;
 }
 .container .user .user-text {
+  margin-top: 12px;
   font-size: 12px;
   color: #999;
+}
+.container button {
+  width: 180px;
+  height: 35px;
+  border-radius: 20px;
+  margin-top: 30px;
+  line-height: 35px;
+  text-align: center;
+  color: #fff;
+  background: #fd9801;
 }
 

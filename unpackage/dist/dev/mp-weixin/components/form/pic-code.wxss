@@ -32,8 +32,7 @@
   line-height: 35px;
   border: 1px solid #ccc;
   padding: 0 15px;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   margin-bottom: 15px;
 }
 .pic-yzm .tel-yzm {
@@ -43,8 +42,7 @@
   top: 0;
   right: 0;
   z-index: 9;
-  -webkit-border-radius: 20px;
-          border-radius: 20px;
+  border-radius: 20px;
   color: #43A3FD;
 }
 

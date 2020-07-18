@@ -104,8 +104,7 @@
   height: 18px;
   line-height: 18px;
   color: #fff;
-  -webkit-border-radius: 10px;
-          border-radius: 10px;
+  border-radius: 10px;
   float: right;
   margin-right: 30px;
 }
