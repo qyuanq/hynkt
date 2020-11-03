@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": " ",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "pic-code": "/components/form/pic-code"
+  }
+}

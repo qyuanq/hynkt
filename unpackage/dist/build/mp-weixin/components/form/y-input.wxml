@@ -1,0 +1,1 @@
+<view><input class="input-section" placeholder="{{placeholder}}" data-event-opts="{{[['input',[['onInput',['$event']]]],['blur',[['onBlur',['$event']]]]]}}" value="{{value}}" bindinput="__e" bindblur="__e"/></view>

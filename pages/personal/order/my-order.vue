@@ -20,7 +20,7 @@ import orderPane from '../../../components/shop-pane/order-pane'
 			return {
 				model:{
 					code:'H2005052020512771785368',
-					img_path:'/static/category/pic1.jpg',
+					img_path:this.server +'/static/category/pic1.jpg',
 					title:'[精讲班]健康管理师专业技能（三级）精讲班',
 					timer:'2020-05-05 20:20:51',
 					price:499

@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="int-friend">
-			<image src="/static/personal/invite/dowload.png"></image>
+			<image :src="SERVER + '/static/img/personal/invite/dowload.png'"></image>
 		</view>
 		<view class="ident">非APP请截图保存</view>
 		<view class="user">
@@ -18,7 +18,7 @@
 	export default {
 		data() {
 			return {
-				
+				SERVER:this.server
 			};
 		}
 	}
@@ -26,7 +26,7 @@
 
 <style lang="scss">
 page{
-	background:url('/static/personal/invite/int-friend.png');
+	background:url('/static/img/int-friend.png');
 	background-size:100% 100%;
 }
 .container{

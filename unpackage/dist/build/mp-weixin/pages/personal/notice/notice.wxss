@@ -1,0 +1,1 @@
+.container .notice{width:85%;height:70px;margin:0 auto;-webkit-box-shadow:#dcdcdc 0 0 5px;box-shadow:#dcdcdc 0 0 5px;border-radius:5px;display:-webkit-box;display:-webkit-flex;display:flex}.container .notice .notice-box{-webkit-box-flex:1;-webkit-flex:1;flex:1;text-align:center;padding-top:10px}.container .notice .notice-box .icon{font-size:30px;color:#41a5fd}

@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "设置中心",
+  "usingComponents": {
+    "van-field": "/static/vant-weapp/field/index",
+    "van-radio": "/static/vant-weapp/radio/index",
+    "van-radio-group": "/static/vant-weapp/radio-group/index",
+    "van-picker": "/static/vant-weapp/picker/index",
+    "van-cell": "/static/vant-weapp/cell/index",
+    "van-cell-group": "/static/vant-weapp/cell-group/index",
+    "van-popup": "/static/vant-weapp/popup/index",
+    "van-uploader": "/static/vant-weapp/uploader/index"
+  }
+}

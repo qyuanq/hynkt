@@ -1,0 +1,1 @@
+.container{width:85%;margin:0 auto;margin-top:25rpx}.container .tit{font-size:16px;font-weight:700;margin-bottom:25px}.container .btn{height:35px;line-height:35px;background-color:#43a3fd;color:#fff;border-radius:20px;margin-top:25px}.container .tel-yzm{height:35px;line-height:35px;position:absolute;top:0;right:0;z-index:9;border-radius:20px;color:#43a3fd}

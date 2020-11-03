@@ -1,12 +1,12 @@
 <template>
 	<view class="container">
-		<image class="bg" src="/static/dlbg.png" ></image>
+		<image class="bg" :src="SERVER + '/static/img/dlbg.png'" ></image>
 		<view class="content">
-			<image class="icon" src="/static/dlicon.png" mode="widthFix"></image>
+			<image class="icon" :src="SERVER + '/static/img/dlicon.png'" mode="widthFix"></image>
 			<view class="tit">慧永诺教育</view>
 			<button class="btn">点击安装</button>
 			<view class="and">适用于安卓手机</view>
-			<image class="ewm" src="/static/dlewm.jpg" mode="widthFix"></image>
+			<image class="ewm" :src="SERVER + '/static/img/dlewm.jpg'" mode="widthFix"></image>
 			<view class="sm">扫描二维码下载</view>
 		</view>
 	</view>
@@ -16,7 +16,7 @@
 	export default {
 		data() {
 			return {
-				
+				SERVER:this.server
 			};
 		}
 	}

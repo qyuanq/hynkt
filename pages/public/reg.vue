@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="tit">注册账号</view>
-		<form class="form1">
+		<form class="form1" ref="form1">
 			<view class="input-item item-pic">
 				<input type="text" class="input-section" placeholder="请输入图形验证码"  v-model="imgcode" >
 				<view class="pic-yzm" @tap="onTap">
@@ -9,10 +9,10 @@
 				</view>
 			</view>
 			<view class="input-item">
-				<input type="tel" class="input-section" placeholder="请输入手机号码"  v-model="phone" >
+				<input type="tel" class="input-section" placeholder="请输入手机号码" name="phone" v-model="phone" >
 			</view>
 			<view class="input-item item-yzm">
-				<input type="text" class="input-section" placeholder="请输入手机验证码" v-model="yzm">
+				<input type="text" class="input-section" placeholder="请输入手机验证码" name="phoneyzm" v-model="yzm">
 				<button class="tel-yzm" @tap="getCode" :disabled="disabled">{{codename}}</button>
 			</view>		
 			<checkbox-group class="agree">
@@ -30,6 +30,7 @@
 <script>
 	import picCode from '../../components/form/pic-code.vue'
 	import Mcaptcha from "../../utils/mcaptcha.js"
+	import request from '../../utils/request'
 	export default {
 		components:{picCode},
 		data() {
@@ -124,10 +125,24 @@
 				var resYzm = this.validateYzm();
 				var resPho = this.validatePhone();
 				var resPic = this.validatePic();
+				
 				if(resPic && resPho && resYzm && resCheck){
-					uni.navigateTo({
-						url:'./login'
+					let form = {}
+					form.phone = this.phone
+					form.password = this.yzm
+					console.log(form)
+					uni.request({
+						url:'http://localhost:7001/user',
+						method:'post',
+						data:form,
+						success:(res) => {
+							// console.log(res.data)
+							uni.navigateTo({
+								url:'./login'
+							})
+						}
 					})
+					
 				}
 				
 			}

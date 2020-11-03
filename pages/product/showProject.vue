@@ -2,8 +2,8 @@
 	<view class="container">
 		<view class="course">
 			<view class="video">
-				<image v-if="imgShow" src="/static/category/pic2.jpg"></image>
-				<image v-if="btnShow" src="/static/category/video_play.png" class="btn-play"></image>
+				<image v-if="imgShow" :src="SERVER + '/static/img/category/pic2.jpg'"></image>
+				<image v-if="btnShow" :src="SERVER + '/static/img/category/video_play.png'" class="btn-play"></image>
 				<video v-if="videoShow" src="https://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/mp4/2019/04/21/1214598912_f3f239fb46b448e4909da386a7a0439f_sd.mp4?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de80cf71d5a4f376edb80607903f1ca760220eebf43112a9492238f198ed1882f2922117d840132767793f969aceceae3793fd3e61bc84b767a68b30f9427eeb2e54426afeac364f76a817da3b2623cd41e" :enable-auto-rotation="true" :autoplay="true" controls></video>
 			</view>
 		</view>
@@ -24,7 +24,7 @@
 			</view>
 		</view>
 		<view class="content-img">
-			<image src="/static/category/content_img.png"></image>
+			<image :src="SERVER + '/static/img/category/content_img.png'"></image>
 		</view>
 	</view>
 </template>
@@ -43,7 +43,8 @@
 				],
 				imgShow:true,
 				btnShow:true,
-				videoShow:false
+				videoShow:false,
+				SERVER:this.server
 			};
 		}
 	}
@@ -80,7 +81,7 @@
 				width:38px;
 				height:14px;
 				margin-right:5px;
-				background:url('/static/category/label_left.png') no-repeat;
+				background:url('/static/img/label_left.png') no-repeat;
 				background-size:100%;
 			}
 			&::after{
@@ -89,7 +90,7 @@
 				width:38px;
 				height:14px;
 				margin-left:5px;
-				background:url('/static/category/label_right.png') no-repeat;
+				background:url('/static/img/label_right.png') no-repeat;
 				background-size:100%;
 			}
 		}

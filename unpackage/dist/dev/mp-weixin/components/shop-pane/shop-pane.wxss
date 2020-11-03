@@ -28,6 +28,7 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  margin-top: 20rpx;
 }
 .carb .pic {
   width: 150px;
@@ -49,10 +50,10 @@
   color: #333;
   font-weight: bold;
 }
-.carb .content .classes {
+.carb .content .classes, .carb .content .class-code {
   font-size: 11px;
   color: #888;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 .carb .content .price {
   margin-top: 10px;

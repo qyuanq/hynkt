@@ -1,209 +1,348 @@
 {
-	"pages": [
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-		{
-		    "path" : "pages/category/category",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black",
-				"usingComponents":{
-					"van-tab": "/wxcomponents/vant-weapp/tab/index",
-					"van-tabs": "/wxcomponents/vant-weapp/tabs/index",
-					"van-search":"/wxcomponents/vant-weapp/search/index"
-				}
-			}
-		},
-		{
-		    "path" : "pages/personal/personal",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black",
-				"usingComponents":{
-					"van-cell": "/wxcomponents/vant-weapp/cell/index",
-					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
-					"van-icon": "/wxcomponents/vant-weapp/icon/index",
-					"van-popup":"/wxcomponents/vant-weapp/popup/index"
-				}
-			}
-		},
-		{
-		    "path" : "pages/public/login",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-		{
-		    "path" : "pages/public/reg",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-		{
-		    "path" : "components/form/pic-code",
-		    "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-		},
-        
-		{
-            "path" : "pages/public/forget",
+    "pages" : [
+        {
+            "path" : "pages/tabBar/index",
             "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-        }
-        ,{
-            "path" : "pages/public/forgets",
+                "navigationBarTitleText" : "",
+                "navigationBarBackgroundColor" : "#ffffff",
+                "navigationBarTextStyle" : "black",
+                "usingComponents" : {
+                    "van-popup" : "/static/vant-weapp/popup/index",
+                    "van-icon" : "/static/vant-weapp/icon/index"
+                }
+            }
+        },
+        {
+            "path" : "pages/tabBar/category",
             "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-        }
-        ,{
-            "path" : "pages/public/apk",
+                "navigationBarTitleText" : "",
+                "navigationBarBackgroundColor" : "#ffffff",
+                "navigationBarTextStyle" : "black",
+                "usingComponents" : {
+                    "van-tab" : "/static/vant-weapp/tab/index",
+                    "van-tabs" : "/static/vant-weapp/tabs/index",
+                    "van-search" : "/static/vant-weapp/search/index"
+                }
+            }
+        },
+        {
+            "path" : "pages/tabBar/personal",
             "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#ffffff",
-				"navigationBarTextStyle": "black"
-			}
-        }
-		,{
-		    "path" : "pages/personal/order/my-order",
-		    "style" : {
-				"navigationBarTitleText": "我的订单",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white",
-				"usingComponents":{
-					"van-icon": "/wxcomponents/vant-weapp/icon/index"
-				}
-			}
-		}
-		,{
-		    "path" : "pages/personal/invite/invite",
-		    "style" : {
-				"navigationBarTitleText": "邀请好友",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white"
-			}
-		}
-        ,{
-            "path" : "pages/personal/notice/notice",
+                "navigationBarTitleText" : "",
+                "navigationBarBackgroundColor" : "#ffffff",
+                "navigationBarTextStyle" : "black",
+                "usingComponents" : {
+                    "van-cell" : "/static/vant-weapp/cell/index",
+                    "van-cell-group" : "/static/vant-weapp/cell-group/index",
+                    "van-icon" : "/static/vant-weapp/icon/index",
+                    "van-popup" : "/static/vant-weapp/popup/index"
+                }
+            }
+        },
+        {
+            "path" : "components/form/pic-code",
             "style" : {
-				"navigationBarTitleText": "通知消息",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white"
-			}
-        }
-        ,{
-            "path" : "pages/personal/question/question",
-            "style" : {
-				"navigationBarTitleText": "课程提问",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white"
-			}
-        }
-        ,{
-            "path" : "pages/personal/setcenter/setcenter",
-            "style" : {
-				"navigationBarTitleText": "设置中心",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white",
-				"usingComponents":{
-					"van-cell": "/wxcomponents/vant-weapp/cell/index",
-					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
-					"van-popup":"/wxcomponents/vant-weapp/popup/index",
-					"van-field":"/wxcomponents/vant-weapp/field/index",
-					"van-button":"/wxcomponents/vant-weapp/button/index"
-				}
-			}
-        }
-        ,{
-            "path" : "pages/public/changePass",
+                "navigationBarTitleText" : "",
+                "navigationBarBackgroundColor" : "#ffffff",
+                "navigationBarTextStyle" : "black"
+            }
+        },
+        {
+            "path" : "pages/tabBar/liveRadio",
             "style" : {}
         }
-        ,{
-            "path" : "pages/product/product",
-            "style" : {
-				"navigationBarTitleText": "",
-				"navigationBarBackgroundColor": "#2890ff",
-				"navigationBarTextStyle": "white",
-				"usingComponents":{
-					"van-tab": "/wxcomponents/vant-weapp/tab/index",
-					"van-tabs":"/wxcomponents/vant-weapp/tabs/index",
-					"van-collapse":"/wxcomponents/vant-weapp/collapse/index",
-					"van-collapse-item":"/wxcomponents/vant-weapp/collapse-item/index",
-					"van-cell":"/wxcomponents/vant-weapp/cell/index",
-					"van-cell-group":"/wxcomponents/vant-weapp/cell-group/index",
-					"van-goods-action":"/wxcomponents/vant-weapp/goods-action/index",
-					"van-goods-action-icon":"/wxcomponents/vant-weapp/goods-action-icon/index",
-					"van-goods-action-button":"/wxcomponents/vant-weapp/goods-action-button/index",
-					"van-divider":"/wxcomponents/vant-weapp/divider/index"
+    ],
+    "globalStyle" : {
+        "navigationBarTextStyle" : "white",
+        "navigationBarTitleText" : "uni-app",
+        "navigationBarBackgroundColor" : "#007AFF",
+        "backgroundColor" : "#FFFFFF"
+    },
+    "tabBar" : {
+        "color" : "#888",
+        "selectedColor" : "#7CC1FE",
+        "list" : [
+            {
+                "pagePath" : "pages/tabBar/index",
+                "text" : "课程学习",
+                "iconPath" : "/static/img/icon/myclass.png",
+                "selectedIconPath" : "/static/img/icon/myclass_.png"
+            },
+            {
+                "pagePath" : "pages/tabBar/category",
+                "text" : "课程分类",
+                "iconPath" : "/static/img/icon/class.png",
+                "selectedIconPath" : "/static/img/icon/class_.png"
+            },
+            {
+                "pagePath" : "pages/tabBar/liveRadio",
+                "text" : "我的直播",
+                "iconPath" : "/static/img/icon/my_live.png",
+                "selectedIconPath" : "/static/img/icon/my_live_.png"
+            },
+            {
+                "pagePath" : "pages/tabBar/personal",
+                "text" : "我的",
+                "iconPath" : "/static/img/icon/my.png",
+                "selectedIconPath" : "/static/img/icon/my_.png"
+            }
+        ]
+    },
+    "subPackages" : [
+        {
+            "root" : "pages/index/",
+            "pages" : [
+                {
+                    "path" : "changeClass",
+                    "style" : {
+                        "navigationBarTitleText" : "选择课程",
+                        "navigationBarBackgroundColor" : "#fff",
+                        "navigationBarTextStyle" : "black",
+                        "usingComponents" : {
+                            "van-search" : "/static/vant-weapp/search/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "integral",
+                    "style" : {
+                        "navigationBarTitleText" : "积分明细",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white"
+                    }
+                }
+            ]
+        },
+        {
+            "root" : "pages/public/",
+            "pages" : [
+                {
+                    "path" : "login",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#ffffff",
+                        "navigationBarTextStyle" : "black"
+                    }
+                },
+                {
+                    "path" : "reg",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#ffffff",
+                        "navigationBarTextStyle" : "black"
+                    }
+                },
+                {
+                    "path" : "forget",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#ffffff",
+                        "navigationBarTextStyle" : "black"
+                    }
+                },
+                {
+                    "path" : "apk",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#ffffff",
+                        "navigationBarTextStyle" : "black"
+                    }
+                },
+                {
+                    "path" : "forgets",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#ffffff",
+                        "navigationBarTextStyle" : "black"
+                    }
+                },
+                {
+                    "path" : "changePass",
+                    "style" : {}
+                }
+            ]
+        },
+        {
+            "root" : "pages/personal/",
+            "pages" : [
+                {
+                    "path" : "order/my-order",
+                    "style" : {
+                        "navigationBarTitleText" : "我的订单",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white",
+                        "usingComponents" : {
+                            "van-icon" : "/static/vant-weapp/icon/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "invite/invite",
+                    "style" : {
+                        "navigationBarTitleText" : "邀请好友",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white"
+                    }
+                },
+                {
+                    "path" : "notice/notice",
+                    "style" : {
+                        "navigationBarTitleText" : "通知消息",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white"
+                    }
+                },
+                {
+                    "path" : "question/question",
+                    "style" : {
+                        "navigationBarTitleText" : "课程提问",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white"
+                    }
+                },
+                {
+                    "path" : "setcenter/setcenter",
+                    "style" : {
+                        "navigationBarTitleText" : "设置中心",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white",
+                        "usingComponents" : {
+                            "van-cell" : "/static/vant-weapp/cell/index",
+                            "van-cell-group" : "/static/vant-weapp/cell-group/index",
+                            "van-popup" : "/static/vant-weapp/popup/index",
+                            "van-field" : "/static/vant-weapp/field/index",
+                            "van-button" : "/static/vant-weapp/button/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "editInfo/edit-info",
+                    "style" : {
+                        "navigationBarTitleText" : "设置中心",
+                        "usingComponents" : {
+                            "van-field" : "/static/vant-weapp/field/index",
+                            "van-radio" : "/static/vant-weapp/radio/index",
+                            "van-radio-group" : "/static/vant-weapp/radio-group/index",
+                            "van-picker" : "/static/vant-weapp/picker/index",
+                            "van-cell" : "/static/vant-weapp/cell/index",
+                            "van-cell-group" : "/static/vant-weapp/cell-group/index",
+                            "van-popup" : "/static/vant-weapp/popup/index",
+                            "van-uploader" : "/static/vant-weapp/uploader/index"
+                        }
+                    }
+                },
+				{
+					"path" : "editInfo/setPhone",
+					"style" : {
+						"navigationBarTitleText" : " ",
+						"navigationBarBackgroundColor" : "#fff",
+						"navigationBarTextStyle" : "black"
+					}
 				}
-			}
-        }
-        ,{
-            "path" : "pages/product/showProject",
-            "style" : {
-				"navigationBarTitleText": "金融管理专科",
-				"navigationBarBackgroundColor": "#fff",
-				"navigationBarTextStyle": "black",
-				"usingComponents":{
-					"van-icon":"/wxcomponents/vant-weapp/icon/index"
-				}
-			}
+            ]
+        },
+        {
+            "root" : "pages/product/",
+            "pages" : [
+                {
+                    "path" : "product",
+                    "style" : {
+                        "navigationBarTitleText" : "",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "white",
+                        "usingComponents" : {
+                            "van-tab" : "/static/vant-weapp/tab/index",
+                            "van-tabs" : "/static/vant-weapp/tabs/index",
+                            "van-collapse" : "/static/vant-weapp/collapse/index",
+                            "van-collapse-item" : "/static/vant-weapp/collapse-item/index",
+                            "van-cell" : "/static/vant-weapp/cell/index",
+                            "van-cell-group" : "/static/vant-weapp/cell-group/index",
+                            "van-goods-action" : "/static/vant-weapp/goods-action/index",
+                            "van-goods-action-icon" : "/static/vant-weapp/goods-action-icon/index",
+                            "van-goods-action-button" : "/static/vant-weapp/goods-action-button/index",
+                            "van-divider" : "/static/vant-weapp/divider/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "showProject",
+                    "style" : {
+                        "navigationBarTitleText" : "金融管理专科",
+                        "navigationBarBackgroundColor" : "#fff",
+                        "navigationBarTextStyle" : "black",
+                        "usingComponents" : {
+                            "van-icon" : "/static/vant-weapp/icon/index"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "root" : "pages/myClassVideo/",
+            "pages" : [
+                {
+                    "path" : "myClassVideo",
+                    "style" : {
+                        "usingComponents" : {
+                            "van-divider" : "/static/vant-weapp/divider/index",
+                            "van-collapse" : "/static/vant-weapp/collapse/index",
+                            "van-collapse-item" : "/static/vant-weapp/collapse-item/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "collect",
+                    "style" : {
+                        "navigationBarTitleText" : "缓存",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "#fff",
+                        "usingComponents" : {
+                            "van-swipe-cell" : "/static/vant-weapp/swipe-cell/index",
+                            "van-cell" : "/static/vant-weapp/cell/index",
+                            "van-cell-group" : "/static/vant-weapp/cell-group/index"
+                        }
+                    }
+                },
+                {
+                    "path" : "videoQuestion",
+                    "style" : {
+                        "navigationBarTitleText" : "视频提问",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "#fff"
+                    }
+                },
+                {
+                    "path" : "myQuestion",
+                    "style" : {
+                        "navigationBarTitleText" : "视频提问",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "#fff"
+                    }
+                },
+                {
+                    "path" : "uploadQuestion",
+                    "style" : {
+                        "navigationBarTitleText" : "我要提问",
+                        "navigationBarBackgroundColor" : "#2890ff",
+                        "navigationBarTextStyle" : "#fff",
+                        "usingComponents" : {
+                            "van-uploader" : "/static/vant-weapp/uploader/index"
+                        }
+                    }
+                }
+            ]
         }
     ],
-	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#007AFF",
-		"backgroundColor": "#FFFFFF"
-	},
-	"tabBar":{
-		"color":"#888",
-		"selectedColor": "#7CC1FE",
-		"list":[
-			{
-				"pagePath":"pages/index/index",
-				"text":"课程学习",
-				"iconPath":"static/icon/myclass.png",
-				"selectedIconPath":"static/icon/myclass_.png"
-			},
-			{
-				"pagePath":"pages/category/category",
-				"text":"课程分类",
-				"iconPath":"static/icon/class.png",
-				"selectedIconPath":"static/icon/class_.png"
-			},
-			{
-				"pagePath":"pages/index/index",
-				"text":"我的直播",
-				"iconPath":"static/icon/my_live.png",
-				"selectedIconPath":"static/icon/my_live_.png"
-			},
-			{
-				"pagePath":"pages/personal/personal",
-				"text":"我的",
-				"iconPath":"static/icon/my.png",
-				"selectedIconPath":"static/icon/my_.png"
-			}
-		]
-	}
+    "condition" : {
+        //模式配置，仅开发期间生效
+        "current" : 0, //当前激活的模式(list 的索引项)
+        "list" : [
+            {
+                "name" : "login", //模式名称
+                "path" : "pages/public/login" //启动页面，必选
+            }
+        ]
+    }
 }
+// "query": "" //启动参数，在页面的onLoad函数里面得到
+

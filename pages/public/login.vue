@@ -5,10 +5,10 @@
 		<view class="wrapper">
 			<view class="input-content">
 				<view class="input-item">
-					<input type="text" class="input-section" placeholder="用户名/学号/手机/邮箱">
+					<input type="text" class="input-section" placeholder="用户名/学号/手机/邮箱" v-model="phone">
 				</view>
 				<view class="input-item">
-					<input type="password" class="input-section" placeholder="请输入密码">
+					<input type="password" class="input-section" placeholder="请输入密码" v-model="password">
 				</view>
 			</view>
 			<button class="btn-login" @tap="onLogin">登录</button>
@@ -26,14 +26,30 @@
 	export default {
 		data() {
 			return {
-				
+				phone:'',
+				password:''
 			};
 		},
 		methods:{
 			onLogin(){
-				
-				uni.navigateTo({
-					url:'../index/index'
+				let data = {
+					phone:this.phone,
+					password:this.password
+				}
+				uni.request({
+					url:'http://localhost:7001/login',
+					method:'post',
+					data:data,
+					success: (res) => {
+						console.log(res.data)
+						uni.setStorage({
+							 key: 'token',
+							 data: res.data.data.token
+						})
+						uni.switchTab({
+							url:'/pages/tabBar/index'
+						})
+					}
 				})
 			}
 		}

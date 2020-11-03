@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "van-popup": "/static/vant-weapp/popup/index",
+    "van-icon": "/static/vant-weapp/icon/index"
+  }
+}

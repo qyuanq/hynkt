@@ -2,8 +2,8 @@
 	<view class="container">
 		<view class="course">
 			<view class="video">
-				<image v-if="imgShow" src="/static/category/course-bg.jpg"></image>
-				<image v-if="btnShow" src="/static/category/button-play.png" class="btn-play"></image>
+				<image v-if="imgShow" :src="SERVER +'/static/img/category/course-bg.jpg'"></image>
+				<image v-if="btnShow" :src="SERVER + '/static/img/category/button-play.png'" class="btn-play"></image>
 				<video v-if="videoShow" src="https://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/mp4/2019/04/21/1214598912_f3f239fb46b448e4909da386a7a0439f_sd.mp4?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de80cf71d5a4f376edb80607903f1ca760220eebf43112a9492238f198ed1882f2922117d840132767793f969aceceae3793fd3e61bc84b767a68b30f9427eeb2e54426afeac364f76a817da3b2623cd41e" :enable-auto-rotation="true" :autoplay="true" controls></video>
 			</view>
 			<view class="info">
@@ -73,10 +73,10 @@
 						   健康管理师是从事个体和群体从营养和心理两方面健康的检测、分析、评估以及健康咨询、指导和危险因素干预等工作的专业人员。为了适应全面建设小康社会的需要，提高全民族的健康意识和身体素质，培养和造就健康管理人才，人力资源和社会保障部教育培训中心推出健康管理师岗位能力培训课程。
 					   </view>
 				  </view>
-				  <image src="/static/category/introduce.jpg" class="learn-img"></image>
+				  <image :src="SERVER + '/static/img/category/introduce.jpg'" class="learn-img"></image>
 				  <view class="teacher">
 					  <view class="img">
-						  <image src="/static/category/teacher.png" class="header"></image>
+						  <image :src="SERVER + '/static/img/category/teacher.png'" class="header"></image>
 					  </view>
 					  <view class="present">
 						  <view class="course">健康管理师-专业技能（三级）(课程精讲班)</view>
@@ -106,7 +106,8 @@
 				activeNames:['1'],
 				imgShow:true,
 				btnShow:true,
-				videoShow:false
+				videoShow:false,
+				SERVER:this.server
 			};
 		},
 		methods:{

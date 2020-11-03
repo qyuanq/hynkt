@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "缓存",
+  "navigationBarBackgroundColor": "#2890ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-swipe-cell": "/static/vant-weapp/swipe-cell/index",
+    "van-cell": "/static/vant-weapp/cell/index",
+    "van-cell-group": "/static/vant-weapp/cell-group/index"
+  }
+}

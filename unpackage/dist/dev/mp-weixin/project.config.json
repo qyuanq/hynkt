@@ -4,34 +4,36 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"preloadBackgroundData": false,
 		"minified": true,
-		"newFeature": true,
+		"newFeature": false,
 		"coverView": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "",
-	"appid": "touristappid",
-	"projectname": "project1",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"appid": "wx67ebcd3fcd4825e9",
+	"projectname": "ketang",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -46,8 +48,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"name": "login",
+					"id": 0,
+					"pathName": "pages/public/login"
+				}
+			]
 		}
 	}
 }

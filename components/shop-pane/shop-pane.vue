@@ -6,9 +6,10 @@
 		<view class="content">
 			<view class="title">{{title}}</view>
 			<view class="classes">[{{classes}}]</view>
+			<view class="class-code">{{classCode}}</view>
 			<view class="price">
-				<view class="num"><text class="sign">￥</text><text class="original">{{original}}</text><text class="current">￥{{current}}</text></view>
-				<button class="btn">课程试听</button>
+				<view class="num" v-if="original"><text class="sign">￥</text><text class="original">{{original}}</text><text class="current">￥{{current}}</text></view>
+				<button class="btn">{{btnName}}</button>
 			</view>
 		</view>
 	</view>
@@ -30,16 +31,25 @@ export default{
 			defalut:'课程精讲班'
 		},
 		original:{
-			type:Number,
-			default:499
+			type:Number
 		},
 		current:{
-			type:Number,
-			default:799
+			type:Number
+		},
+		btnName:{
+			type:String,
+			default:'课程试听'
+		},
+		classCode:{
+			type:String,
+			default:''
 		}
 	},
 	data(){
 		return{}
+	},
+	created(){
+		console.log(this.original);
 	}
 }
 </script>
@@ -47,6 +57,7 @@ export default{
 <style lang="scss">
 	.carb{
 		display:flex;
+		margin-top:20rpx;
 		.pic{
 			width:150px;height:90px;margin-right:12rpx;
 			image{width:100%;height:100%;border-radius:7px;}
@@ -54,7 +65,7 @@ export default{
 		.content{
 			flex:1;
 			.title{font-size:12px;color:#333;font-weight:bold;}
-			.classes{font-size:11px;color:#888;margin-top:5px;}
+			.classes,.class-code{font-size:11px;color:#888;margin-top:10px;}
 			.price{
 				margin-top:10px;
 				.num{

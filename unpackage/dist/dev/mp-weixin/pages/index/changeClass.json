@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "选择课程",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "van-search": "/static/vant-weapp/search/index",
+    "shop-pane": "/components/shop-pane/shop-pane"
+  }
+}

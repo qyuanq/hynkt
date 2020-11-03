@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "pic-code": "/components/form/pic-code"
+  }
+}

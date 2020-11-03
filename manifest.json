@@ -1,14 +1,21 @@
 {
-    "name" : "project1",
+    "name" : "ketang",
     "appid" : "__UNI__8590C67",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
-        "nvueCompiler" : "uni-app",
-        "compilerVersion" : 3,
-        "modules" : {},
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        "modules" : {
+            "VideoPlayer" : {},
+            "Webview-x5" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -41,13 +48,11 @@
                 "ad" : {}
             }
         },
-        "splashscreen" : {
-            "waiting" : false
-        }
+        "compilerVersion" : 2
     },
     "quickapp" : {},
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx67ebcd3fcd4825e9",
         "setting" : {
             "urlCheck" : true
         }

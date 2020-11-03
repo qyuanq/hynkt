@@ -1,0 +1,1 @@
+<view class="container"><view class="speack-box"><view class="icon-head"><image src="{{SERVER+'/static/img/icon_head.png'}}"></image></view><view data-event-opts="{{[['tap',[['onSkip',['$event']]]]]}}" class="speack-input" bindtap="__e">说点什么</view></view></view>

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "y-form": "/components/form/y-form",
+    "form-item": "/components/form/formItem",
+    "y-input": "/components/form/y-input"
+  }
+}

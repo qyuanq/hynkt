@@ -1,0 +1,1 @@
+<view class="input-item"><block wx:if="{{label}}"><label>{{label}}</label></block><slot></slot></view>

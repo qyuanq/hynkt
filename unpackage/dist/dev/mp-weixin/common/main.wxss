@@ -15,13 +15,14 @@
 
 
 	/* @import "./wxcomponents/vant-weapp/common/index.wxss"; */
-@font-face {font-family: "my-icon";
-	  src: url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.eot');
-	  src: url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.eot?#iefix') format('embedded-opentype'),
-	  url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.woff2') format('woff2'),
-	  url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.woff') format('woff'),
-	  url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.ttf') format('truetype'),
-	  url('//at.alicdn.com/t/font_1915821_c7kaio5yzsd.svg#iconfont') format('svg');
+@font-face {
+  font-family: 'my-icon';  /* project id 1915821 */
+  src: url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.eot');
+  src: url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1915821_ioea2g8vaop.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "my-icon" !important;
@@ -29,6 +30,24 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.my-icon-dayi:before{
+	content:'\e641'
+}
+.my-icon-huancun:before{
+	content:'\e60c';
+}
+.my-icon-shoucang:before{
+	content:'\e73d';
+}
+.my-icon-jiantou:before{
+	content:"\e612";
+}
+.my-icon-time:before{
+	content:"\e6ce";
+}
+.my-icon-kechenghuifang:before{
+	content:"\e619";
 }
 .my-icon-kaoshizhinan:before{
 	content:"\e711";
@@ -83,6 +102,12 @@
 }
 .my-icon-dianhualianxi:before {
   content: "\e618";
+}
+.my-icon-video:before{
+	content: "\e61e";
+}
+.my-icon-xiangji:before{
+	content: "\e643";
 }
 	/* 解决头条小程序组件内引入字体不生效的问题 */
 

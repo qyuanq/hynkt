@@ -4,6 +4,7 @@ import App from './App'
 
 
 Vue.config.productionTip = false
+Vue.prototype.server = 'http://www.hynkt.com'
 
 App.mpType = 'app'
 
