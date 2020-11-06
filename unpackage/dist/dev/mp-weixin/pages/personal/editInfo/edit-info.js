@@ -451,6 +451,7 @@ var _default = {
       });
       console.log(this.countys);
       this.columns[2].values = this.countys;
+      //github测试
     },
     initUserInfo: function initUserInfo() {var _this2 = this;
       var token = uni.getStorageSync('token');

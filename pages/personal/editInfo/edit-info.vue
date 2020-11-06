@@ -319,6 +319,7 @@
 				})
 				console.log(this.countys)
 				this.columns[2].values = this.countys
+				//github测试
 			},
 			initUserInfo(){
 				const token = uni.getStorageSync('token');
