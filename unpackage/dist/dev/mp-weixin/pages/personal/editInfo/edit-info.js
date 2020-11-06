@@ -127,9 +127,345 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!C:/Users/Administrator/Desktop/项目开发/project1/pages/personal/editInfo/edit-info.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js):\nSyntaxError: Unexpected token, expected \",\" (118:3)\n    at Object.raise (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:7017:17)\n    at Object.unexpected (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8395:16)\n    at Object.expect (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:8381:28)\n    at Object.parseObj (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9982:14)\n    at Object.parseExprAtom (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9616:28)\n    at Object.parseExprSubscripts (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9259:23)\n    at Object.parseMaybeUnary (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9239:21)\n    at Object.parseMaybeUnary (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:6269:20)\n    at Object.parseExprOps (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9109:23)\n    at Object.parseMaybeConditional (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9082:23)\n    at Object.parseMaybeAssign (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:9037:21)\n    at Object.parseMaybeAssign (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:6216:20)\n    at Object.parseExportDefaultExpression (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:11866:24)\n    at Object.parseExportDefaultExpression (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:5961:18)\n    at Object.parseExport (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:11768:31)\n    at Object.parseExport (C:\\Users\\Administrator\\Downloads\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\parser\\lib\\index.js:5939:20)");
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 355));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// const info = [
+// 	{
+// 		'province':'11',
+// 		'name':'安徽',
+// 		'city':[
+// 			{
+// 				'code':'01',
+// 				'name':'安庆',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'河北区'
+// 					},
+// 					{
+// 						'code':'02',
+// 						'name':'南开区'
+// 					}
+// 				]
+// 			},
+// 			{
+// 				'code':'02',
+// 				'name':'黄山',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'河东区'
+// 					},
+// 					{
+// 						'code':'02',
+// 						'name':'新华区'
+// 					}
+// 				]
+// 			}
+// 		]
+// 	},
+// 	{
+// 		'province':'12',
+// 		'name':'山东',
+// 		'city':[
+// 			{
+// 				'code':'01',
+// 				'name':'济南',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'河西区'
+// 					}
+// 				]
+// 			},
+// 			{
+// 				'code':'02',
+// 				'name':'青岛',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'北辰区'
+// 					},
+// 					{
+// 						'code':'02',
+// 						'name':'运河区'
+// 					}
+// 				]
+// 			}
+// 		]
+// 	},
+// 	{
+// 		'province':'13',
+// 		'name':'内蒙古',
+// 		'city':[
+// 			{
+// 				'code':'01',
+// 				'name':'呼和浩特',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'呜啦啦区'
+// 					}
+// 				]
+// 			},
+// 			{
+// 				'code':'02',
+// 				'name':'赤峰',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'吱吱吱区'
+// 					},
+// 					{
+// 						'code':'02',
+// 						'name':'嘟嘟嘟区'
+// 					}
+// 				]
+// 			},
+// 			{
+// 				'code':'03',
+// 				'name':'呼伦贝尔',
+// 				'county':[
+// 					{
+// 						'code':'01',
+// 						'name':'呼呼呼区'
+// 					},
+// 					{
+// 						'code':'02',
+// 						'name':'尔尔尔区'
+// 					}
+// 				]
+// 			}
+// 		]
+// 	}
+// ]
+var _default = {
+  data: function data() {
+    return {
+      adrInfo: [],
+      provinces: [],
+      citys: [],
+      countys: [],
+      info: '',
+      show: false,
+      fileList: [],
+      user: {
+        username: 'yuan',
+        sex: 0,
+        phone: '18526435118',
+        adress: '',
+        icon: '' },
+
+      columns: [
+      {
+        values: '',
+        className: 'column1' },
+
+      {
+        values: '',
+        className: 'column2',
+        defaultIndex: 0 },
+
+      {
+        values: '',
+        classname: 'column3',
+        defaultIndex: 0 }] };
+
+
+
+  },
+  beforeCreate: function beforeCreate() {
+
+  },
+  created: function created() {
+    // 初始化省市数据
+    this.initAdress();
+    this.initUserInfo();
+  },
+  methods: {
+    afterRead: function afterRead(event) {var
+      file = event.detail.file;
+      console.log(file);
+
+      // 获取token
+      var token = uni.getStorageSync('token');
+      // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+      uni.uploadFile({
+        url: 'http://localhost:7001/api/upload/single',
+        filePath: file.path,
+        name: 'file',
+        header: { "Authorization": 'Bearer ' + token },
+        success: function success(res) {
+          // 上传完成需要更新 fileList
+          // const { fileList = [] } = this.data;
+          // fileList.push({ ...file, url: res.data });
+          // this.fileList = fileList
+          console.log('上传成功');
+        } });
+
+    },
+    changeSex: function changeSex(event) {
+      this.user.sex = event.detail;
+    },
+    updatePhone: function updatePhone() {
+      uni.navigateTo({
+        url: './setPhone' });
+
+    },
+    onCity: function onCity() {
+      this.show = true;
+    },
+    onCancel: function onCancel() {
+      this.show = false;
+    },
+    changeCity: function changeCity(event) {var _event$detail =
+      event.detail,picker = _event$detail.picker,value = _event$detail.value,index = _event$detail.index;
+      // 拿到省份索引值
+      var proIdx = this.provinces.indexOf(value[0]);
+
+      // 省份发生改变
+      if (index === 0) {
+        // 更新该省份下城市信息
+        this.citys = this.adrInfo[proIdx].city.map(function (item) {
+          return item.name;
+        });
+        // 更新城市列
+        picker.setColumnValues(1, this.citys);
+        // 显示第一个城市下的第一个区县
+        picker.setColumnValues(2, this.adrInfo[proIdx].city[0].county.map(function (item) {
+          return item.name;
+        }));
+        console.log('省变了');
+      } else if (index === 1) {//城市发生改变
+        // 拿到城市索引值
+        var citIdx = this.citys.indexOf(value[1]);
+        console.log('当前城市索引:', citIdx);
+        // 更新当前城市的区县信息
+        this.countys = this.adrInfo[proIdx].city[citIdx].county.map(function (item) {
+          return item.name;
+        });
+        // 更新区县列
+        picker.setColumnValues(2, this.countys);
+      } else if (index === 2) {//区县发生改变
+
+        picker.setColumnValues(2, this.countys);
+      }
+      // console.log(value,index)
+      // console.log(this.provinces,this.citys,this.countys)
+    },
+    onConfirm: function onConfirm(event) {var _event$detail2 =
+      event.detail,picker = _event$detail2.picker,value = _event$detail2.value,index = _event$detail2.index;
+      console.log(value);
+      this.user.adress = value.join(' ');
+      this.show = false;
+      // 修改地址后，再次修改需要重置citys和countys
+      this.citys = this.adrInfo[0].city.map(function (item) {
+        return item.name;
+      });
+      this.countys = this.adrInfo[0].city[0].county.map(function (item) {
+        return item.name;
+      });
+      // console.log('确认之后:',this.provinces,this.citys,this.countys)
+    },
+    preventTouchMove: function preventTouchMove() {
+
+    },
+    initAdress: function initAdress() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  uni.request({
+                    url: 'http://localhost:7001/getProvince',
+                    method: 'get',
+                    success: function success(res) {
+                      _this.adrInfo = res.data;
+                      console.log(_this.adrInfo);
+                      _this.initColumn();
+                    } }));case 2:case "end":return _context.stop();}}}, _callee);}))();
+
+    },
+    initColumn: function initColumn() {
+      this.provinces = this.adrInfo.map(function (item) {
+        return item.name;
+      });
+      console.log('provinces', this.provinces);
+      this.columns[0].values = this.provinces;
+
+      // this.citys = this.adrInfo[0].city.map((item) => {
+      // 	return item.name
+      // })
+      this.citys = this.adrInfo[0].city.name;
+      console.log(this.citys);
+
+      this.columns[1].values = this.citys;
+
+      // this.countys = this.adrInfo[0].city[0].county.map((item) => {
+      // 	return item.name
+      // })
+      this.countys = this.adrInfo[0].city.county.map(function (item) {
+        return item.name;
+      });
+      console.log(this.countys);
+      this.columns[2].values = this.countys;
+    },
+    initUserInfo: function initUserInfo() {var _this2 = this;
+      var token = uni.getStorageSync('token');
+      uni.request({
+        url: 'http://localhost:7001/api/getuser',
+        method: 'get',
+        header: { "Authorization": 'Bearer ' + token },
+        success: function success(res) {
+          _this2.user = res.data;
+          _this2.user.icon = 'http://localhost:7001' + _this2.user.icon;
+          console.log(_this2.user.icon);
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
