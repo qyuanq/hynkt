@@ -86,4 +86,13 @@ page .container .base-info .van-picker {
   margin-top: 30rpx;
   z-index: 100;
 }
+page .container .base-info .btn {
+  width: 50%;
+  height: 35px;
+  line-height: 35px;
+  background-color: #43A3FD;
+  color: #fff;
+  border-radius: 20px;
+  margin-top: 25px;
+}
 

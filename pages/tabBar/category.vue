@@ -43,12 +43,12 @@
 					    </shopPane>
 				    </view>
 			  </van-tab>
-			  <van-tab title="自学考试">
+			  <van-tab  v-for="item in category" :title="item.name">
 					<cateItem v-for="item in zk_specialty" :title="item.title" :specialty="item.specialty" @tap="onZikao"></cateItem>
 			  </van-tab>
-			  <van-tab title="成人高考">内容 3</van-tab>
+			  <!-- <van-tab title="成人高考">内容 3</van-tab>
 			  <van-tab title="职业资格">内容 4</van-tab>
-			  <van-tab title="研究生考试">内容 5</van-tab>
+			  <van-tab title="研究生考试">内容 5</van-tab> -->
 			</van-tabs>
 		</view>
 	</view>
@@ -71,6 +71,7 @@
 				original:3499,
 				current:5990,
 				btnName:'课程试听',
+				category:[],
 				zk_specialty:[
 					{title:"金融类",specialty:['金融管理专科','金融学本科','金融管理本科']},
 					{title:"经管类",specialty:['现代企业管理本科','商务管理专科','商务管理本科']},
@@ -86,6 +87,18 @@
 					{title:"旅游类",specialty:['旅游管理专科']}
 				]
 			}
+		},
+		created(){
+			this.request({
+				// url:this.development + '/api/categorys',
+				url:'http://localhost:7001/api/categorys',
+				method:'get',
+				success:(res) => {
+					// console.log(res.data)
+					this.category = res.data.data
+					console.log(this.category)
+				}
+			})
 		},
 		methods:{
 			onChange(event) {

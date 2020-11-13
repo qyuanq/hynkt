@@ -11,9 +11,10 @@
 				<van-cell title="基本资料" class="tit"/>
 				<van-field
 				  label="昵称"
-				  v-model="user.username"
+				  :value="user.username"
 				  border="false"
 				  input-align="right"
+				  @change="changeUsername"
 				/>
 				<van-cell title="性别">
 					<van-radio-group v-model="user.sex" @change="changeSex" class="demo-radio-group">
@@ -39,6 +40,7 @@
 					@confirm="onConfirm"
 				/>
 			</van-cell-group>
+			<button class="btn" @tap="updateInfo">保存</button>
 		</view>
 	</view>
 </template>
@@ -210,14 +212,19 @@
 			      filePath: file.path,
 			      name: 'file',
 				  header:{"Authorization":'Bearer ' + token},
-			      success(res) {
+			      success:(res) => {
 			        // 上传完成需要更新 fileList
 			        // const { fileList = [] } = this.data;
 			        // fileList.push({ ...file, url: res.data });
 			        // this.fileList = fileList
-					console.log('上传成功');
+					const result = JSON.parse(res.data)
+					this.user.icon = 'http://localhost:7001' + result.data;
+					console.log(this.user.icon)
 			      },
 			    });
+			},
+			changeUsername(event){
+				this.user.username = event.detail
 			},
 			changeSex(event) {
 			    this.user.sex = event.detail;
@@ -286,8 +293,10 @@
 				
 			},
 			async initAdress(){
+				const token = uni.getStorageSync('token');
 				await uni.request({
-					url:'http://localhost:7001/getProvince',
+					url:'http://localhost:7001/api/getProvince',
+					header:{"Authorization":'Bearer ' + token},
 					method:'get',
 					success:(res) => {
 						this.adrInfo = res.data
@@ -303,10 +312,10 @@
 				console.log('provinces',this.provinces)
 				this.columns[0].values = this.provinces
 				
-				// this.citys = this.adrInfo[0].city.map((item) => {
-				// 	return item.name
-				// })
-				this.citys = this.adrInfo[0].city.name
+				this.citys = this.adrInfo[0].city.map((item) => {
+					return item.name
+				})
+				// this.citys = this.adrInfo[5].city.name
 				console.log(this.citys)
 				
 				this.columns[1].values = this.citys
@@ -314,12 +323,12 @@
 				// this.countys = this.adrInfo[0].city[0].county.map((item) => {
 				// 	return item.name
 				// })
-				this.countys = this.adrInfo[0].city.county.map((item) => {
+				this.countys = this.adrInfo[0].city[0].county.map((item) => {
 					return item.name
 				})
 				console.log(this.countys)
 				this.columns[2].values = this.countys
-				//github测试
+				
 			},
 			initUserInfo(){
 				const token = uni.getStorageSync('token');
@@ -331,6 +340,31 @@
 						this.user = res.data;
 						this.user.icon = 'http://localhost:7001' + this.user.icon
 						console.log(this.user.icon)
+					}
+				})
+			},
+			updateInfo(){
+				let data = {
+					username:this.user.username,
+					sex:this.user.sex,
+					phone:this.user.phone,
+					adress:this.user.adress,
+				}
+				const token = uni.getStorageSync('token');
+				uni.request({
+					url:'http://localhost:7001/api/updateUser',
+					method:'post',
+					header:{"Authorization":'Bearer ' + token},
+					data:data,
+					success: (res) => {
+						uni.showToast({
+							title: '修改成功',
+							duration: 2000
+						})
+						uni.switchTab({
+							url:'../../tabBar/personal'
+						})
+						console.log(res.data)
 					}
 				})
 			}
@@ -401,6 +435,15 @@
 					height:560rpx;
 					margin-top:30rpx;
 					z-index:100;
+				}
+				.btn{
+					width:50%;
+					height:35px;
+					line-height: 35px;
+					background-color: #43A3FD;
+					color:#fff;
+					border-radius:20px;
+					margin-top:25px;
 				}
 			}
 		}
