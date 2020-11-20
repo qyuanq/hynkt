@@ -174,6 +174,10 @@ var _default =
         data: data,
         success: function success(res) {
           console.log(res.data);
+
+          if (uni.getStorageSync('token')) {
+            uni.removeStorageSync('token');
+          }
           uni.setStorage({
             key: 'token',
             data: res.data.data.token });

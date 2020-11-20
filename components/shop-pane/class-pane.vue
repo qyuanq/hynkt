@@ -1,12 +1,12 @@
 <template>
 	<view class="container">
 		<view class="class-img">
-			<image src="/static/category/concise.png"></image>
+			<image :src='singleImg'></image>
 		</view>
 		<view class="content">
-			<view class="tit">课程精讲班</view>
+			<view class="tit">{{single.label}}</view>
 			<view class="pro-box">
-				<view class="price">￥99-288</view>
+				<view class="price">￥{{single.retail_price}}</view>
 				<view class="btn">报名试听</view>
 			</view>
 		</view>
@@ -15,9 +15,17 @@
 
 <script>
 	export default {
+		props:{
+			single:{
+				type:Object,
+				default:() => {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
-				
+				singleImg:this.development + this.single.head_picture
 			};
 		}
 	}

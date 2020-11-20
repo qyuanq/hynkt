@@ -42,6 +42,10 @@
 					data:data,
 					success: (res) => {
 						console.log(res.data)
+						
+						if(uni.getStorageSync('token')){
+							uni.removeStorageSync('token')
+						}
 						uni.setStorage({
 							 key: 'token',
 							 data: res.data.data.token

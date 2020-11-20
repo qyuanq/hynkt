@@ -203,31 +203,16 @@ __webpack_require__.r(__webpack_exports__);
       original: 3499,
       current: 5990,
       btnName: '课程试听',
-      category: [],
-      zk_specialty: [
-      { title: "金融类", specialty: ['金融管理专科', '金融学本科', '金融管理本科'] },
-      { title: "经管类", specialty: ['现代企业管理本科', '商务管理专科', '商务管理本科'] },
-      { title: "财贸类", specialty: ['市场营销本科', '财务管理本科', '国际商务本科', '会计专科', '农村财会与审计专科', '财务会计与审计本科', '会计学本科'] },
-      { title: "教育类", specialty: ['学前教育本科', '小学教育本科', '教育管理本科', '汉语言文学专科', '学前教育专科', '教育学本科'] },
-      { title: "语言类", specialty: ['英语本科', '商务英语本专科', '商务英语本科', '汉语言文学本科', '英语专科'] },
-      { title: "文史类", specialty: ['法学（本科段）'] },
-      { title: "艺术类", specialty: ['广告学本科', '产品设计本科', '视觉传播设计与制作专科', '环境艺术设计专科', '动漫设计专科', '数字媒体艺术本科', '视觉传达设计本科', '环境设计本科'] },
-      { title: "医学类", specialty: ['护理学本科', '护理专科'] },
-      { title: "理工类", specialty: ['计算机科学与技术', '工程管理本科', '工程造价本科'] },
-      { title: "管理类", specialty: ['公共关系学本科', '行政管理专科', '公共关系专科', '电子商务本科', '人力资源管理本科', '行政管理本科'] },
-      { title: "食品类", specialty: ['食品营养与卫生专科', '食品卫生与营养学本科'] },
-      { title: "旅游类", specialty: ['旅游管理专科'] }] };
-
+      category: [] };
 
   },
   created: function created() {var _this = this;
     this.request({
-      // url:this.development + '/api/categorys',
-      url: 'http://localhost:7001/api/categorys',
+      url: this.development + '/api/categorys',
+      // url:'http://localhost:7001/spe',
       method: 'get',
       success: function success(res) {
-        // console.log(res.data)
-        _this.category = res.data.data;
+        _this.category = res.data.data.rows;
         console.log(_this.category);
       } });
 
@@ -241,9 +226,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     onCourse: function onCourse() {
       uni.navigateTo({ url: '../product/product' });
-    },
-    onZikao: function onZikao() {
-      uni.navigateTo({ url: '../product/showProject' });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -19,8 +19,13 @@
 		<view class="pro-box couse-class">
 			<view class="title">单科班</view>
 			<view class="class-pane">
-				<classPane></classPane>
-				<classPane></classPane>
+				<classPane v-for="item in classSingle" :single="item" @tap="onProduct('single',item.id)"></classPane>
+			</view>
+		</view>
+		<view class="pro-box couse-class">
+			<view class="title">套餐班</view>
+			<view class="class-pane">
+				<classPane v-for="item in classMeal" :single="item" @tap="onProduct('meal',item.id)"></classPane>
 			</view>
 		</view>
 		<view class="content-img">
@@ -44,8 +49,34 @@
 				imgShow:true,
 				btnShow:true,
 				videoShow:false,
-				SERVER:this.server
+				SERVER:this.server,
+				classSingle:[],
+				classMeal:[]
 			};
+		},
+		created(){
+			
+			
+		},
+		onLoad: async function(option) { //option为object类型，会序列化上个页面传递的参数
+			console.log(option.id); //打印出上个页面传递的参数。
+			await this.request({
+				url:`${this.development}/api/classes/${option.id}`,
+				method:'get',
+				success:(res) =>{
+					console.log(res.data.data);
+					this.classSingle = res.data.data.single;
+					this.classMeal = res.data.data.meal;
+				}
+			})
+		},
+		methods:{
+			onProduct(type,pid){
+				uni.navigateTo({
+					// 向课程页传递两个参数：type:班型类型（单科班，全科班）,id:某一课程的id
+					url:`./product?type=${type}&id=${pid}`
+				})
+			}
 		}
 	}
 </script>

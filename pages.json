@@ -260,7 +260,8 @@
                             "van-goods-action" : "/static/vant-weapp/goods-action/index",
                             "van-goods-action-icon" : "/static/vant-weapp/goods-action-icon/index",
                             "van-goods-action-button" : "/static/vant-weapp/goods-action-button/index",
-                            "van-divider" : "/static/vant-weapp/divider/index"
+                            "van-divider" : "/static/vant-weapp/divider/index",
+							"van-action-sheet": "/static/vant-weapp/action-sheet/index"
                         }
                     }
                 },

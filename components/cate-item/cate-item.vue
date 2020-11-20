@@ -2,7 +2,7 @@
 	<view class="item">
 		<p class="title">{{title}}</p>
 		<view class="content">
-			<span class="specialty" v-for="item in specialty">{{item}}</span>
+			<span class="specialty" v-for="item in specialty" @tap="onClass(item.id)">{{item.name}}</span>
 		</view>
 		<view class="divider"></view>
 	</view>
@@ -24,6 +24,19 @@ export default{
 	},
 	data(){
 		return{}
+	},
+	methods:{
+		onClass(id){
+			uni.navigateTo({url:`../product/showProject?id=${id}`})
+			// this.request({
+			// 	url:`${this.development}/api/classes/${id}`,
+			// 	method:'get',
+			// 	success:(res) =>{
+			// 		console.log(res.data.data);
+			// 	}
+			// })
+			
+		}
 	}
 }
 </script>

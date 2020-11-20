@@ -130,7 +130,12 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var classPane = function classPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/class-pane */ "components/shop-pane/class-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/class-pane */ 283));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 157));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var classPane = function classPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/class-pane */ "components/shop-pane/class-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/class-pane */ 283));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
 
 
 
@@ -176,9 +181,35 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       imgShow: true,
       btnShow: true,
       videoShow: false,
-      SERVER: this.server };
+      SERVER: this.server,
+      classSingle: [],
+      classMeal: [] };
 
-  } };exports.default = _default;
+  },
+  created: function created() {
+
+
+  },
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var _this = this;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0: //option为object类型，会序列化上个页面传递的参数
+              console.log(option.id); //打印出上个页面传递的参数。
+              _context.next = 3;return this.request({
+                url: "".concat(this.development, "/api/classes/").concat(option.id),
+                method: 'get',
+                success: function success(res) {
+                  console.log(res.data.data);
+                  _this.classSingle = res.data.data.single;
+                  _this.classMeal = res.data.data.meal;
+                } });case 3:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
+
+
+  methods: {
+    onProduct: function onProduct(type, pid) {
+      uni.navigateTo({
+        // 向课程页传递两个参数：type:班型类型（单科班，全科班）,id:某一课程的id
+        url: "./product?type=".concat(type, "&id=").concat(pid) });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
