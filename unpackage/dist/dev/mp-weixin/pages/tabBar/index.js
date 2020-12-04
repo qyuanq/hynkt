@@ -321,6 +321,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -328,16 +332,38 @@ var _default =
       href: 'https://uniapp.dcloud.io/component/README?id=uniui',
       testTime: '全国 2020-10-24 09:00',
       show: false,
-      SERVER: this.server };
+      development: this.development,
+      SERVER: this.server,
+      myCource: null,
+      notlesson: null };
 
   },
-  created: function created() {
-    console.log(this.server + '/static/img/logo.png');
+  created: function created() {var _this = this;
+    this.request({
+      url: "".concat(this.development, "/api/myCources"),
+      method: 'get',
+      success: function success(res) {
+        _this.myCource = res.data.data;
+        _this.notlesson = _this.myCource.class_meal_models.length === 0 && _this.myCource.class_single_models.length === 0 ? true : false;
+        console.log('mycource', _this.myCource);
+        console.log('notlesson', _this.notlesson);
+      } });
+
   },
   methods: {
-    changeClass: function changeClass() {
+    changeClass: function changeClass(notlesson) {
+      var url;
+      if (this.notlesson) {
+        url = "../user/myCource?notlesson=".concat(notlesson);
+      } else {
+        var cource = {
+          single: this.myCource.class_single_models,
+          meal: this.myCource.class_meal_models };
+
+        url = "../user/myCource?notlesson=".concat(notlesson, "&cource=").concat(encodeURIComponent(JSON.stringify(cource)));
+      }
       uni.navigateTo({
-        url: './changeClass' });
+        url: url });
 
     },
     signed: function signed() {
@@ -354,6 +380,19 @@ var _default =
     onClickVideo: function onClickVideo() {
       uni.navigateTo({
         url: '../myClassVideo/myClassVideo' });
+
+    },
+    buyCource: function buyCource() {
+      uni.switchTab({
+        url: '/pages/tabBar/category' });
+
+    },
+    onProblem: function onProblem() {
+      console.log('点击了章节练习');
+      var url;
+      this.notlesson ? url = "../user/myCource?notlesson=".concat(this.notlesson) : url = '../examQuestion/practice';
+      uni.navigateTo({
+        url: url });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

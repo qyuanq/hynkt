@@ -97,6 +97,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.hotCource, function(item, __i0__) {
+    var g0 = item.label.indexOf("全程")
+    return {
+      $orig: _vm.__get_orig(item),
+      g0: g0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -130,7 +146,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 224));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 231));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var shopPane = function shopPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/shop-pane */ "components/shop-pane/shop-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/shop-pane.vue */ 238));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cateItem = function cateItem() {__webpack_require__.e(/*! require.ensure | components/cate-item/cate-item */ "components/cate-item/cate-item").then((function () {return resolve(__webpack_require__(/*! @/components/cate-item/cate-item.vue */ 245));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 261));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 268));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var shopPane = function shopPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/shop-pane */ "components/shop-pane/shop-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/shop-pane.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cateItem = function cateItem() {__webpack_require__.e(/*! require.ensure | components/cate-item/cate-item */ "components/cate-item/cate-item").then((function () {return resolve(__webpack_require__(/*! @/components/cate-item/cate-item.vue */ 275));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -196,14 +212,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       SERVER: this.server,
-      active: 1,
-      picture: this.server + "/static/img/category/pic1.jpg",
-      title: "健康管理师专业技能(三级)精讲班",
-      classes: "课程精讲班",
-      original: 3499,
-      current: 5990,
-      btnName: '课程试听',
-      category: [] };
+      active: 0,
+      category: [],
+      hotCource: [] };
 
   },
   created: function created() {var _this = this;
@@ -212,9 +223,17 @@ __webpack_require__.r(__webpack_exports__);
       // url:'http://localhost:7001/spe',
       method: 'get',
       success: function success(res) {
+        // 设置分类导航
         _this.category = res.data.data.rows;
-        console.log(_this.category);
+        _this.request({
+          url: _this.development + '/hotcources',
+          method: 'get',
+          success: function success(res) {
+            _this.hotCource = res.data.data;
+          } });
+
       } });
+
 
   },
   methods: {
@@ -224,8 +243,9 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'none' });
 
     },
-    onCourse: function onCourse() {
-      uni.navigateTo({ url: '../product/product' });
+    onCourse: function onCourse(type, pid) {
+      // console.log(pid);
+      uni.navigateTo({ url: "../product/product?type=".concat(type, "&id=").concat(pid) });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

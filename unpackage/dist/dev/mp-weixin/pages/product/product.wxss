@@ -106,19 +106,25 @@
   padding-left: 30rpx;
   font-size: 30rpx;
 }
+.container .content {
+  width: calc(100%-20rpx);
+  overflow: hidden;
+}
 .container .content .info {
+  width: 100%;
   height: 500rpx;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .container .content .tit {
+  margin-top: 20rpx;
   font-size: 24rpx;
 }
 .container .content .label-item {
   display: inline-block;
   width: 150rpx;
   height: 50rpx;
-  margin: 30rpx 20rpx 30rpx 0;
-  background: #41A5FD;
-  color: #fff;
+  margin: 30rpx 20rpx 0 0;
   text-align: center;
   font-size: 22rpx;
   line-height: 50rpx;
@@ -126,11 +132,14 @@
 }
 .container .content .active {
   background: #41A5FD;
+  color: #fff;
+}
+.container .content .default {
+  background: #F2F1F1;
 }
 .container .content .class-item {
   width: 680rpx;
   height: 50rpx;
-  color: #fff;
   font-size: 22rpx;
   line-height: 50rpx;
   border-radius: 8rpx;
@@ -259,7 +268,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.container .introduce .teacher .present .cource {
+  margin-top: 10rpx;
+}
 .container .introduce .teacher .present .tea-name {
   color: #888;
+  margin-top: 10rpx;
 }
 

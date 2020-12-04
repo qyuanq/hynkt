@@ -18,6 +18,7 @@
 				  <text class="class-name">当前试听：{{cource.name}}</text>
 				  <button class="classBtn" @tap="changeClass">切换班型</button>
 			  </view>
+			  <!-- 所有课程 -->
 			  <van-collapse :value="activeNames" @change="onChange">
 			    <van-collapse-item v-for="(item,i) in goodVideos" :key="item.section" :title="item.section" :name="i+1">
 				<view class="cell-group">
@@ -32,19 +33,29 @@
 				</view>
 			    </van-collapse-item>
 			  </van-collapse>
+			  <!-- 试听课程 -->
 			  <van-action-sheet :show="changeClassShow" title="选择试听该商品所有课程" close-on-click-overlay="false" @close="onClose">
 			    <view class="content">
 					<view class="info">
 						<view class="tit">选择课程班型</view>
 						<view>
-							<text class="label-item active">{{cource.label}}</text>
+							<text :class="['label-item',activelabel===index ? 'active' : 'default']" 
+							v-for="(item,index) in labels || 1 " 
+							:key="item"
+							@tap="onActiveLabel(index)"
+							>{{item || cource.label}}</text>
 						</view>
 						<view class="tit">选择试听课程</view>
-						<view class="class-item active">{{cource.name}}</view>
+						<view :class="['class-item',classId === (item.id || cource.id) ? 'active' : 'default']" 
+						v-for="(item,index) in listenClass || 1" 
+						:key="item.id"
+						@tap="onActiveClass(index)"
+						>{{item.name || cource.name}}</view>
 					</view>
-					<button class="audition-btn" @tap="">试听该课程</button>
+					<button class="audition-btn" @tap="listen(classId,activelabel)">试听该课程</button>
 				</view>
 			  </van-action-sheet>
+			  <!-- 解决底部被遮挡 -->
 			  <view class="white"></view>
 		  </van-tab>
 		  <van-tab title="课程介绍">
@@ -63,7 +74,7 @@
 					  <view class="title">
 						  考试时间
 					  </view>
-					  <text class="test-time">{{cource.Exam_time ? cource.Exam_time : '暂无考试时间信息'}}</text>
+					  <text class="test-time">{{cource.Exam_time || cource.class_single_models[0].Exam_time ? cource.Exam_time || cource.class_single_models[0].Exam_time : '暂无考试时间信息'}}</text>
 					  <van-divider dashed />
 					  
 					  <!-- <view class="count">
@@ -88,13 +99,18 @@
 					   </view>
 				  </view>
 				  <image :src="development + cource.detail_picture" class="learn-img"></image>
-				  <view class="teacher">
-					  <view class="img">
-						  <image :src="SERVER + '/static/img/category/teacher.png'" class="header"></image>
-					  </view>
-					  <view class="present">
-						  <view class="course">健康管理师-专业技能（三级）(课程精讲班)</view>
-						  <view class="tea-name">教师：<text>陈禹斌</text></view>
+				  <view v-for="item in (cource.class_single_models || 1)" :key="item.id">
+					  <view class="teacher" v-for="(tea,index) in (item.id ? item.teacher_models : cource.teacher_models)" :key="tea.id" :id="tea.id" @tap="onTeacher">
+						  <view >
+							  <view class="img">
+							  	<image :src="development + tea.headIcon" class="header"></image>
+							  </view>
+							  <view class="present">
+								  <view class="course">{{item ? item.name : cource.name}}</view>
+								  <view class="tea-name">教师：<text>{{tea.name}}</text></view>
+							  </view>
+						  </view>
+						  
 					  </view>
 				  </view>
 			  </view>
@@ -103,11 +119,12 @@
 		  			  
 		  </van-tab>
 		</van-tabs>
+		<!-- 底部按钮 -->
 		<van-goods-action>
 		  <van-goods-action-icon icon="chat-o" text="客服" />
 		  <van-goods-action-icon icon="cart-o" text="收藏" info="5" />
 		  <van-goods-action-button color="#be99ff" text="加入购物车" type="warning" />
-		  <van-goods-action-button color="#7232dd" text="立即购买" />
+		  <van-goods-action-button color="#7232dd" text="立即购买" @tap="onBuy(cource)" />
 		</van-goods-action>
 	</view>
 </template>
@@ -127,15 +144,24 @@
 				count:null,
 				cource:{},
 				videoPath:'',
-				changeClassShow:false
+				changeClassShow:false,
+				activelabel:0,
+				labels:null,
+				allListenClass:null,
+				listenClass:null,
+				classId:0
 			};
 		},
 		methods:{
+			// 切换章节效果
 			onChange(event){
 				this.activeNames = event.detail;
 			},
+			
+			//切换视频
 			changeVideo(path,i=null,index=null){
 				// console.log(index,i,path)
+				//
 				if((!i && index < this.count) || (i === null && index === null)){
 					this.imgShow = false;
 					this.btnShow = false;
@@ -145,11 +171,85 @@
 					return;
 				}
 			},
+			
+			//将json数组按照对象的属性分组
+			groupBy(arr){
+				//pre 返回值  current当前元素  index当前元素索引
+			  return arr.reduce((pre, current, index) => {
+			    pre[current.label] = pre[current.label] || [];
+			    pre[current.label].push({ name: current.name, id: current.id });
+			    return pre;
+			  }, {});
+			},
+			
+			// 打开试听课程弹窗
 			changeClass(){
+				// 打开弹窗
 				this.changeClassShow = true;
 			},
+			// 关闭试听课程弹窗
 			onClose(){
 				this.changeClassShow = false;
+			},
+			//试听课程
+			async listen(id,index){
+				console.log('listen:',id);
+				console.log('index',index);
+				await this.request({
+					url:`${this.development}/goodVideos/${id}`,
+					method:'get',
+					success:(res) => {
+						// 所有视频
+						this.goodVideos = res.data.data.content;
+						console.log('视频',this.goodVideos);
+						//免费试听课程
+						this.count = Math.ceil((res.data.data.count) * 0.1);
+						//播放新视频
+						this.changeVideo(this.goodVideos[0].value[0].path);
+						// 关闭课程弹窗
+						this.onClose();
+					}
+				})
+			},
+			// 循环元素，点击元素动态切换class
+			onActiveLabel(index){
+				// 用于动态切换选中class
+				this.activelabel = index;
+				// 点击切换班型，自动切换匹配的试听课程
+				this.listenClass = this.allListenClass[this.labels[index]]
+			},
+			onActiveClass(index){
+				// 用于动态切换选中class
+				if(this.cource.class_single_models){
+					// 套餐班试听课程id
+					this.classId = this.listenClass[index].id;
+				}else{
+					// 单科班试听课程id
+					this.classId = this.cource.id;
+				}
+				console.log(this.classId);
+			},
+			
+			// 跳转教师界面
+			onTeacher(event){
+				//event.currentTarget.id  当前绑定组件的id    （组件使用 :id="")
+				const teacherPid = event.currentTarget.id;
+				uni.navigateTo({
+					url:`./teacherDetai?teacherPid=${teacherPid}`
+				})
+			},
+			
+			// 立即购买
+			onBuy(cource){
+				let orderCource = {
+					name:this.cource.name,
+					head_picture:this.cource.head_picture,
+					disc_price:this.cource.disc_price,
+					type:this.cource.class_single_models ? '套餐班' : '单科班'
+				}
+				uni.navigateTo({
+					url:`../order/detail?cource=${encodeURIComponent(JSON.stringify(orderCource))}`
+				})
 			}
 		},
 		onLoad: async function(option) { //option为object类型，会序列化上个页面传递的参数
@@ -163,20 +263,38 @@
 				success:async (res) => {
 					this.cource = res.data.data;
 					console.log(this.cource);
+					
+					// 试听课程如果是全科班课程
+					if(this.cource.class_single_models){
+						// 获得形如{'模拟实战班':[id:4,name:'幼儿教师资格证-模拟实战班']}所有课程
+						this.allListenClass = this.groupBy(this.cource.class_single_models);
+						console.log('数组分组后的json',this.allListenClass);
+						// 全科班所有标签
+						this.labels = Object.keys(this.allListenClass);
+						// 默认显示第一个标签下的所有课程
+						this.listenClass = this.allListenClass[this.labels[0]];
+						// 默认选中第一个课程
+						this.classId = this.listenClass[0].id;
+					}else{
+						// 单科班默认唯一课程id
+						this.classId = this.cource.id;
+					}
+					
 					// 根据班型不同请求不同课程视频API
 					let video_url = option.type === 'single' ? `${this.development}/goodVideos/${option.id}` : `${this.development}/goodVideos/${this.cource.class_single_models[0].id}`;
 					await this.request({
 						url:video_url,
 						method:'get',
 						success:(res) =>{
-							// console.log(res.data.data);
+							// 所有视频
 							this.goodVideos = res.data.data.content;
+							console.log('视频',this.goodVideos);
+							//免费试听课程
 							this.count = Math.ceil((res.data.data.count) * 0.1);
 						}
 					});
 				}
 			});
-			// console.log('视频id',this.cource)
 			
 		}
 	}
@@ -254,19 +372,23 @@
 		font-size:30rpx;
 	}
 	.content{
+		width:calc(100%-20rpx);
+		overflow: hidden;
 		.info{
+			width:100%;
 			height:500rpx;
+			overflow-y: scroll;
+			overflow-x:hidden;
 		}
 		.tit{
+			margin-top:20rpx;
 			font-size:24rpx;
 		}
 		.label-item{
 			display:inline-block;
 			width:150rpx;
 			height:50rpx;
-			margin:30rpx 20rpx 30rpx 0; 
-			background:#41A5FD;
-			color:#fff;
+			margin:30rpx 20rpx 0 0; 
 			text-align:center;
 			font-size:22rpx;
 			line-height:50rpx;
@@ -274,11 +396,14 @@
 		}
 		.active{
 			background:#41A5FD;
+			color:#fff;
+		}
+		.default{
+			background:#F2F1F1;
 		}
 		.class-item{
 			width:680rpx;
 			height:50rpx;
-			color:#fff;
 			font-size:22rpx;
 			line-height:50rpx;
 			border-radius:8rpx;
@@ -354,7 +479,8 @@
 				white-space:nowrap;
 				text-overflow:ellipsis;
 				overflow: hidden;
-				.tea-name{color:#888;}
+				.cource{margin-top:10rpx;}
+				.tea-name{color:#888;margin-top:10rpx;}
 			}
 		}
 	}

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "shop-pane": "/components/shop-pane/shop-pane",
+    "van-search": "/static/vant-weapp/search/index"
+  }
+}

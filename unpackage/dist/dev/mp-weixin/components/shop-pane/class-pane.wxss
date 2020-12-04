@@ -25,6 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .container {
+  margin-top: 10rpx;
   width: 150px;
 }
 .container .class-img {

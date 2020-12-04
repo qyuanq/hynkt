@@ -15,6 +15,30 @@
       ]
     },
     {
+      "root": "pages/category/",
+      "pages": [
+        "consulting"
+      ]
+    },
+    {
+      "root": "pages/examQuestion/",
+      "pages": [
+        "practice"
+      ]
+    },
+    {
+      "root": "pages/user/",
+      "pages": [
+        "myCource"
+      ]
+    },
+    {
+      "root": "pages/order/",
+      "pages": [
+        "detail"
+      ]
+    },
+    {
       "root": "pages/public/",
       "pages": [
         "login",
@@ -41,7 +65,8 @@
       "root": "pages/product/",
       "pages": [
         "product",
-        "showProject"
+        "showProject",
+        "teacherDetai"
       ]
     },
     {

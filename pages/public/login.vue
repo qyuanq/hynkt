@@ -42,7 +42,6 @@
 					data:data,
 					success: (res) => {
 						console.log(res.data)
-						
 						if(uni.getStorageSync('token')){
 							uni.removeStorageSync('token')
 						}
@@ -51,7 +50,7 @@
 							 data: res.data.data.token
 						})
 						uni.switchTab({
-							url:'/pages/tabBar/index'
+							url:`/pages/tabBar/index`
 						})
 					}
 				})

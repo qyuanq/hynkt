@@ -46,7 +46,7 @@
 }
 .container .pro-box {
   text-align: center;
-  padding: 20px 0;
+  padding: 20rpx 0;
 }
 .container .pro-box .title {
   display: inline-block;
@@ -96,10 +96,12 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
+  padding: 0 30rpx;
 }
 .container .content-img {
   width: 100%;

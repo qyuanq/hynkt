@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "van-search": "/static/vant-weapp/search/index"
+  }
+}

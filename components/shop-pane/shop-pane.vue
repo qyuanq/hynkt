@@ -1,15 +1,18 @@
 <template>
 	<view class="carb">
 		<view class="pic">
-			<image :src="picture"></image>
+			<image :src="development + hotCource.head_picture"></image>
 		</view>
 		<view class="content">
-			<view class="title">{{title}}</view>
-			<view class="classes">[{{classes}}]</view>
-			<view class="class-code">{{classCode}}</view>
-			<view class="price">
-				<view class="num" v-if="original"><text class="sign">￥</text><text class="original">{{original}}</text><text class="current">￥{{current}}</text></view>
-				<button class="btn">{{btnName}}</button>
+			<view class="title">{{hotCource.name}}</view>
+			<view class="classes" v-if="hotCource.label">[{{hotCource.label}}]</view>
+			<view class="class-code" v-if="hotCource.classCode">{{hotCource.classCode}}</view>
+			<view class="classes" v-if="hotCource.type">({{hotCource.type}})</view>
+			<view class="price clearfix">
+				<view class="num"><text class="sign">￥</text><text class="original">{{hotCource.disc_price}}</text><text class="current" v-if="hotCource.retail_price">￥{{hotCource.retail_price}}</text></view>
+				<button class="btn" v-if="hotCource.label">点击试听</button>
+				<button class="btn" v-if="hotCource.mylearn">开始学习</button>
+				<button class="btn" v-if="hotCource.renewal">去续费</button>
 			</view>
 		</view>
 	</view>
@@ -18,38 +21,14 @@
 <script>
 export default{
 	props:{
-		picture:{
-			type:String,
-			default:''
-		},
-		title:{
-			type:String,
-			defalut:'健康管理师专业技能（三级）精讲班'
-		},
-		classes:{
-			type:String,
-			defalut:'课程精讲班'
-		},
-		original:{
-			type:Number
-		},
-		current:{
-			type:Number
-		},
-		btnName:{
-			type:String,
-			default:'课程试听'
-		},
-		classCode:{
-			type:String,
-			default:''
+		hotCource:{
+			type:Object
 		}
 	},
 	data(){
-		return{}
-	},
-	created(){
-		console.log(this.original);
+		return{
+			development:this.development
+		}
 	}
 }
 </script>
@@ -59,12 +38,13 @@ export default{
 		display:flex;
 		margin-top:20rpx;
 		.pic{
-			width:150px;height:90px;margin-right:12rpx;
+			width:300rpx;height:auto;margin-right:12rpx;
 			image{width:100%;height:100%;border-radius:7px;}
 		}
 		.content{
 			flex:1;
-			.title{font-size:12px;color:#333;font-weight:bold;}
+			width:426rpx;
+			.title{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;font-size:12px;color:#333;font-weight:bold;}
 			.classes,.class-code{font-size:11px;color:#888;margin-top:10px;}
 			.price{
 				margin-top:10px;

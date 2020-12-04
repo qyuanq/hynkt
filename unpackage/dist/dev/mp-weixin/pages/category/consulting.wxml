@@ -1,0 +1,1 @@
+<view class="container"><view class="header"><image class="picture" src="{{development+'/public/static/img/category/new-bgc.png'}}"></image><view class="title-box"><view class="title">{{content.name}}</view><view class="date">{{content.date}}</view></view><view class="information"><rich-text nodes="{{content.content}}"></rich-text></view></view></view>

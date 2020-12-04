@@ -1,16 +1,16 @@
 <template>
 	<view class="container">
 		<view class="course">
-			<view class="video">
-				<image v-if="imgShow" :src="SERVER + '/static/img/category/pic2.jpg'"></image>
+			<view class="video" @tap="onProduct('single',classSingle[0].id)">
+				<image v-if="imgShow" :src="development + classSingle[0].head_picture"></image>
 				<image v-if="btnShow" :src="SERVER + '/static/img/category/video_play.png'" class="btn-play"></image>
-				<video v-if="videoShow" src="https://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/mp4/2019/04/21/1214598912_f3f239fb46b448e4909da386a7a0439f_sd.mp4?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de80cf71d5a4f376edb80607903f1ca760220eebf43112a9492238f198ed1882f2922117d840132767793f969aceceae3793fd3e61bc84b767a68b30f9427eeb2e54426afeac364f76a817da3b2623cd41e" :enable-auto-rotation="true" :autoplay="true" controls></video>
+				<!-- <video v-if="videoShow" src="https://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/mp4/2019/04/21/1214598912_f3f239fb46b448e4909da386a7a0439f_sd.mp4?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de80cf71d5a4f376edb80607903f1ca760220eebf43112a9492238f198ed1882f2922117d840132767793f969aceceae3793fd3e61bc84b767a68b30f9427eeb2e54426afeac364f76a817da3b2623cd41e" :enable-auto-rotation="true" :autoplay="true" controls></video> -->
 			</view>
 		</view>
 		<view class="pro-box">
 			<view class="title">专业咨询</view>
 			<view class="nav">
-				<view class="nav-btn" v-for="item in icons">
+				<view class="nav-btn" v-for="item in icons" @tap="onConsulting(item.param)">
 					<van-icon class="iconfont" class-prefix="my-icon" :name="item.name" />
 					<view class="text">{{item.text}}</view>
 				</view>
@@ -40,18 +40,15 @@
 		components:{classPane},
 		data() {
 			return {
-				icons:[
-					{"name":"baoming","text":"报考条件"},
-					{"name":"baoming","text":"考试报名"},
-					{"name":"kaoshizhinan","text":"考试指南"},
-					{"name":"changjianwenti","text":"常见问题"}
-				],
 				imgShow:true,
 				btnShow:true,
 				videoShow:false,
 				SERVER:this.server,
+				development:this.development,
 				classSingle:[],
-				classMeal:[]
+				classMeal:[],
+				classInfo:{},
+				icons:[],
 			};
 		},
 		created(){
@@ -65,8 +62,14 @@
 				method:'get',
 				success:(res) =>{
 					console.log(res.data.data);
+					this.classInfo = res.data.data;
 					this.classSingle = res.data.data.single;
 					this.classMeal = res.data.data.meal;
+					this.icons =[ 
+						{"name":"baoming","text":"报考条件",param:this.classInfo.conditions},
+						{"name":"baoming","text":"考试报名",param:this.classInfo.registratio},
+						{"name":"kaoshizhinan","text":"考试指南",param:this.classInfo.examguide},
+						{"name":"changjianwenti","text":"常见问题",param:this.classInfo.question}];
 				}
 			})
 		},
@@ -75,6 +78,13 @@
 				uni.navigateTo({
 					// 向课程页传递两个参数：type:班型类型（单科班，全科班）,id:某一课程的id
 					url:`./product?type=${type}&id=${pid}`
+				})
+			},
+			onConsulting(content){
+				console.log('content:',content);
+				uni.navigateTo({
+					// 传递对象，将对象转换成字符串，进行encodeURIComponent编码浏览器识别
+					url:'../category/consulting?content='+ encodeURIComponent(JSON.stringify(content))
 				})
 			}
 		}
@@ -101,7 +111,7 @@
 	}
 	.pro-box{
 		text-align:center;
-		padding:20px 0;
+		padding:20rpx 0;
 		.title{
 			display:inline-block;
 			font-size:16px;
@@ -136,8 +146,9 @@
 	.couse-class{
 		.class-pane{
 			display:flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			flex-wrap: wrap;
+			padding:0 30rpx;
 		}
 	}
 	.content-img{

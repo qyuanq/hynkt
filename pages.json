@@ -113,6 +113,56 @@
                 }
             ]
         },
+		{
+			"root" : "pages/category/",
+			"pages" : [
+				{
+                    "path" : "consulting",
+                    "style" : {}
+                }
+            ]
+		},
+		{
+			"root" : "pages/examQuestion/",
+			"pages" : [
+				{
+                    "path" : "practice",
+                    "style" : {}
+                }
+            ]
+		},
+		{
+			"root" : "pages/user/",
+			"pages" : [
+		    {
+                    "path" : "myCource",
+                    "style" : {
+						"usingComponents": {
+						  "van-search": "/static/vant-weapp/search/index"
+						}
+					}
+                }
+            ]
+		},
+		{
+			"root" : "pages/order/",
+			"pages" : [
+				
+		    {
+                    "path" : "detail",
+                    "style" : {
+						"usingComponents": {
+						  "van-icon" : "/static/vant-weapp/icon/index",
+						  "van-submit-bar": "/static/vant-weapp/submit-bar/index",
+						  "van-cell": "/static/vant-weapp/cell/index",
+						  "van-cell-group": "/static/vant-weapp/cell-group/index",
+						  "van-radio": "/static/vant-weapp/radio/index",
+						  "van-radio-group": "/static/vant-weapp/radio-group/index"
+						}
+					}
+                }
+            ]
+		},
         {
             "root" : "pages/public/",
             "pages" : [
@@ -275,6 +325,10 @@
                             "van-icon" : "/static/vant-weapp/icon/index"
                         }
                     }
+                }
+                ,{
+                    "path" : "teacherDetai",
+                    "style" : {}
                 }
             ]
         },

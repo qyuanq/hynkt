@@ -39,7 +39,7 @@
 			  <van-tab title="热门推荐">
 				    <view class="pane">
 						<shopPane 
-					 v-for="item in 8" :picture="picture" :title="title" :classes="classes" :original="original" :current="current" @tap="onCourse">
+					 v-for="item in hotCource" :hotCource="item" @tap="onCourse(item.label.indexOf('全程') != -1 ? 'meal' : 'single',item.id)">
 					    </shopPane>
 				    </view>
 			  </van-tab>
@@ -64,14 +64,9 @@
 		data(){
 			return {
 				SERVER:this.server,
-				active:1,
-				picture:this.server +"/static/img/category/pic1.jpg",
-				title:"健康管理师专业技能(三级)精讲班",
-				classes:"课程精讲班",
-				original:3499,
-				current:5990,
-				btnName:'课程试听',
-				category:[]
+				active:0,
+				category:[],
+				hotCource:[]
 			}
 		},
 		created(){
@@ -80,10 +75,18 @@
 				// url:'http://localhost:7001/spe',
 				method:'get',
 				success:(res) => {
+					// 设置分类导航
 					this.category = res.data.data.rows
-					console.log(this.category)
+					this.request({
+						url:this.development + '/hotcources',
+						method:'get',
+						success: (res) => {
+							this.hotCource = res.data.data
+						}
+					})
 				}
-			})
+			});
+			
 		},
 		methods:{
 			onChange(event) {
@@ -92,8 +95,9 @@
 			      icon: 'none',
 			    });
 			  },
-			onCourse(){
-				uni.navigateTo({url:'../product/product'})
+			onCourse(type,pid){
+				// console.log(pid);
+				uni.navigateTo({url:`../product/product?type=${type}&id=${pid}`})
 			}
 		}
 	}

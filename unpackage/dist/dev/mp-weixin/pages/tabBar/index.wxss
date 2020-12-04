@@ -223,7 +223,7 @@ page {
   height: 450rpx;
   background: #fff;
   padding: 50rpx 0 40rpx 0;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   text-align: center;
 }
 .container .video-learn image {

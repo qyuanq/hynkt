@@ -33,6 +33,7 @@
 
 <style lang="scss">
 .container{
+	margin-top:10rpx;
 	width:150px;
 	.class-img{
 		width:100%;height:90px;
