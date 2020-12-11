@@ -9,10 +9,10 @@
 			<view class="class-code" v-if="hotCource.classCode">{{hotCource.classCode}}</view>
 			<view class="classes" v-if="hotCource.type">({{hotCource.type}})</view>
 			<view class="price clearfix">
-				<view class="num"><text class="sign">￥</text><text class="original">{{hotCource.disc_price}}</text><text class="current" v-if="hotCource.retail_price">￥{{hotCource.retail_price}}</text></view>
-				<button class="btn" v-if="hotCource.label">点击试听</button>
-				<button class="btn" v-if="hotCource.mylearn">开始学习</button>
-				<button class="btn" v-if="hotCource.renewal">去续费</button>
+				<view class="num"><text class="sign" v-if="hotCource.retail_price">￥</text><text class="original">{{hotCource.disc_price}}</text><text class="current" v-if="hotCource.retail_price">￥{{hotCource.retail_price}}</text></view>
+				<button class="btn btnA" v-if="audition">点击试听</button>
+				<button class="btn btnB" v-if="normal">开始学习</button>
+				<button class="btn btnO" v-if="renewal">去续费</button>
 			</view>
 		</view>
 	</view>
@@ -23,6 +23,15 @@ export default{
 	props:{
 		hotCource:{
 			type:Object
+		},
+		normal:{
+			type:Boolean
+		},
+		renewal:{
+			type:Boolean
+		},
+		audition:{
+			type:Boolean
 		}
 	},
 	data(){
@@ -54,8 +63,11 @@ export default{
 					.original{font-size:17px;color:#FD9801;}
 					.current{font-size:12px;color:#969799;text-decoration: line-through;display:line-height;margin-left:5px;}
 				}
-				button{padding-left:0;padding-right:0;}
-				.btn{float:right;width:60px;height:18px;line-height:18px;text-align: center;background:#FD9801;color:#fff;font-size:12px;border-radius:10px;margin-right:15px;margin-top:5px;}
+				button{padding-left:0;padding-right:0;margin-left:0;margin-right:0;}
+				.btn{width:120rpx;height:36rpx;line-height: 36rpx;text-align: center;color:#fff;font-size:12px;border-radius:20rpx;}
+				.btnA{float:right;background:#FD9801;margin-right:15px;margin-top:5px;}
+				.btnB{background:#41A5FD;}
+				.btnO{background:#FD9801;}
 			}
 		}
 	}

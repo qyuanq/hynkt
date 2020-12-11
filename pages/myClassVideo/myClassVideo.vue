@@ -4,7 +4,7 @@
 			<view class="video">
 				<image v-if="imgShow" :src="SERVER + '/static/img/category/course-bg.jpg'"></image>
 				<image v-if="btnShow" :src="SERVER +'/static/img/category/button-play.png'" class="btn-play" @tap="changeVideo"></image>
-				<video v-if="videoShow" src="https://jdvodluwytr3t.vod.126.net/jdvodluwytr3t/nos/mp4/2019/04/21/1214598912_f3f239fb46b448e4909da386a7a0439f_sd.mp4?ak=7909bff134372bffca53cdc2c17adc27a4c38c6336120510aea1ae1790819de80cf71d5a4f376edb80607903f1ca760220eebf43112a9492238f198ed1882f2922117d840132767793f969aceceae3793fd3e61bc84b767a68b30f9427eeb2e54426afeac364f76a817da3b2623cd41e" :enable-auto-rotation="true" :autoplay="true" controls></video>
+				<video v-if="videoShow" :src="videoPath" :enable-auto-rotation="true" :autoplay="true" controls></video>
 			</view>
 			<view class="info">
 				<view class="title">模块一（2020）>第二讲 学生观 > 学生观(一)</view>
@@ -29,23 +29,19 @@
 			<view class="catalog">目录</view>
 			<view class="learn-list">
 				<van-collapse :value="activeNames" @change="onChange" icon="">
-				  <van-collapse-item title="模块一(2020)" name="1">
-				    <view class="cell" v-for="item in 3" @tap="changeVideo">
+				  <van-collapse-item 
+					  v-for="(item,index) in goodVideos.content" 
+					  :title="item.section" 
+					  :value="'0/' + item.value.length" 
+					  :name="index + 1"
+					  :key="item.section">
+				    <view 
+						class="cell" 
+						v-for="(video,idx) in item.value" 
+						:key="video.id"
+						@tap="changeVideo(video.path)">
 						<icon class="iconfont my-icon-video"></icon>
-						第一讲 教育观0/9
-						<icon class="iconfont my-icon-xiazai"></icon>
-					</view>
-				  </van-collapse-item>
-				  <van-collapse-item title="模块二(2020)" name="2">
-				    <view class="cell" v-for="item in 3">
-						<icon class="iconfont my-icon-video"></icon>
-				    	第一讲 教育观0/9
-				    </view>
-				  </van-collapse-item>
-				  <van-collapse-item title="模块三(2020)" name="3">
-					<view class="cell" v-for="item in 3" @tap="changeVideo">
-						<icon class="iconfont my-icon-video"></icon>
-						第一讲 教育观0/9
+						{{idx+1 + '. ' + video.name}}
 						<icon class="iconfont my-icon-xiazai"></icon>
 					</view>
 				  </van-collapse-item>
@@ -64,17 +60,21 @@
 				videoShow:false,
 				activeNames:'',
 				collect_state:false,
-				SERVER:this.server
+				development:this.development,
+				SERVER:this.server,
+				goodVideos:null,
+				videoPath:null
 			};
 		},
 		methods:{
 			onChange(event){
 				this.activeNames = event.detail;
 			},
-			changeVideo(){
+			changeVideo(path){
 				this.imgShow = false;
 				this.btnShow = false;
 				this.videoShow = true;
+				this.videoPath = path;
 			},
 			onCollect(){
 				// this.collect_state  为true 说明已收藏
@@ -104,6 +104,17 @@
 					url:'./videoQuestion'
 				})
 			}
+		},
+		onLoad: async function(option){
+			console.log('视频id:',option.id);
+			this.request({
+				url:`${this.development}/goodVideos/${option.id}`,
+				method:'get',
+				success: (res) => {
+					this.goodVideos = res.data.data;
+					console.log('我的视频:',this.goodVideos)
+				}
+			})
 		}
 	}
 </script>

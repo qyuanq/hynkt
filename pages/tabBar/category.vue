@@ -39,7 +39,7 @@
 			  <van-tab title="热门推荐">
 				    <view class="pane">
 						<shopPane 
-					 v-for="item in hotCource" :hotCource="item" @tap="onCourse(item.label.indexOf('全程') != -1 ? 'meal' : 'single',item.id)">
+					 v-for="item in hotCource" :audition="true" :hotCource="item" @tap="onCourse(item.label.indexOf('全程') != -1 ? 'meal' : 'single',item.id)">
 					    </shopPane>
 				    </view>
 			  </van-tab>

@@ -83,19 +83,29 @@
 .carb .content .price button {
   padding-left: 0;
   padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 .carb .content .price .btn {
-  float: right;
-  width: 60px;
-  height: 18px;
-  line-height: 18px;
+  width: 120rpx;
+  height: 36rpx;
+  line-height: 36rpx;
   text-align: center;
-  background: #FD9801;
   color: #fff;
   font-size: 12px;
-  border-radius: 10px;
+  border-radius: 20rpx;
+}
+.carb .content .price .btnA {
+  float: right;
+  background: #FD9801;
   margin-right: 15px;
   margin-top: 5px;
+}
+.carb .content .price .btnB {
+  background: #41A5FD;
+}
+.carb .content .price .btnO {
+  background: #FD9801;
 }
 
 @charset "UTF-8";
@@ -124,6 +134,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.container {
+  background: #f6f7f8;
+  padding: 0 30rpx;
+}
 .container .notbuy {
   width: 100%;
   height: 100vh;
@@ -160,5 +174,9 @@
   text-align: center;
   color: #fff;
   border-radius: 30rpx;
+}
+.container .mycource .title {
+  height: 80rpx;
+  line-height: 80rpx;
 }
 

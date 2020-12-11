@@ -6,7 +6,7 @@
 					<image class="logo" :src="SERVER + '/static/img/logo.png'" mode="widthFix"></image>
 				</view>
 				<view class="classcs">
-					<text class="chouse">请选择课程</text>
+					<text class="chouse">{{showName}}</text>
 					<button class="cource" @tap="changeClass(notlesson)">选课</button>
 				</view>
 				<view class="qd">
@@ -102,7 +102,7 @@
 		<view v-else="notlesson">
 			<view class="test-time" @tap="getTestTime">
 				<image :src="SERVER + '/static/img/icon/test_time.png'"></image>
-				<text class="text">考试时间:{{testTime}}</text>
+				<text class="text">考试时间:{{classgoryInfo.Exam_time}}</text>
 				<text class="more">更多</text>
 			</view>
 			<van-popup :show="show" closeable close-icon="iconfont my-icon-jiantou iconfont" position="bottom" custom-style="height: 20%" @close="onClose">
@@ -111,16 +111,16 @@
 					<text>考试时间</text>
 				</view>
 				<view class="content">
-					<view>全国 2020-10-24 09:00</view>
+					<view>全国 {{classgoryInfo.Exam_time}}</view>
 				</view>
 			</van-popup>
 			<!-- 视频学习 -->
 			<view class="video-text">视频学习</view>
 			
 			<!-- 用户有课程显示 -->
-			<view class="video-class" @tap="onClickVideo">
+			<view class="video-class" @tap="onClickVideo(showLesson.id)">
 				<view class="img">
-					<image :src="SERVER + '/static/img/index/js1.png'" class="video-img"></image>
+					<image :src="development + showLesson.head_picture" class="video-img"></image>
 				</view>
 				<view class="text-box">
 					<view class="title">班型精讲视频</view>
@@ -197,32 +197,58 @@
 				development:this.development,
 				SERVER:this.server,
 				myCource:null,
-				notlesson:null
+				notlesson:null,
+				showLesson:null,
+				showName:'',
+				classgoryInfo:null
 			}
 		},
 		created(){
 			this.request({
 				url:`${this.development}/api/myCources`,
 				method:'get',
-				success: (res) => {
+				success: async(res) => {
+					console.log(res.data.data);
 					this.myCource = res.data.data;
-					this.notlesson = this.myCource.class_meal_models.length === 0 && this.myCource.class_single_models.length === 0 ? true : false;
+					if(this.myCource && this.myCource.noverCource.length > 0){
+						// 用户有无课程标识
+						this.notlesson = false;
+						// 未过期课程
+						if(uni.getStorageSync('cource')){
+							this.showLesson = uni.getStorageSync('cource');
+						}else{
+							this.showLesson = this.myCource.noverCource.length > 0 ? this.myCource.noverCource[0][0] : null;
+						}
+						//获取课程对应从专业信息
+						await this.request({
+							url:`${this.development}/api/myClassgory/${this.showLesson.classgroup_id}`,
+							method:'get',
+							success: (res) => {
+								this.classgoryInfo = res.data.data;
+								// 格式化时间
+								this.classgoryInfo.Exam_time = this.renderTime(this.classgoryInfo.Exam_time);
+								this.showName = this.classgoryInfo.name;
+								console.log('专业信息',this.classgoryInfo)
+							}
+						});
+					}else{
+						this.notlesson = true;
+						this.showName = "请选择课程";
+					}
+					
 					console.log('mycource',this.myCource);
 					console.log('notlesson',this.notlesson);
 				}
 			})
 		},
 		methods: {
+			// 选课
 			changeClass(notlesson){
 				let url;
-				if(this.notlesson){
-					url = `../user/myCource?notlesson=${notlesson}`
+				if(this.myCource){
+					url = `../user/myCource?notlesson=false&nover=${encodeURIComponent(JSON.stringify(this.myCource.noverCource))}&overdue=${encodeURIComponent(JSON.stringify(this.myCource.overdueCource))}`
 				}else{
-					let cource = {
-						single:this.myCource.class_single_models,
-						meal:this.myCource.class_meal_models
-					}
-					url = `../user/myCource?notlesson=${notlesson}&cource=${encodeURIComponent(JSON.stringify(cource))}`
+					url = `../user/myCource?notlesson=true`
 				}
 				uni.navigateTo({
 					url:url
@@ -239,9 +265,9 @@
 			onClose(){
 				this.show = false;
 			},
-			onClickVideo(){
+			onClickVideo(pid){
 				uni.navigateTo({
-					url:'../myClassVideo/myClassVideo'
+					url:`../myClassVideo/myClassVideo?id=${pid}`
 				})
 			},
 			buyCource(){
@@ -256,7 +282,26 @@
 				uni.navigateTo({
 					url:url
 				})
+			},
+			//转化时间
+			renderTime(date) {
+			  let dateee = new Date(date).toJSON();
+			  // 北京处于东八区，所以要加8个小时
+			  // return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+			   return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
 			}
+		},
+		onLoad: function (option) {
+			if(option.swatchCourse){
+				let swatchCourse = JSON.parse(decodeURIComponent(option.swatchCourse));
+				uni.showToast({
+					title:`您已切换${swatchCourse.name}`,
+					icon:'none',
+					duration:2000
+				})
+				uni.setStorageSync('cource', swatchCourse);
+			}
+		    console.log('切换课程',swatchCourse);
 		}
 	}
 </script>
