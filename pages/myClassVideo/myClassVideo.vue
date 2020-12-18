@@ -1,15 +1,30 @@
 <template>
 	<view class="container">
 		<view class="course">
-			<view class="video">
-				<image v-if="imgShow" :src="SERVER + '/static/img/category/course-bg.jpg'"></image>
-				<image v-if="btnShow" :src="SERVER +'/static/img/category/button-play.png'" class="btn-play" @tap="changeVideo"></image>
-				<video v-if="videoShow" :src="videoPath" :enable-auto-rotation="true" :autoplay="true" controls></video>
+			<view class="video" v-if="videoShow">
+				<video 
+				v-if="videoPath" 
+				:src="videoPath" 
+				enable-auto-rotation="true" 
+				autoplay="true" 
+				controls 
+				@ended="videoEnded"
+				@timeupdate="setCurrentTime"
+				:initial-time="current"></video>
+			</view>
+			<view v-else="videoShow" class="videoEnd">
+				<view class="content">
+					<view class="text">该视频已完成</view>
+					<view class="btns">
+						<button class="btn" @tap="replay"><van-icon class="iconfont" class-prefix="my-icon" name="chongbo" />重学一遍</button>
+						<button class="btn" @tap="nextVideo" v-if="btnShow">观看下一节<van-icon class="iconfont" class-prefix="my-icon" name="xiayijie" /></button>
+					</view>
+				</view>
 			</view>
 			<view class="info">
-				<view class="title">模块一（2020）>第二讲 学生观 > 学生观(一)</view>
+				<view class="title">{{title}}</view>
 				<view class="nav">
-					<view class="looked">已看</view>
+					<view class="looked">已看{{proCount}}</view>
 					<view :class="[collect_state ? 'collect-check' : '','collect']" @tap="onCollect" >
 						<icon class="iconfont my-icon-shoucang"></icon>
 						收藏
@@ -32,14 +47,18 @@
 				  <van-collapse-item 
 					  v-for="(item,index) in goodVideos.content" 
 					  :title="item.section" 
-					  :value="'0/' + item.value.length" 
+					  :value="arrs[index].progress + '/' + item.value.length" 
 					  :name="index + 1"
-					  :key="item.section">
+					  :key="item.section"
+					  :title-class="sec_selected===index ? 'active' : ' '"
+					  :value-class="sec_selected===index ? 'active' : ' '"
+					  >
 				    <view 
-						class="cell" 
+						class="cell"
 						v-for="(video,idx) in item.value" 
 						:key="video.id"
-						@tap="changeVideo(video.path)">
+						@tap="changeVideo(video.path,index,idx)"
+						:class="vid_selected === idx && sec_selected===index ? 'active' : ' '">
 						<icon class="iconfont my-icon-video"></icon>
 						{{idx+1 + '. ' + video.name}}
 						<icon class="iconfont my-icon-xiazai"></icon>
@@ -55,27 +74,42 @@
 	export default {
 		data() {
 			return {
-				imgShow:true,
-				btnShow:true,
-				videoShow:false,
 				activeNames:'',
 				collect_state:false,
 				development:this.development,
 				SERVER:this.server,
-				goodVideos:null,
-				videoPath:null
+				btnShow:true,		//按钮是否显示
+				videoShow:true,		//video是否显示
+				goodVideos:null,	//当前课程全部视频
+				videoPath:null,		//视频地址
+				sec_selected:0,		//章节索引
+				vid_selected:0,		//视频索引
+				current:1,			//视频从什么播放位置开始播放
+				title:' ' ,			//面包屑标题
+				videoStorage:[],	//课程观看记录
+				courceId:null,		//课程id
+				arrs:[], 			//存储视频进度数组
+				proCount:0			//观看总数
 			};
 		},
 		methods:{
 			onChange(event){
 				this.activeNames = event.detail;
 			},
-			changeVideo(path){
-				this.imgShow = false;
-				this.btnShow = false;
-				this.videoShow = true;
+			// 切换视频
+			changeVideo(path,index,idx){
 				this.videoPath = path;
+				// 切换视频，从0播放
+				this.current = 0;
+				// 章节文本选中样式
+				this.sec_selected = index;
+				// 视频文本选中样式
+				this.vid_selected = idx;
+				// 面包屑标题
+				this.title = `${this.goodVideos.content[this.sec_selected].section} > ${this.goodVideos.content[this.sec_selected].value[this.vid_selected].name}`
+				this.videoShow = true;
 			},
+			// 收藏
 			onCollect(){
 				// this.collect_state  为true 说明已收藏
 				if(this.collect_state){
@@ -103,24 +137,172 @@
 				uni.navigateTo({
 					url:'./videoQuestion'
 				})
+			},
+			// 记录视频播放位置
+			setCurrentTime(event){
+				this.current = event.detail.currentTime;
+			},
+			// 视频播完了
+			videoEnded(){
+				console.log('视频播完了');
+				
+				// 设置进度操作
+				let id = this.goodVideos.content[this.sec_selected].value[this.vid_selected].id;
+				// 获取当前章节数组
+				let arr = this.arrs[this.sec_selected].proarr;
+				//当前章节数组不存在id
+				if(arr.indexOf(id) === -1){
+					// 将id存到对应章节数组里
+					arr.push(id);
+				}
+				// 设置进度值
+				this.arrs[this.sec_selected].progress = arr.length;
+				
+				// 设置总数
+				let count = 0;
+				this.arrs.forEach(item => {
+					count += item.progress;
+				})
+				this.proCount = count;
+				console.log('更新后的arrs',this.arrs);
+				
+				// 设置视频操作
+				this.videoShow = false;
+				const sec_length = this.goodVideos.content.length;
+				const vid_length = this.goodVideos.content[sec_length-1].value.length;
+				// 是不是课程最后一节视频
+				if(this.videoPath === this.goodVideos.content[sec_length-1].value[vid_length-1].path){
+					this.btnShow = false;
+				}else{
+					this.btnShow = true;
+				}
+			},
+			// 重播视频
+			replay(){
+				this.videoShow = true;
+				this.current = 0;
+			},
+			// 播放下一节
+			nextVideo(){
+				this.videoShow = true;
+				this.current = 0;
+				//该视频是该章节最后一个视频
+				if(this.vid_selected === this.goodVideos.content[this.sec_selected].value.length - 1){
+					// 章节跳到下一节
+					this.sec_selected += 1;
+					// 视频从0播放
+					this.vid_selected = 0;
+				}else{
+					this.vid_selected += 1;
+				}
+				// 面包屑标题
+				this.title = `${this.goodVideos.content[this.sec_selected].section} > ${this.goodVideos.content[this.sec_selected].value[this.vid_selected].name}`;
+				//视频地址
+				this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
+				console.log('跳转下一节',this.videoPath);
+			},
+			// 页面退出缓存播放时间
+			changeCurrent(){
+				this.videoStorage = uni.getStorageSync('videoStorage');
+				const index = this.videoStorage.findIndex(item => item.vid === this.courceId)
+				if(index !== -1){
+					this.videoStorage[index].currentTime = this.current;
+					uni.setStorageSync('videoStorage',this.videoStorage);
+				}
+			}
+		},
+		watch:{
+			// 监听视频地址
+			videoPath(){
+				this.videoStorage = uni.getStorageSync('videoStorage');
+				// 返回符合条件的索引
+				const index = this.videoStorage.findIndex(item => item.vid === this.courceId)
+				if(index !== -1){
+					this.videoStorage[index].vid_selected = this.vid_selected;
+					this.videoStorage[index].sec_selected = this.sec_selected;
+					this.videoStorage[index].vid_title = this.title;
+					// this.videoStorage[index].currentTime = this.current;
+					uni.setStorageSync('videoStorage',this.videoStorage);
+				}
 			}
 		},
 		onLoad: async function(option){
-			console.log('视频id:',option.id);
+			this.courceId = option.id;
 			this.request({
 				url:`${this.development}/goodVideos/${option.id}`,
 				method:'get',
 				success: (res) => {
 					this.goodVideos = res.data.data;
+					if(uni.getStorageSync('progress')){
+						this.arrs = uni.getStorageSync('progress')
+						this.arrs.forEach(item => {
+							// 设置总数
+							this.proCount += item.progress;
+						})
+						console.log('总数：',this.proCount);
+					}else{
+						this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
+					}
+					console.log('arrs',this.arrs);
+					//uni.getStorageSync('videoStorage')为空说明第一次访问
+					this.videoStorage = uni.getStorageSync('videoStorage') ? uni.getStorageSync('videoStorage') : [];
+					//判断缓存中是否存在此课程
+					const index = this.videoStorage.findIndex(item => {return item.vid === this.courceId});
+					console.log('数组',this.videoStorage)
+					//缓存存在该课程
+					if(index !== -1){
+						//章节索引
+						this.sec_selected = this.videoStorage[index].sec_selected;
+						//视频索引
+						this.vid_selected = this.videoStorage[index].vid_selected;
+						//视频地址
+						this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
+						//标题
+						this.title = this.videoStorage[index].vid_title;
+						// 播放历史位置
+						this.current = this.videoStorage[index].currentTime;
+				
+						console.log('111:',this.current);
+					}else{
+						//缓存不存在该课程，默认第一个视频
+						this.videoPath = this.goodVideos.content[0].value[0].path;
+						//面包屑标题
+						this.title = `${this.goodVideos.content[this.sec_selected].section} > ${this.goodVideos.content[this.sec_selected].value[this.vid_selected].name}`;
+						// 存入缓存中
+						this.videoStorage.push({
+							'vid':this.courceId,
+							'vid_selected':this.vid_selected,
+							'sec_selected':this.sec_selected,
+							'vid_title':this.title,
+							'currentTime':this.current
+						})
+						uni.setStorageSync('videoStorage',this.videoStorage);
+						
+					}
+					
 					console.log('我的视频:',this.goodVideos)
+					console.log('第一个视频',this.videoPath)
 				}
 			})
+		},
+		onHide(){
+			console.log('页面隐藏啦');
+			// 缓存播放位置
+			this.changeCurrent();
+			uni.setStorageSync('progress',this.arrs);
+		},
+		onUnload(){
+			console.log('页面退出啦');
+			// 缓存播放位置
+			this.changeCurrent();
+			uni.setStorageSync('progress',this.arrs);
 		}
 	}
 </script>
 
 <style lang="scss">
 page{background:#c6c7c8;}
+video{height:400rpx;}
 .container{
 	padding-top:565rpx;
 	.course{
@@ -146,6 +328,37 @@ page{background:#c6c7c8;}
 				transform:translate(-50%,-50%);
 			}
 			video{width:100%;}
+		}
+		.videoEnd{
+			width:100%;
+			height:400rpx;
+			background:#000;
+			position: relative;
+			.content{
+				width:500rpx;
+				height:100rpx;
+				text-align: center;
+				position: absolute;
+				top:50%;
+				left:50%;
+				transform:translate(-50%,-50%);
+				.text{
+					color:#fff;
+				}
+				.btns{
+					width:500rpx;
+					display: flex;
+					justify-content: space-between;
+					.btn{
+						width:240rpx;
+						height:50rpx;
+						margin-top:30rpx;
+						line-height:50rpx;
+						text-align:center;
+						font-size:14px;
+					}
+				}
+			}
 		}
 		.info{
 			height:115rpx;
@@ -192,6 +405,9 @@ page{background:#c6c7c8;}
 				.iconfont{margin-right:10rpx;font-size:24rpx;}
 				.my-icon-video{color:#41a5fd;}
 				.my-icon-xiazai{float:right;color:#41a5fd;font-size:28rpx;zindex:999;}
+			}
+			.active{
+				color:#FF6600;
 			}
 		}
 	}

@@ -50,18 +50,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"name": "login",
 					"id": 0,
 					"pathName": "pages/public/login"
-				},
-				{
-					"id": 1,
-					"name": "pages/public/login",
-					"pathName": "pages/public/login",
-					"query": ""
 				}
 			]
 		}

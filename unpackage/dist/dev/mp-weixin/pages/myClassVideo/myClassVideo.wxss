@@ -27,6 +27,9 @@
 page {
   background: #c6c7c8;
 }
+video {
+  height: 400rpx;
+}
 .container {
   padding-top: 565rpx;
 }
@@ -57,6 +60,42 @@ page {
 }
 .container .course .video video {
   width: 100%;
+}
+.container .course .videoEnd {
+  width: 100%;
+  height: 400rpx;
+  background: #000;
+  position: relative;
+}
+.container .course .videoEnd .content {
+  width: 500rpx;
+  height: 100rpx;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.container .course .videoEnd .content .text {
+  color: #fff;
+}
+.container .course .videoEnd .content .btns {
+  width: 500rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.container .course .videoEnd .content .btns .btn {
+  width: 240rpx;
+  height: 50rpx;
+  margin-top: 30rpx;
+  line-height: 50rpx;
+  text-align: center;
+  font-size: 14px;
 }
 .container .course .info {
   height: 115rpx;
@@ -113,5 +152,8 @@ page {
   color: #41a5fd;
   font-size: 28rpx;
   zindex: 999;
+}
+.container .learn-box .learn-list .active {
+  color: #FF6600;
 }
 

@@ -124,7 +124,7 @@
 				</view>
 				<view class="text-box">
 					<view class="title">班型精讲视频</view>
-					<view class="last-look">上次观看：</view>
+					<view class="last-look">上次观看：{{vidTitle}}</view>
 				</view>
 			</view>
 			<!-- 用户有课程显示直播 -->
@@ -200,7 +200,8 @@
 				notlesson:null,
 				showLesson:null,
 				showName:'',
-				classgoryInfo:null
+				classgoryInfo:null,
+				vidTitle:' '
 			}
 		},
 		created(){
@@ -231,6 +232,8 @@
 								console.log('专业信息',this.classgoryInfo)
 							}
 						});
+						//获取vid_title
+						this.updateTitle();
 					}else{
 						this.notlesson = true;
 						this.showName = "请选择课程";
@@ -275,6 +278,21 @@
 					url:'/pages/tabBar/category'
 				})
 			},
+			// 更新面包屑标题
+			updateTitle(){
+				if(uni.getStorageSync('videoStorage')){
+					const videoStorage = uni.getStorageSync('videoStorage');
+					const index = videoStorage.findIndex(item => {
+						console.log('当前课程',this.showLesson);
+						console.log('id',this.showLesson.id)
+						return item.vid == this.showLesson.id
+					})
+					console.log('index',index)
+					if(index !== -1){
+						this.vidTitle = videoStorage[index].vid_title;
+					}
+				}
+			},
 			onProblem(){
 				console.log('点击了章节练习');
 				let url;
@@ -294,14 +312,20 @@
 		onLoad: function (option) {
 			if(option.swatchCourse){
 				let swatchCourse = JSON.parse(decodeURIComponent(option.swatchCourse));
+				this.showLesson = swatchCourse;
 				uni.showToast({
 					title:`您已切换${swatchCourse.name}`,
 					icon:'none',
 					duration:2000
 				})
 				uni.setStorageSync('cource', swatchCourse);
+				console.log('切换课程',swatchCourse);
 			}
-		    console.log('切换课程',swatchCourse);
+		    
+		},
+		// 切入前台
+		onShow(){
+			this.updateTitle();
 		}
 	}
 </script>
