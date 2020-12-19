@@ -228,22 +228,23 @@
 		},
 		onLoad: async function(option){
 			this.courceId = option.id;
-			this.request({
+			console.log('我的课程id',option.mycourceId)
+			await this.request({
 				url:`${this.development}/goodVideos/${option.id}`,
 				method:'get',
 				success: (res) => {
 					this.goodVideos = res.data.data;
-					if(uni.getStorageSync('progress')){
-						this.arrs = uni.getStorageSync('progress')
-						this.arrs.forEach(item => {
-							// 设置总数
-							this.proCount += item.progress;
-						})
-						console.log('总数：',this.proCount);
-					}else{
-						this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
-					}
-					console.log('arrs',this.arrs);
+					// if(uni.getStorageSync('progress')){
+					// 	this.arrs = uni.getStorageSync('progress')
+					// 	this.arrs.forEach(item => {
+					// 		// 设置总数
+					// 		this.proCount += item.progress;
+					// 	})
+					// 	console.log('总数：',this.proCount);
+					// }else{
+					// 	this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
+					// }
+					// console.log('arrs',this.arrs);
 					//uni.getStorageSync('videoStorage')为空说明第一次访问
 					this.videoStorage = uni.getStorageSync('videoStorage') ? uni.getStorageSync('videoStorage') : [];
 					//判断缓存中是否存在此课程
@@ -264,6 +265,7 @@
 				
 						console.log('111:',this.current);
 					}else{
+						
 						//缓存不存在该课程，默认第一个视频
 						this.videoPath = this.goodVideos.content[0].value[0].path;
 						//面包屑标题
@@ -277,11 +279,23 @@
 							'currentTime':this.current
 						})
 						uni.setStorageSync('videoStorage',this.videoStorage);
-						
 					}
-					
 					console.log('我的视频:',this.goodVideos)
 					console.log('第一个视频',this.videoPath)
+				}
+			});
+			await this.request({
+				url:`${this.development}/myProgress/${option.mycourceId}`,
+				method:'get',
+				success: (res) => {
+					console.log(res.data.data);
+					// this.videoStorage = res.data.data;
+					// this.sec_selected = this.videoStorage.sec_selected;
+					// this.vid_selected = this.videoStorage.vid_selected;
+					// this.vid_title = this.videoStorage.vid_title;
+					// this.currentTime = this.videoStorage.currentTime;
+					this.arrs = JSON.parse(res.data.data.proarr);
+					console.log('arrs初始化',this.arrs)
 				}
 			})
 		},
@@ -290,6 +304,15 @@
 			// 缓存播放位置
 			this.changeCurrent();
 			uni.setStorageSync('progress',this.arrs);
+			let data = {id:2,arr:JSON.stringify(this.arrs)}
+			uni.request({
+				url:`${this.development}/updateProgress`,
+				method:'post',
+				data:data,
+				success: (res) => {
+					console.log(res);
+				}
+			})
 		},
 		onUnload(){
 			console.log('页面退出啦');

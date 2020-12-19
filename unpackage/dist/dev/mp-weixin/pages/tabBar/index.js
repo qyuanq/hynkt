@@ -355,12 +355,14 @@ var _default =
                   // 未过期课程
                   if (uni.getStorageSync('cource')) {
                     _this.showLesson = uni.getStorageSync('cource');
+                    _this.vidTitle = _this.showLesson.vid_title;
                   } else {
-                    _this.showLesson = _this.myCource.noverCource.length > 0 ? _this.myCource.noverCource[0][0] : null;
+                    _this.showLesson = _this.myCource.noverCource.length > 0 ? _this.myCource.noverCource[0] : null;
+                    _this.vidTitle = _this.myCource.noverCource[0].vid_title;
                   }
                   //获取课程对应从专业信息
                   _context.next = 7;return _this.request({
-                    url: "".concat(_this.development, "/api/myClassgory/").concat(_this.showLesson.classgroup_id),
+                    url: "".concat(_this.development, "/api/myClassgory/").concat(_this.showLesson.class_single_models[0].classgroup_id),
                     method: 'get',
                     success: function success(res) {
                       _this.classgoryInfo = res.data.data;
@@ -406,9 +408,9 @@ var _default =
     onClose: function onClose() {
       this.show = false;
     },
-    onClickVideo: function onClickVideo(pid) {
+    onClickVideo: function onClickVideo(pid, mycourceId) {
       uni.navigateTo({
-        url: "../myClassVideo/myClassVideo?id=".concat(pid) });
+        url: "../myClassVideo/myClassVideo?id=".concat(pid, "&mycourceId=").concat(mycourceId) });
 
     },
     buyCource: function buyCource() {
@@ -417,20 +419,20 @@ var _default =
 
     },
     // 更新面包屑标题
-    updateTitle: function updateTitle() {var _this2 = this;
-      if (uni.getStorageSync('videoStorage')) {
-        var videoStorage = uni.getStorageSync('videoStorage');
-        var index = videoStorage.findIndex(function (item) {
-          console.log('当前课程', _this2.showLesson);
-          console.log('id', _this2.showLesson.id);
-          return item.vid == _this2.showLesson.id;
-        });
-        console.log('index', index);
-        if (index !== -1) {
-          this.vidTitle = videoStorage[index].vid_title;
-        }
-      }
-    },
+    // updateTitle(){
+    // 	if(uni.getStorageSync('videoStorage')){
+    // 		const videoStorage = uni.getStorageSync('videoStorage');
+    // 		const index = videoStorage.findIndex(item => {
+    // 			console.log('当前课程',this.showLesson);
+    // 			console.log('id',this.showLesson.id)
+    // 			return item.vid == this.showLesson.id
+    // 		})
+    // 		console.log('index',index)
+    // 		if(index !== -1){
+    // 			this.vidTitle = videoStorage[index].vid_title;
+    // 		}
+    // 	}
+    // },
     onProblem: function onProblem() {
       console.log('点击了章节练习');
       var url;
@@ -452,7 +454,7 @@ var _default =
       var swatchCourse = JSON.parse(decodeURIComponent(option.swatchCourse));
       this.showLesson = swatchCourse;
       uni.showToast({
-        title: "\u60A8\u5DF2\u5207\u6362".concat(swatchCourse.name),
+        title: "\u60A8\u5DF2\u5207\u6362".concat(swatchCourse.class_single_models[0].name),
         icon: 'none',
         duration: 2000 });
 
@@ -463,7 +465,7 @@ var _default =
   },
   // 切入前台
   onShow: function onShow() {
-    this.updateTitle();
+    // this.updateTitle();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

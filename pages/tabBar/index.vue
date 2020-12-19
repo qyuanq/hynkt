@@ -118,9 +118,9 @@
 			<view class="video-text">视频学习</view>
 			
 			<!-- 用户有课程显示 -->
-			<view class="video-class" @tap="onClickVideo(showLesson.id)">
+			<view class="video-class" @tap="onClickVideo(showLesson.class_single_models[0].id,showLesson.id)">
 				<view class="img">
-					<image :src="development + showLesson.head_picture" class="video-img"></image>
+					<image :src="development + showLesson.class_single_models[0].head_picture" class="video-img"></image>
 				</view>
 				<view class="text-box">
 					<view class="title">班型精讲视频</view>
@@ -217,12 +217,14 @@
 						// 未过期课程
 						if(uni.getStorageSync('cource')){
 							this.showLesson = uni.getStorageSync('cource');
+							this.vidTitle = this.showLesson.vid_title;
 						}else{
-							this.showLesson = this.myCource.noverCource.length > 0 ? this.myCource.noverCource[0][0] : null;
+							this.showLesson = this.myCource.noverCource.length > 0 ? this.myCource.noverCource[0] : null;
+							this.vidTitle = this.myCource.noverCource[0].vid_title;
 						}
 						//获取课程对应从专业信息
 						await this.request({
-							url:`${this.development}/api/myClassgory/${this.showLesson.classgroup_id}`,
+							url:`${this.development}/api/myClassgory/${this.showLesson.class_single_models[0].classgroup_id}`,
 							method:'get',
 							success: (res) => {
 								this.classgoryInfo = res.data.data;
@@ -268,9 +270,9 @@
 			onClose(){
 				this.show = false;
 			},
-			onClickVideo(pid){
+			onClickVideo(pid,mycourceId){
 				uni.navigateTo({
-					url:`../myClassVideo/myClassVideo?id=${pid}`
+					url:`../myClassVideo/myClassVideo?id=${pid}&mycourceId=${mycourceId}`
 				})
 			},
 			buyCource(){
@@ -279,20 +281,20 @@
 				})
 			},
 			// 更新面包屑标题
-			updateTitle(){
-				if(uni.getStorageSync('videoStorage')){
-					const videoStorage = uni.getStorageSync('videoStorage');
-					const index = videoStorage.findIndex(item => {
-						console.log('当前课程',this.showLesson);
-						console.log('id',this.showLesson.id)
-						return item.vid == this.showLesson.id
-					})
-					console.log('index',index)
-					if(index !== -1){
-						this.vidTitle = videoStorage[index].vid_title;
-					}
-				}
-			},
+			// updateTitle(){
+			// 	if(uni.getStorageSync('videoStorage')){
+			// 		const videoStorage = uni.getStorageSync('videoStorage');
+			// 		const index = videoStorage.findIndex(item => {
+			// 			console.log('当前课程',this.showLesson);
+			// 			console.log('id',this.showLesson.id)
+			// 			return item.vid == this.showLesson.id
+			// 		})
+			// 		console.log('index',index)
+			// 		if(index !== -1){
+			// 			this.vidTitle = videoStorage[index].vid_title;
+			// 		}
+			// 	}
+			// },
 			onProblem(){
 				console.log('点击了章节练习');
 				let url;
@@ -314,7 +316,7 @@
 				let swatchCourse = JSON.parse(decodeURIComponent(option.swatchCourse));
 				this.showLesson = swatchCourse;
 				uni.showToast({
-					title:`您已切换${swatchCourse.name}`,
+					title:`您已切换${swatchCourse.class_single_models[0].name}`,
 					icon:'none',
 					duration:2000
 				})
@@ -325,7 +327,7 @@
 		},
 		// 切入前台
 		onShow(){
-			this.updateTitle();
+			// this.updateTitle();
 		}
 	}
 </script>

@@ -12,14 +12,14 @@
 			<van-search :value="value" placeholder="请输入课程名称" />
 			<view class="my-lessons" v-if="nover.length > 0">
 				<view class="title">我的课程</view>
-				<view class="cources" v-for="item in nover" :key="item[0].id" @tap="Switching(item[0])">
-					<shop-pane :hotCource="item[0]" :normal="true"></shop-pane>
+				<view class="cources" v-for="item in nover" :key="item.class_single_models[0].id" @tap="Switching(item)">
+					<shop-pane :hotCource="item.class_single_models[0]" :normal="true"></shop-pane>
 				</view>
 			</view>
 			<view class="have-lessons" v-if="overdue.length > 0">
 				<view class="title">已学课程</view>
-				<view class="cources" v-for="item in overdue" :key="item[0].id" @tap="onRenewal(item[0].label.indexOf('全程') != -1 ? 'meal' : 'single',item[0].id)">
-					<shop-pane :hotCource="item[0]" :renewal="true"></shop-pane>
+				<view class="cources" v-for="item in overdue" :key="item.class_single_models[0].id" @tap="onRenewal(item.class_single_models[0].label.indexOf('全程') != -1 ? 'meal' : 'single',item.class_single_models[0].id)">
+					<shop-pane :hotCource="item.class_single_models[0]" :renewal="true"></shop-pane>
 				</view>
 			</view>
 		</view>
@@ -75,6 +75,7 @@
 			// 正常课程
 			if(option.nover){
 				this.nover = JSON.parse(decodeURIComponent(option.nover));
+				console.log('nover',this.nover);
 			}
 			// 过期课程
 			if(option.overdue){

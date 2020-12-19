@@ -102,7 +102,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   var l0 = _vm.__map(_vm.overdue, function(item, __i1__) {
-    var g0 = item[0].label.indexOf("全程")
+    var g0 = item.class_single_models[0].label.indexOf("全程")
     return {
       $orig: _vm.__get_orig(item),
       g0: g0
@@ -227,6 +227,7 @@ var _shopPane = _interopRequireDefault(__webpack_require__(/*! @/components/shop
               // 正常课程
               if (option.nover) {
                 this.nover = JSON.parse(decodeURIComponent(option.nover));
+                console.log('nover', this.nover);
               }
               // 过期课程
               if (option.overdue) {
