@@ -76,7 +76,8 @@
         "collect",
         "videoQuestion",
         "myQuestion",
-        "uploadQuestion"
+        "uploadQuestion",
+        "questionDetail"
       ]
     }
   ],
@@ -116,6 +117,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap89.json"
+  "usingComponents": {}
 }

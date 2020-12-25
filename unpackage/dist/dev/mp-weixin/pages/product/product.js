@@ -261,6 +261,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -395,6 +402,10 @@ var _default =
                   success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var video_url;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
                               _this2.cource = res.data.data;
                               console.log(_this2.cource);
+                              //设置本页标题
+                              uni.setNavigationBarTitle({
+                                title: _this2.cource.name });
+
 
                               // 试听课程如果是全科班课程
                               if (_this2.cource.class_single_models) {
@@ -413,7 +424,7 @@ var _default =
                               }
 
                               // 根据班型不同请求不同课程视频API
-                              video_url = option.type === 'single' ? "".concat(_this2.development, "/goodVideos/").concat(option.id) : "".concat(_this2.development, "/goodVideos/").concat(_this2.cource.class_single_models[0].id);_context2.next = 6;return (
+                              video_url = option.type === 'single' ? "".concat(_this2.development, "/goodVideos/").concat(option.id) : "".concat(_this2.development, "/goodVideos/").concat(_this2.cource.class_single_models[0].id);_context2.next = 7;return (
                                 _this2.request({
                                   url: video_url,
                                   method: 'get',
@@ -423,7 +434,7 @@ var _default =
                                     console.log('视频', _this2.goodVideos);
                                     //免费试听课程
                                     _this2.count = Math.ceil(res.data.data.count * 0.1);
-                                  } }));case 6:case "end":return _context2.stop();}}}, _callee2);}));function success(_x2) {return _success.apply(this, arguments);}return success;}() }));case 5:case "end":return _context3.stop();}}}, _callee3, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
+                                  } }));case 7:case "end":return _context2.stop();}}}, _callee2);}));function success(_x2) {return _success.apply(this, arguments);}return success;}() }));case 5:case "end":return _context3.stop();}}}, _callee3, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -1,45 +1,81 @@
 <template>
 	<view class="container">
 		<form>
-			<textarea :class="[state ? 'testBorder' : '','textarea']" @blur="blurBorder" @focus="focusBorder" placeholder="请输入您的疑问(1000字以内)..."></textarea>
+			<textarea :class="[state ? 'testBorder' : '','textarea']" v-model="text" @blur="blurBorder" @focus="focusBorder" placeholder="请输入您的疑问(1000字以内)..."></textarea>
 			<view class="text">上传图片</view>
-			<van-uploader  file-list="fileList" max-count="3" @after-read="afterRead" />
-			<view class="btn"><button>提交</button></view>
+			<van-uploader  :file-list="fileList" max-count="3"  @after-read="afterRead" />
+			<view class="btn"><button @tap="submit">提交</button></view>
 		</form>
 	</view>
 </template>
 
 <script>
+	import {renderTime} from '../../static/js/common.js'
 	export default {
 		data() {
 			return {
-				fileList:[{
-					url:''
-				}],
-				state:false
+				SERVER:this.development,
+				fileList:[],
+				state:false,
+				filePath:' ',
+				text:' ',
+				coureId:null
 			};
 		},
 		methods:{
 			afterRead(event){
-				const {file} = event.detail;
-				uni.uploadFile({
-					url:'https://example.weixin.qq.com/upload',
-					filePath:file.path,
-					name:'file',
-					formData:{user:'test'},
-					success(res){
-						const {fileList = []} = this.data;
-						fileList.push({...file,url:res.data});
-						this.fileList = fileList;
-					}
-				})
+				this.filePath = event.detail.file.path;
+				this.fileList.push({ url:this.filePath});
+			},
+			delete(event){
+				console.log(event.detail.index);
 			},
 			blurBorder(){
 				this.state = false;
 			},
 			focusBorder(){
 				this.state = true;
+			},
+			submit(){
+				const token = uni.getStorageSync('token');
+				let date = renderTime(new Date());
+				console.log('date',date);
+				let source;
+				if(uni.getStorageSync('courceName') && uni.getStorageSync('vid_title')){
+					source = '视频 > ' + uni.getStorageSync('courceName') + uni.getStorageSync('vid_title');
+				}		
+				// 上传图片到服务器
+				uni.uploadFile({
+					url:`${this.SERVER}/api/answerQuestion`,
+					filePath: this.filePath,
+					name: 'file',
+					formData:{
+						'content':this.text,
+						'date':date,
+						'source':source,
+						'ClassSingleModelId':this.coureId
+					},
+					header:{
+						"Authorization":'Bearer ' + token,
+						'Content-Type': 'multipart/form-data;charset=utf-8'
+					},
+					success:(res) => {
+						if(res.statusCode === 200){
+							uni.showToast({
+								title:"提交成功",
+								icon:"none"
+							});
+							setTimeout(function(){
+								uni.navigateBack({delta:1})
+							},2000)
+						}
+					}
+					
+				});
 			}
+		},
+		onLoad:function(option){
+			this.coureId = option.coureId;
 		}
 	}
 </script>

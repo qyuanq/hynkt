@@ -356,12 +356,16 @@ var _default =
                   if (uni.getStorageSync('cource')) {
                     _this.showLesson = uni.getStorageSync('cource');
                     _this.vidTitle = _this.showLesson.vid_title;
+                    console.log('title1', _this.vidTitle, _this.showLesson);
                   } else {
                     _this.showLesson = _this.myCource.noverCource.length > 0 ? _this.myCource.noverCource[0] : null;
                     _this.vidTitle = _this.myCource.noverCource[0].vid_title;
+                    console.log('title2', _this.vidTitle, _this.showLesson);
                   }
+                  // 缓存当前课程名字,后续答疑调用
+                  uni.setStorageSync('courceName', _this.showLesson.class_single_models[0].name);
                   //获取课程对应从专业信息
-                  _context.next = 7;return _this.request({
+                  _context.next = 8;return _this.request({
                     url: "".concat(_this.development, "/api/myClassgory/").concat(_this.showLesson.class_single_models[0].classgroup_id),
                     method: 'get',
                     success: function success(res) {
@@ -370,10 +374,10 @@ var _default =
                       _this.classgoryInfo.Exam_time = _this.renderTime(_this.classgoryInfo.Exam_time);
                       _this.showName = _this.classgoryInfo.name;
                       console.log('专业信息', _this.classgoryInfo);
-                    } });case 7:
+                    } });case 8:_context.next = 12;break;case 10:
 
-                  //获取vid_title
-                  _this.updateTitle();_context.next = 12;break;case 10:
+
+
 
                   _this.notlesson = true;
                   _this.showName = "请选择课程";case 12:
@@ -418,21 +422,6 @@ var _default =
         url: '/pages/tabBar/category' });
 
     },
-    // 更新面包屑标题
-    // updateTitle(){
-    // 	if(uni.getStorageSync('videoStorage')){
-    // 		const videoStorage = uni.getStorageSync('videoStorage');
-    // 		const index = videoStorage.findIndex(item => {
-    // 			console.log('当前课程',this.showLesson);
-    // 			console.log('id',this.showLesson.id)
-    // 			return item.vid == this.showLesson.id
-    // 		})
-    // 		console.log('index',index)
-    // 		if(index !== -1){
-    // 			this.vidTitle = videoStorage[index].vid_title;
-    // 		}
-    // 	}
-    // },
     onProblem: function onProblem() {
       console.log('点击了章节练习');
       var url;
@@ -465,7 +454,9 @@ var _default =
   },
   // 切入前台
   onShow: function onShow() {
-    // this.updateTitle();
+    if (uni.getStorageSync('vid_title')) {
+      this.vidTitle = uni.getStorageSync('vid_title');
+    }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

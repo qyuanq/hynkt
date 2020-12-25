@@ -120,7 +120,13 @@ video {
   font-size: 22rpx;
 }
 .container .course .info .nav .looked {
-  vertical-align: bottom;
+  width: 66rpx;
+  position: relative;
+}
+.container .course .info .nav .looked .text {
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 .container .course .info .nav .collect-check {
   color: #ff6600;

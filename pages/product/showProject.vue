@@ -10,7 +10,7 @@
 		<view class="pro-box">
 			<view class="title">专业咨询</view>
 			<view class="nav">
-				<view class="nav-btn" v-for="item in icons" @tap="onConsulting(item.param)">
+				<view class="nav-btn" v-for="item in icons" @tap="onConsulting(item.param,item.text)">
 					<van-icon class="iconfont" class-prefix="my-icon" :name="item.name" />
 					<view class="text">{{item.text}}</view>
 				</view>
@@ -63,6 +63,10 @@
 				success:(res) =>{
 					console.log(res.data.data);
 					this.classInfo = res.data.data;
+					//设置本页标题
+					uni.setNavigationBarTitle({
+					　　title:this.classInfo.name
+					})
 					this.classSingle = res.data.data.single;
 					this.classMeal = res.data.data.meal;
 					this.icons =[ 
@@ -80,11 +84,11 @@
 					url:`./product?type=${type}&id=${pid}`
 				})
 			},
-			onConsulting(content){
+			onConsulting(content,title){
 				console.log('content:',content);
 				uni.navigateTo({
 					// 传递对象，将对象转换成字符串，进行encodeURIComponent编码浏览器识别
-					url:'../category/consulting?content='+ encodeURIComponent(JSON.stringify(content))
+					url:`../category/consulting?content=${encodeURIComponent(JSON.stringify(content))}&title=${title}`
 				})
 			}
 		}

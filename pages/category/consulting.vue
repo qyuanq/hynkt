@@ -32,6 +32,10 @@
 			}
 		},
 		onLoad: async function(option){
+			// 设置本页标题
+			uni.setNavigationBarTitle({
+			　　title:option.title
+			})
 			//decodeURIComponent解码 ，转换成json
 			this.content = JSON.parse(decodeURIComponent(option.content));
 			this.content.date = this.renderTime(this.content.date);

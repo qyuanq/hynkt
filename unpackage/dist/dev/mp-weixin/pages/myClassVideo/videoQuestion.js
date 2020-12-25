@@ -130,30 +130,66 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Question = function Question() {Promise.all(/*! require.ensure | components/questions/question */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/questions/question")]).then((function () {return resolve(__webpack_require__(/*! ../../components/questions/question */ 329));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {
+  components: { Question: Question },
   data: function data() {
     return {
-      SERVER: this.server };
-
+      SERVER: this.development,
+      userIcon: ' ', //用户头像
+      question: null,
+      userInfo: null,
+      courceId: null //当前课程id
+    };
   },
   methods: {
+    // 跳转发表答疑
     onSkip: function onSkip() {
       uni.navigateTo({
-        url: './uploadQuestion' });
+        url: "./uploadQuestion?coureId=".concat(this.coureId) });
 
-    } } };exports.default = _default;
+    },
+    // 跳转答疑详情
+    onDetail: function onDetail(question) {
+      uni.navigateTo({
+        url: "./questionDetail?question=".concat(encodeURIComponent(JSON.stringify(question))) });
+
+    } },
+
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var _this = this;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              this.coureId = option.id;
+              // 获取答疑
+              _context.next = 3;return this.request({
+                url: "".concat(this.SERVER, "/api/answerQuestions/").concat(option.id),
+                method: 'get',
+                success: function success(res) {
+                  _this.question = res.data.data;
+                  console.log('res', _this.question);
+                } });case 3:_context.next = 5;return (
+
+
+
+                this.request({
+                  url: "".concat(this.SERVER, "/api/getuser"),
+                  method: 'get',
+                  success: function success(res) {
+                    _this.userIcon = _this.SERVER + res.data.icon;
+                  } }));case 5:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

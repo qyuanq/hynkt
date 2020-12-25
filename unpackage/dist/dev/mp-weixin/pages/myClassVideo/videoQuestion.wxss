@@ -24,29 +24,35 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.icon-head {
+  width: 80rpx;
+  height: 80rpx;
+}
+.icon-head image {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+.container .question-list {
+  margin: 20rpx 20rpx 100rpx 20rpx;
+}
 .container .speack-box {
-  position: absolute;
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 710rpx;
   height: 90rpx;
   margin: 0 auto;
   background: #fff;
-  padding: 20rpx;
+  margin: 0 20rpx;
+  box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
-  box-shadow: 2rpx 2rpx 3rpx #666;
-}
-.container .speack-box .icon-head {
-  width: 80rpx;
-  height: 80rpx;
-}
-.container .speack-box .icon-head image {
-  width: 100%;
-  height: 100%;
+  box-shadow: 2rpx 2rpx 10rpx #e3e2e2;
 }
 .container .speack-box .speack-input {
   width: 610rpx;

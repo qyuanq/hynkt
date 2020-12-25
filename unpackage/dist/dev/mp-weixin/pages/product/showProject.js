@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var classPane = function classPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/class-pane */ "components/shop-pane/class-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/class-pane */ 321));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var classPane = function classPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/class-pane */ "components/shop-pane/class-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/class-pane */ 322));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -195,6 +195,10 @@ __webpack_require__.r(__webpack_exports__);
                 success: function success(res) {
                   console.log(res.data.data);
                   _this.classInfo = res.data.data;
+                  //设置本页标题
+                  uni.setNavigationBarTitle({
+                    title: _this.classInfo.name });
+
                   _this.classSingle = res.data.data.single;
                   _this.classMeal = res.data.data.meal;
                   _this.icons = [
@@ -212,11 +216,11 @@ __webpack_require__.r(__webpack_exports__);
         url: "./product?type=".concat(type, "&id=").concat(pid) });
 
     },
-    onConsulting: function onConsulting(content) {
+    onConsulting: function onConsulting(content, title) {
       console.log('content:', content);
       uni.navigateTo({
         // 传递对象，将对象转换成字符串，进行encodeURIComponent编码浏览器识别
-        url: '../category/consulting?content=' + encodeURIComponent(JSON.stringify(content)) });
+        url: "../category/consulting?content=".concat(encodeURIComponent(JSON.stringify(content)), "&title=").concat(title) });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

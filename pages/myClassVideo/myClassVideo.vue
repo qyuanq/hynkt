@@ -24,7 +24,7 @@
 			<view class="info">
 				<view class="title">{{title}}</view>
 				<view class="nav">
-					<view class="looked">已看{{proCount}}</view>
+					<view class="looked"><text class="text">已看 {{proCount}}</text></view>
 					<view :class="[collect_state ? 'collect-check' : '','collect']" @tap="onCollect" >
 						<icon class="iconfont my-icon-shoucang"></icon>
 						收藏
@@ -43,11 +43,11 @@
 		<view class="learn-box">
 			<view class="catalog">目录</view>
 			<view class="learn-list">
-				<van-collapse :value="activeNames" @change="onChange" icon="">
+				<van-collapse :value="activeNames" @change="onChange">
 				  <van-collapse-item 
 					  v-for="(item,index) in goodVideos.content" 
 					  :title="item.section" 
-					  :value="arrs[index].progress + '/' + item.value.length" 
+					  :value="(arrs[index].progress ? arrs[index].progress : 0) + '/' + item.value.length" 
 					  :name="index + 1"
 					  :key="item.section"
 					  :title-class="sec_selected===index ? 'active' : ' '"
@@ -74,7 +74,7 @@
 	export default {
 		data() {
 			return {
-				activeNames:'',
+				activeNames:[],
 				collect_state:false,
 				development:this.development,
 				SERVER:this.server,
@@ -88,6 +88,7 @@
 				title:' ' ,			//面包屑标题
 				videoStorage:[],	//课程观看记录
 				courceId:null,		//课程id
+				mycourceId:null,	//我的课程id
 				arrs:[], 			//存储视频进度数组
 				proCount:0			//观看总数
 			};
@@ -107,7 +108,10 @@
 				this.vid_selected = idx;
 				// 面包屑标题
 				this.title = `${this.goodVideos.content[this.sec_selected].section} > ${this.goodVideos.content[this.sec_selected].value[this.vid_selected].name}`
+				// 缓存标题首页其他页调用
+				uni.setStorageSync('vid_title',this.title);
 				this.videoShow = true;
+				console.log(this.sec_selected,this.vid_selected,this.title);
 			},
 			// 收藏
 			onCollect(){
@@ -135,12 +139,12 @@
 			},
 			onAnswer(){
 				uni.navigateTo({
-					url:'./videoQuestion'
+					url:`./videoQuestion?id=${this.courceId}`
 				})
 			},
 			// 记录视频播放位置
 			setCurrentTime(event){
-				this.current = event.detail.currentTime;
+				this.current = Math.floor(event.detail.currentTime);
 			},
 			// 视频播完了
 			videoEnded(){
@@ -157,7 +161,6 @@
 				}
 				// 设置进度值
 				this.arrs[this.sec_selected].progress = arr.length;
-				
 				// 设置总数
 				let count = 0;
 				this.arrs.forEach(item => {
@@ -201,124 +204,87 @@
 				this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
 				console.log('跳转下一节',this.videoPath);
 			},
-			// 页面退出缓存播放时间
-			changeCurrent(){
-				this.videoStorage = uni.getStorageSync('videoStorage');
-				const index = this.videoStorage.findIndex(item => item.vid === this.courceId)
-				if(index !== -1){
-					this.videoStorage[index].currentTime = this.current;
-					uni.setStorageSync('videoStorage',this.videoStorage);
+			// 页面退出保存进度时间
+			saveProgress(){
+				let data = {
+					id:parseInt(this.mycourceId),
+					sec_selected:this.sec_selected,
+					vid_selected:this.vid_selected,
+					vid_title:this.title,
+					currentTime:this.current,
+					proarr:JSON.stringify(this.arrs)
 				}
+				//存储进度信息
+				uni.request({
+					url:`${this.development}/updateProgress`,
+					method:'post',
+					data:data,
+					success: (res) => {
+						console.log(res);
+					}
+				})
 			}
 		},
-		watch:{
-			// 监听视频地址
-			videoPath(){
-				this.videoStorage = uni.getStorageSync('videoStorage');
-				// 返回符合条件的索引
-				const index = this.videoStorage.findIndex(item => item.vid === this.courceId)
-				if(index !== -1){
-					this.videoStorage[index].vid_selected = this.vid_selected;
-					this.videoStorage[index].sec_selected = this.sec_selected;
-					this.videoStorage[index].vid_title = this.title;
-					// this.videoStorage[index].currentTime = this.current;
-					uni.setStorageSync('videoStorage',this.videoStorage);
-				}
-			}
-		},
-		onLoad: async function(option){
+		onLoad: function(option){
+			// 设置本页标题
+			uni.setNavigationBarTitle({
+			　　title:'课程目录'
+			})
 			this.courceId = option.id;
-			console.log('我的课程id',option.mycourceId)
-			await this.request({
+			this.mycourceId = option.mycourceId;
+			this.request({
 				url:`${this.development}/goodVideos/${option.id}`,
 				method:'get',
 				success: (res) => {
 					this.goodVideos = res.data.data;
-					// if(uni.getStorageSync('progress')){
-					// 	this.arrs = uni.getStorageSync('progress')
-					// 	this.arrs.forEach(item => {
-					// 		// 设置总数
-					// 		this.proCount += item.progress;
-					// 	})
-					// 	console.log('总数：',this.proCount);
-					// }else{
-					// 	this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
-					// }
-					// console.log('arrs',this.arrs);
-					//uni.getStorageSync('videoStorage')为空说明第一次访问
-					this.videoStorage = uni.getStorageSync('videoStorage') ? uni.getStorageSync('videoStorage') : [];
-					//判断缓存中是否存在此课程
-					const index = this.videoStorage.findIndex(item => {return item.vid === this.courceId});
-					console.log('数组',this.videoStorage)
-					//缓存存在该课程
-					if(index !== -1){
-						//章节索引
-						this.sec_selected = this.videoStorage[index].sec_selected;
-						//视频索引
-						this.vid_selected = this.videoStorage[index].vid_selected;
-						//视频地址
-						this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
-						//标题
-						this.title = this.videoStorage[index].vid_title;
-						// 播放历史位置
-						this.current = this.videoStorage[index].currentTime;
+					console.log('goodVideos',this.goodVideos);
+					this.request({
+						url:`${this.development}/myProgress/${option.mycourceId}`,
+						method:'get',
+						success: (res) => {
+							console.log(res.data.data.proarr);
+							this.videoStorage = res.data.data;
+							//章节索引
+							this.sec_selected = this.videoStorage.sec_selected;
+							//视频索引
+							this.vid_selected = this.videoStorage.vid_selected;
+							//标题
+							this.title = this.videoStorage.vid_title;
+							//播放历史位置
+							this.current = this.videoStorage.currentTime;
+							//视频地址
+							this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
+							// 展开折叠面板
+							this.activeNames.push(this.sec_selected + 1);
+							
+							let proarr = this.videoStorage.proarr;
+							if(proarr){
+								this.arrs = JSON.parse(proarr);
+								this.arrs.forEach(item => {
+									// 设置总数
+									this.proCount += item.progress;
+								})
+								console.log('总数：',this.proCount);
+							}else{
+								this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
+							}
+							console.log('arrs',this.arrs);
+						}
+					})
 				
-						console.log('111:',this.current);
-					}else{
-						
-						//缓存不存在该课程，默认第一个视频
-						this.videoPath = this.goodVideos.content[0].value[0].path;
-						//面包屑标题
-						this.title = `${this.goodVideos.content[this.sec_selected].section} > ${this.goodVideos.content[this.sec_selected].value[this.vid_selected].name}`;
-						// 存入缓存中
-						this.videoStorage.push({
-							'vid':this.courceId,
-							'vid_selected':this.vid_selected,
-							'sec_selected':this.sec_selected,
-							'vid_title':this.title,
-							'currentTime':this.current
-						})
-						uni.setStorageSync('videoStorage',this.videoStorage);
-					}
-					console.log('我的视频:',this.goodVideos)
-					console.log('第一个视频',this.videoPath)
 				}
 			});
-			await this.request({
-				url:`${this.development}/myProgress/${option.mycourceId}`,
-				method:'get',
-				success: (res) => {
-					console.log(res.data.data);
-					// this.videoStorage = res.data.data;
-					// this.sec_selected = this.videoStorage.sec_selected;
-					// this.vid_selected = this.videoStorage.vid_selected;
-					// this.vid_title = this.videoStorage.vid_title;
-					// this.currentTime = this.videoStorage.currentTime;
-					this.arrs = JSON.parse(res.data.data.proarr);
-					console.log('arrs初始化',this.arrs)
-				}
-			})
+			
 		},
 		onHide(){
 			console.log('页面隐藏啦');
-			// 缓存播放位置
-			this.changeCurrent();
-			uni.setStorageSync('progress',this.arrs);
-			let data = {id:2,arr:JSON.stringify(this.arrs)}
-			uni.request({
-				url:`${this.development}/updateProgress`,
-				method:'post',
-				data:data,
-				success: (res) => {
-					console.log(res);
-				}
-			})
+			// 缓存播放进度
+			this.saveProgress();
 		},
 		onUnload(){
 			console.log('页面退出啦');
-			// 缓存播放位置
-			this.changeCurrent();
-			uni.setStorageSync('progress',this.arrs);
+			// 缓存播放进度
+			this.saveProgress();
 		}
 	}
 </script>
@@ -401,7 +367,13 @@ video{height:400rpx;}
 					font-size:22rpx;
 				}
 				.looked{
-					vertical-align: bottom;
+					width:66rpx;
+					position: relative;
+					.text{
+						position: absolute;
+						left:0;
+						bottom:0;
+					}
 				}
 				.collect-check{
 					color:rgb(255,102,0);

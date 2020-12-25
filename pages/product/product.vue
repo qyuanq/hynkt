@@ -116,7 +116,14 @@
 			  </view>
 		  </van-tab>
 		  <van-tab title="课程评价">
-		  			  
+		  	<view class="top">
+				<text>全部评价</text>
+				<text>共108个评价</text>
+			</view>
+			<view class="evaluation">
+				<view class="text"></view>
+				<view class="star"></view>
+			</view>
 		  </van-tab>
 		</van-tabs>
 		<!-- 底部按钮 -->
@@ -263,6 +270,10 @@
 				success:async (res) => {
 					this.cource = res.data.data;
 					console.log(this.cource);
+					//设置本页标题
+					uni.setNavigationBarTitle({
+					　　title:this.cource.name
+					})
 					
 					// 试听课程如果是全科班课程
 					if(this.cource.class_single_models){

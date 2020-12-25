@@ -8560,6 +8560,24 @@ internalMixin(Vue);
 
 /***/ }),
 
+/***/ 267:
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/js/common.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.renderTime = void 0; //转化时间
+var renderTime = function renderTime(date) {
+  var dateee = new Date(date).toJSON();
+  // 北京处于东八区，所以要加8个小时
+  // return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+  return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+};exports.renderTime = renderTime;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -8591,7 +8609,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 302:
+/***/ 303:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -10043,11 +10061,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 303)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 304)))
 
 /***/ }),
 
-/***/ 303:
+/***/ 304:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -10078,7 +10096,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 304);
+        if (!path) path = __webpack_require__(/*! path */ 305);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -10092,7 +10110,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 304:
+/***/ 305:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -10402,11 +10420,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 303)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 304)))
 
 /***/ }),
 
-/***/ 333:
+/***/ 341:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/

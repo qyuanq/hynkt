@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -206,7 +206,7 @@ var _default =
 {
   data: function data() {
     return {
-      activeNames: '',
+      activeNames: [],
       collect_state: false,
       development: this.development,
       SERVER: this.server,
@@ -220,6 +220,7 @@ var _default =
       title: ' ', //面包屑标题
       videoStorage: [], //课程观看记录
       courceId: null, //课程id
+      mycourceId: null, //我的课程id
       arrs: [], //存储视频进度数组
       proCount: 0 //观看总数
     };
@@ -239,7 +240,10 @@ var _default =
       this.vid_selected = idx;
       // 面包屑标题
       this.title = "".concat(this.goodVideos.content[this.sec_selected].section, " > ").concat(this.goodVideos.content[this.sec_selected].value[this.vid_selected].name);
+      // 缓存标题首页其他页调用
+      uni.setStorageSync('vid_title', this.title);
       this.videoShow = true;
+      console.log(this.sec_selected, this.vid_selected, this.title);
     },
     // 收藏
     onCollect: function onCollect() {
@@ -267,12 +271,12 @@ var _default =
     },
     onAnswer: function onAnswer() {
       uni.navigateTo({
-        url: './videoQuestion' });
+        url: "./videoQuestion?id=".concat(this.courceId) });
 
     },
     // 记录视频播放位置
     setCurrentTime: function setCurrentTime(event) {
-      this.current = event.detail.currentTime;
+      this.current = Math.floor(event.detail.currentTime);
     },
     // 视频播完了
     videoEnded: function videoEnded() {
@@ -289,7 +293,6 @@ var _default =
       }
       // 设置进度值
       this.arrs[this.sec_selected].progress = arr.length;
-
       // 设置总数
       var count = 0;
       this.arrs.forEach(function (item) {
@@ -333,124 +336,87 @@ var _default =
       this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
       console.log('跳转下一节', this.videoPath);
     },
-    // 页面退出缓存播放时间
-    changeCurrent: function changeCurrent() {var _this = this;
-      this.videoStorage = uni.getStorageSync('videoStorage');
-      var index = this.videoStorage.findIndex(function (item) {return item.vid === _this.courceId;});
-      if (index !== -1) {
-        this.videoStorage[index].currentTime = this.current;
-        uni.setStorageSync('videoStorage', this.videoStorage);
-      }
+    // 页面退出保存进度时间
+    saveProgress: function saveProgress() {
+      var data = {
+        id: parseInt(this.mycourceId),
+        sec_selected: this.sec_selected,
+        vid_selected: this.vid_selected,
+        vid_title: this.title,
+        currentTime: this.current,
+        proarr: JSON.stringify(this.arrs) };
+
+      //存储进度信息
+      uni.request({
+        url: "".concat(this.development, "/updateProgress"),
+        method: 'post',
+        data: data,
+        success: function success(res) {
+          console.log(res);
+        } });
+
     } },
 
-  watch: {
-    // 监听视频地址
-    videoPath: function videoPath() {var _this2 = this;
-      this.videoStorage = uni.getStorageSync('videoStorage');
-      // 返回符合条件的索引
-      var index = this.videoStorage.findIndex(function (item) {return item.vid === _this2.courceId;});
-      if (index !== -1) {
-        this.videoStorage[index].vid_selected = this.vid_selected;
-        this.videoStorage[index].sec_selected = this.sec_selected;
-        this.videoStorage[index].vid_title = this.title;
-        // this.videoStorage[index].currentTime = this.current;
-        uni.setStorageSync('videoStorage', this.videoStorage);
-      }
-    } },
+  onLoad: function onLoad(option) {var _this = this;
+    // 设置本页标题
+    uni.setNavigationBarTitle({
+      title: '课程目录' });
 
-  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var _this3 = this;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              this.courceId = option.id;
-              console.log('我的课程id', option.mycourceId);_context.next = 4;return (
-                this.request({
-                  url: "".concat(this.development, "/goodVideos/").concat(option.id),
-                  method: 'get',
-                  success: function success(res) {
-                    _this3.goodVideos = res.data.data;
-                    // if(uni.getStorageSync('progress')){
-                    // 	this.arrs = uni.getStorageSync('progress')
-                    // 	this.arrs.forEach(item => {
-                    // 		// 设置总数
-                    // 		this.proCount += item.progress;
-                    // 	})
-                    // 	console.log('总数：',this.proCount);
-                    // }else{
-                    // 	this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
-                    // }
-                    // console.log('arrs',this.arrs);
-                    //uni.getStorageSync('videoStorage')为空说明第一次访问
-                    _this3.videoStorage = uni.getStorageSync('videoStorage') ? uni.getStorageSync('videoStorage') : [];
-                    //判断缓存中是否存在此课程
-                    var index = _this3.videoStorage.findIndex(function (item) {return item.vid === _this3.courceId;});
-                    console.log('数组', _this3.videoStorage);
-                    //缓存存在该课程
-                    if (index !== -1) {
-                      //章节索引
-                      _this3.sec_selected = _this3.videoStorage[index].sec_selected;
-                      //视频索引
-                      _this3.vid_selected = _this3.videoStorage[index].vid_selected;
-                      //视频地址
-                      _this3.videoPath = _this3.goodVideos.content[_this3.sec_selected].value[_this3.vid_selected].path;
-                      //标题
-                      _this3.title = _this3.videoStorage[index].vid_title;
-                      // 播放历史位置
-                      _this3.current = _this3.videoStorage[index].currentTime;
-
-                      console.log('111:', _this3.current);
-                    } else {
-
-                      //缓存不存在该课程，默认第一个视频
-                      _this3.videoPath = _this3.goodVideos.content[0].value[0].path;
-                      //面包屑标题
-                      _this3.title = "".concat(_this3.goodVideos.content[_this3.sec_selected].section, " > ").concat(_this3.goodVideos.content[_this3.sec_selected].value[_this3.vid_selected].name);
-                      // 存入缓存中
-                      _this3.videoStorage.push({
-                        'vid': _this3.courceId,
-                        'vid_selected': _this3.vid_selected,
-                        'sec_selected': _this3.sec_selected,
-                        'vid_title': _this3.title,
-                        'currentTime': _this3.current });
-
-                      uni.setStorageSync('videoStorage', _this3.videoStorage);
-                    }
-                    console.log('我的视频:', _this3.goodVideos);
-                    console.log('第一个视频', _this3.videoPath);
-                  } }));case 4:_context.next = 6;return (
-
-                this.request({
-                  url: "".concat(this.development, "/myProgress/").concat(option.mycourceId),
-                  method: 'get',
-                  success: function success(res) {
-                    console.log(res.data.data);
-                    // this.videoStorage = res.data.data;
-                    // this.sec_selected = this.videoStorage.sec_selected;
-                    // this.vid_selected = this.videoStorage.vid_selected;
-                    // this.vid_title = this.videoStorage.vid_title;
-                    // this.currentTime = this.videoStorage.currentTime;
-                    _this3.arrs = JSON.parse(res.data.data.proarr);
-                    console.log('arrs初始化', _this3.arrs);
-                  } }));case 6:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
-
-
-  onHide: function onHide() {
-    console.log('页面隐藏啦');
-    // 缓存播放位置
-    this.changeCurrent();
-    uni.setStorageSync('progress', this.arrs);
-    var data = { id: 2, arr: JSON.stringify(this.arrs) };
-    uni.request({
-      url: "".concat(this.development, "/updateProgress"),
-      method: 'post',
-      data: data,
+    this.courceId = option.id;
+    this.mycourceId = option.mycourceId;
+    this.request({
+      url: "".concat(this.development, "/goodVideos/").concat(option.id),
+      method: 'get',
       success: function success(res) {
-        console.log(res);
+        _this.goodVideos = res.data.data;
+        console.log('goodVideos', _this.goodVideos);
+        _this.request({
+          url: "".concat(_this.development, "/myProgress/").concat(option.mycourceId),
+          method: 'get',
+          success: function success(res) {
+            console.log(res.data.data.proarr);
+            _this.videoStorage = res.data.data;
+            //章节索引
+            _this.sec_selected = _this.videoStorage.sec_selected;
+            //视频索引
+            _this.vid_selected = _this.videoStorage.vid_selected;
+            //标题
+            _this.title = _this.videoStorage.vid_title;
+            //播放历史位置
+            _this.current = _this.videoStorage.currentTime;
+            //视频地址
+            _this.videoPath = _this.goodVideos.content[_this.sec_selected].value[_this.vid_selected].path;
+            // 展开折叠面板
+            _this.activeNames.push(_this.sec_selected + 1);
+
+            var proarr = _this.videoStorage.proarr;
+            if (proarr) {
+              _this.arrs = JSON.parse(proarr);
+              _this.arrs.forEach(function (item) {
+                // 设置总数
+                _this.proCount += item.progress;
+              });
+              console.log('总数：', _this.proCount);
+            } else {
+              _this.arrs = _this.goodVideos.content.map(function (item) {return { progress: 0, proarr: [] };});
+            }
+            console.log('arrs', _this.arrs);
+          } });
+
+
       } });
 
+
+  },
+  onHide: function onHide() {
+    console.log('页面隐藏啦');
+    // 缓存播放进度
+    this.saveProgress();
   },
   onUnload: function onUnload() {
     console.log('页面退出啦');
-    // 缓存播放位置
-    this.changeCurrent();
-    uni.setStorageSync('progress', this.arrs);
+    // 缓存播放进度
+    this.saveProgress();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

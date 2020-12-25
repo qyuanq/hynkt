@@ -118,7 +118,11 @@
 			"pages" : [
 				{
                     "path" : "consulting",
-                    "style" : {}
+                    "style" : {
+						"navigationBarTitleText" : " ",
+						"navigationBarBackgroundColor" : "#2890ff",
+						"navigationBarTextStyle" : "white"
+					}
                 }
             ]
 		},
@@ -137,6 +141,9 @@
 		    {
                     "path" : "myCource",
                     "style" : {
+						"navigationBarTitleText" : "课程学习",
+						"navigationBarBackgroundColor" : "#2890ff",
+						"navigationBarTextStyle" : "white",
 						"usingComponents": {
 						  "van-search": "/static/vant-weapp/search/index"
 						}
@@ -318,7 +325,7 @@
                 {
                     "path" : "showProject",
                     "style" : {
-                        "navigationBarTitleText" : "金融管理专科",
+                        "navigationBarTitleText" : " ",
                         "navigationBarBackgroundColor" : "#fff",
                         "navigationBarTextStyle" : "black",
                         "usingComponents" : {
@@ -328,7 +335,11 @@
                 }
                 ,{
                     "path" : "teacherDetai",
-                    "style" : {}
+                    "style" : {
+						"navigationBarTitleText" : "教师详情",
+						"navigationBarBackgroundColor" : "#fff",
+						"navigationBarTextStyle" : "black"
+					}
                 }
             ]
         },
@@ -338,6 +349,9 @@
                 {
                     "path" : "myClassVideo",
                     "style" : {
+						"navigationBarTitleText" : " ",
+						"navigationBarBackgroundColor" : "#fff",
+						"navigationBarTextStyle" : "black",
                         "usingComponents" : {
                             "van-divider" : "/static/vant-weapp/divider/index",
                             "van-collapse" : "/static/vant-weapp/collapse/index",
@@ -385,6 +399,12 @@
                             "van-uploader" : "/static/vant-weapp/uploader/index"
                         }
                     }
+                }
+                ,{
+                    "path" : "questionDetail",
+                    "style" : {
+						"navigationBarTitleText" : "提问详情"
+					}
                 }
             ]
         }

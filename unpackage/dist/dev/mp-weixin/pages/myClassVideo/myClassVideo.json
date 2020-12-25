@@ -1,4 +1,7 @@
 {
+  "navigationBarTitleText": " ",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
   "usingComponents": {
     "van-divider": "/static/vant-weapp/divider/index",
     "van-collapse": "/static/vant-weapp/collapse/index",

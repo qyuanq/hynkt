@@ -218,10 +218,14 @@
 						if(uni.getStorageSync('cource')){
 							this.showLesson = uni.getStorageSync('cource');
 							this.vidTitle = this.showLesson.vid_title;
+							console.log('title1',this.vidTitle,this.showLesson);
 						}else{
 							this.showLesson = this.myCource.noverCource.length > 0 ? this.myCource.noverCource[0] : null;
 							this.vidTitle = this.myCource.noverCource[0].vid_title;
+							console.log('title2',this.vidTitle,this.showLesson);
 						}
+						// 缓存当前课程名字,后续答疑调用
+						uni.setStorageSync('courceName',this.showLesson.class_single_models[0].name);
 						//获取课程对应从专业信息
 						await this.request({
 							url:`${this.development}/api/myClassgory/${this.showLesson.class_single_models[0].classgroup_id}`,
@@ -235,7 +239,7 @@
 							}
 						});
 						//获取vid_title
-						this.updateTitle();
+						// this.updateTitle();
 					}else{
 						this.notlesson = true;
 						this.showName = "请选择课程";
@@ -280,21 +284,6 @@
 					url:'/pages/tabBar/category'
 				})
 			},
-			// 更新面包屑标题
-			// updateTitle(){
-			// 	if(uni.getStorageSync('videoStorage')){
-			// 		const videoStorage = uni.getStorageSync('videoStorage');
-			// 		const index = videoStorage.findIndex(item => {
-			// 			console.log('当前课程',this.showLesson);
-			// 			console.log('id',this.showLesson.id)
-			// 			return item.vid == this.showLesson.id
-			// 		})
-			// 		console.log('index',index)
-			// 		if(index !== -1){
-			// 			this.vidTitle = videoStorage[index].vid_title;
-			// 		}
-			// 	}
-			// },
 			onProblem(){
 				console.log('点击了章节练习');
 				let url;
@@ -327,7 +316,9 @@
 		},
 		// 切入前台
 		onShow(){
-			// this.updateTitle();
+			if(uni.getStorageSync('vid_title')){
+				this.vidTitle = uni.getStorageSync('vid_title');
+			}
 		}
 	}
 </script>
