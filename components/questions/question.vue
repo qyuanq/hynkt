@@ -8,8 +8,10 @@
 				<text class="phone">{{userInfo.phone}}</text>
 			</view>
 			<view class="btns">
-				<view class="zan"><icon :class="[up ? 'active' : ' ','iconfont','my-icon-dianzan',]" @tap="giveLike" /><text class="count">{{question.praise}}</text></view>
-				<view class="comments"><icon class="iconfont my-icon-pinglun"></icon><text class="count">0</text></view>
+				<view class="zan"><icon :class="[up ? 'active' : ' ','iconfont','my-icon-dianzan',]" @tap.stop="giveLike"/><text class="count">{{praiseCount}}</text></view>
+				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">0</text></view>
+				<!-- <icon class="iconfont my-icon-shanchu" /> -->
+				<slot></slot>
 			</view>
 		</view>
 		<view class="center">
@@ -36,22 +38,56 @@
 			},
 			question:{
 				type:Object
+			},
+			index:{
+				type:Number,
+				default:0
 			}
 		},
 		data(){
 			return{
 				SERVER:this.development,
-				up:false,
-				date:null
+				up:false,		//点赞标识
+				date:null,
+				praiseCount:0   //点赞量			
 			}
 		},
 		methods:{
-			giveLike(){
-				this.up = !this.up;
+			async giveLike(){
+				// 已点赞
+				if(this.up){
+					this.up = !this.up;
+					this.praiseCount -= 1;
+				}else{
+					this.up = !this.up;
+					this.praiseCount += 1;
+				}
+				// 发起请求
+				await this.request({
+					url:`${this.SERVER}/api/like?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`,
+					method:'get',
+					success:(res) => {
+						console.log(res)
+					}
+				});
+				uni.$emit('change_praise',[this.praiseCount,this.index]);
 			}
 		},
 		created(){
+			this.request({
+				url:`${this.SERVER}/api/isLike?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`,
+				method:'get',
+				success: (res) => {
+					// 获取点赞标识
+					this.up = res.data.data;
+				}
+			});
+			// 点赞总量
+			this.praiseCount = this.question.praise;
+			console.log('praise',this.question.praise);
+			// 日期时间格式化
 			this.date = renderTime(this.question.date);
+			console.log('date详情值',this.date,this.question.date);
 		}
 	}
 </script>
@@ -84,15 +120,19 @@
 			}
 			.btns{
 				padding-top:20rpx;
-				.comments,.zan{
+				.comment-btn,.zan{
 					display: inline-block;
 					.count{margin-left:20rpx;}
 				}
-				.comments{
+				.comment-btn{
 					margin-left:30rpx;
 				}
 				.active{
 					color:rgb(255,102,0);
+				}
+				.my-icon-shanchu{
+					position:absolute;
+					right:20rpx;
 				}
 			}
 		}

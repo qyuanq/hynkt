@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "提问详情",
-  "usingComponents": {}
+  "usingComponents": {
+    "question": "/components/questions/question"
+  }
 }

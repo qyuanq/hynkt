@@ -63,17 +63,21 @@
 .question .head .btns {
   padding-top: 20rpx;
 }
-.question .head .btns .comments, .question .head .btns .zan {
+.question .head .btns .comment-btn, .question .head .btns .zan {
   display: inline-block;
 }
-.question .head .btns .comments .count, .question .head .btns .zan .count {
+.question .head .btns .comment-btn .count, .question .head .btns .zan .count {
   margin-left: 20rpx;
 }
-.question .head .btns .comments {
+.question .head .btns .comment-btn {
   margin-left: 30rpx;
 }
 .question .head .btns .active {
   color: #ff6600;
+}
+.question .head .btns .my-icon-shanchu {
+  position: absolute;
+  right: 20rpx;
 }
 .question .center {
   margin-left: 95rpx;

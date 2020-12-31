@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		<view class="question-list">
-			<Question v-for="item in question" :question="item" :userInfo="item.users_model" :key="item.id" @tap="onDetail(item)"></Question>
+		<view class="question-list" v-if="sonRefresh">
+			<Question v-for="(item,index) in question" :question="item" :userInfo="item.users_model" :index="index" :key="item.id" @tap="onDetail(item)"></Question>
 		</view>
 		<view class="speack-box">
 			<view class="icon-head">
@@ -19,6 +19,7 @@
 		data() {
 			return {
 				SERVER:this.development,
+				sonRefresh: true,
 				userIcon:' ',   //用户头像
 				question:null,
 				userInfo:null,
@@ -38,6 +39,21 @@
 					url:`./questionDetail?question=${encodeURIComponent(JSON.stringify(question))}`
 				})
 			}
+		},
+		mounted(){
+			uni.$on('change_praise',(arg) => {
+				this.$set(this.question[arg[1]],'praise',arg[0]);
+				// this.$forceUpdate();
+			})
+		},
+		// watch(){
+			
+		// },
+		onShow:function(){
+			this.sonRefresh= false;
+			this.$nextTick(() => {
+				this.sonRefresh= true;
+			});
 		},
 		onLoad: async function(option){
 			this.coureId = option.id;

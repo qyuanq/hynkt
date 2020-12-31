@@ -49,7 +49,7 @@
 							 key: 'token',
 							 data: res.data.data.token
 						})
-						uni.switchTab({
+						uni.reLaunch({
 							url:`/pages/tabBar/index`
 						})
 					}
