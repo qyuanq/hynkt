@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Question = function Question() {Promise.all(/*! require.ensure | components/questions/question */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/questions/question")]).then((function () {return resolve(__webpack_require__(/*! ../../components/questions/question */ 340));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -154,18 +154,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
-
-
-
-
-
-
-
-
+var _common = __webpack_require__(/*! ../../static/js/common.js */ 270);var Question = function Question() {Promise.all(/*! require.ensure | components/questions/question */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/questions/question")]).then((function () {return resolve(__webpack_require__(/*! ../../components/questions/question */ 340));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Comment = function Comment() {__webpack_require__.e(/*! require.ensure | components/questions/comment */ "components/questions/comment").then((function () {return resolve(__webpack_require__(/*! ../../components/questions/comment */ 347));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
-    Question: Question },
+    Question: Question,
+    Comment: Comment },
 
   data: function data() {
     return {
@@ -174,10 +167,107 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       hackReset: true,
       SERVER: this.development,
       commentPlaceholder: '请输入评论...',
-      comments: [] //评论
-    };
+      content: '', //评论内容v-model实现双向绑定
+      comments: [], //评论
+      replyUserComment: '', //评论对象
+      isOne: false,
+      text: '' };
+
   },
-  onLoad: function onLoad(options) {var _this = this;
+  methods: {
+    // 提交评论
+    submit: function submit() {var _this = this;
+      var myDate = (0, _common.renderTime)(new Date());
+      if (this.content == "") {
+        uni.showToast({
+          title: '输入内容不能为空' });
+
+      } else {
+        var AnserquestionModelId = '';
+        var CommentsModelId = '';
+        var to_user_id = '';
+        if (this.replyUserComment) {
+          to_user_id = this.replyUserComment.UsersModelId;
+          CommentsModelId = this.replyUserComment.id;
+        } else {
+          // 添加根评论
+          AnserquestionModelId = this.question.id;
+        }
+        var comment = {
+          AnserquestionModelId: AnserquestionModelId,
+          CommentsModelId: CommentsModelId,
+          to_user_id: to_user_id,
+          level: this.replyUserComment.index2,
+          data: {
+            UsersModelId: this.question.UsersModelId,
+            content: this.content,
+            date: myDate } };
+
+
+        this.request({
+          url: "".concat(this.SERVER, "/api/comments"),
+          method: 'post',
+          data: comment,
+          success: function success(res) {
+            console.log('添加成功返回数据', res);
+            uni.showToast({
+              title: '评论成功' });
+
+            var newComment = {
+              id: res.data.data.id,
+              content: _this.content,
+              date: '刚刚',
+              users_model: {
+                icon: _this.userInfo.icon,
+                username: _this.userInfo.username } };
+
+
+            if (!_this.replyUserComment) {
+              newComment.replay_models = [];
+              _this.comments.unshift(newComment);
+              console.log('comments1:', _this.comments);
+            } else {
+              var index = _this.replyUserComment.index;
+              var index2 = _this.replyUserComment.index2;
+              if (index2) {
+                // newComment.content = '回复@'+ this.replyUserComment.users_model.username + newComment.content;
+                newComment.level = 1;
+                newComment.to_user = {
+                  username: _this.replyUserComment.users_model.username };
+
+                console.log("new", newComment);
+                _this.comments[index].children.push(newComment);
+              } else {
+                if (_this.replyUserComment.countShow) {
+                  console.log('comments', _this.comments);
+                  _this.comments[index].text = _this.content;
+                  _this.comments[index].replay_models.length = _this.comments[index].replay_models.length ? _this.comments[index].replay_models.length + 1 : 1;
+                  console.log('回复数量：', _this.comments[index].replay_models.length);
+                } else {
+                  _this.comments[index].children.unshift(newComment);
+                }
+              }
+            }
+            _this.content = '';
+          } });
+
+      }
+    },
+    // 回复用户评论
+    replyUser: function replyUser(args, item, index) {
+      args = args.detail.__args__;
+      this.replyUserComment = args[0]; //保存评论对象
+      this.replyUserComment.index = index;
+      this.replyUserComment.id = item.id;
+      this.commentPlaceholder = args[1]; //输入框提示文本
+      console.log('replyUserComment', this.replyUserComment);
+    },
+    getReplay: function getReplay(child, item) {
+      item.children = child.detail.__args__[0];
+      console.log(item, this.comments);
+    } },
+
+  onLoad: function onLoad(options) {var _this2 = this;
     this.question = JSON.parse(decodeURIComponent(options.question));
     this.userInfo = this.question.users_model;
     console.log('提问详情', this.question);
@@ -185,17 +275,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       url: "".concat(this.SERVER, "/api/comments/").concat(this.question.id),
       method: 'get',
       success: function success(res) {
-        _this.comments = res.data.data;
+        _this2.comments = res.data.data.map(function (item) {
+          item.date = (0, _common.renderTime)(item.date);
+          return item;
+        });
+
         console.log('评论', res.data);
       } });
 
   },
-  onShow: function onShow() {var _this2 = this;
+  onShow: function onShow() {var _this3 = this;
     this.hackReset = false;
     this.$nextTick(function () {
-      _this2.hackReset = true;
+      _this3.hackReset = true;
     });
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

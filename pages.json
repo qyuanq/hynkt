@@ -56,7 +56,10 @@
         "navigationBarTextStyle" : "white",
         "navigationBarTitleText" : "uni-app",
         "navigationBarBackgroundColor" : "#007AFF",
-        "backgroundColor" : "#FFFFFF"
+        "backgroundColor" : "#FFFFFF",
+		"usingComponents": {  
+			"comment":"/components/questions/comment"  
+		}  
     },
     "tabBar" : {
         "color" : "#888",

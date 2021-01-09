@@ -2,28 +2,18 @@
 	<view>
 		<Question :question="question" :userInfo="userInfo" v-if="hackReset" ></Question>
 		<view class="comments">
-			<view class="comment" v-for="item in comments" :key="item.id">
-				<view class="box-top user">
-					<view class="icon-head">
-						<image :src="SERVER + item.users_model.icon" />
-					</view>
-					<text class="phone">{{item.users_model.phone}}</text>
-				</view>
-				<view class="box-center">
-					<view class="content">{{item.content}}</view>
-					<view class="reply">等多少回复</view>
-				</view>
-				<view class="box-bottom">
-					<view class="date">{{item.date}}</view>
-					<view class="btns">
-						<view class="praise-btn"><icon :class="[up ? 'active' : ' ','iconfont','my-icon-dianzan',]" @tap.stop="giveLike"/><text class="count">{{praiseCount}}</text></view>
-						<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon></view>
-					</view>
-				</view>
-			</view>
+			<Comment 
+			v-for="(item,index) in comments" 
+			:key="item.id" 
+			:comment="item" 
+			:userInfo="userInfo"
+			@replyUser="replyUser($event,item,index)"
+			@getReplay="getReplay($event,item)"
+			>
+			</Comment>
 			<view class="published">
-				<input type="text" :placeholder="commentPlaceholder" class="input" />
-				<button class="btn">发送</button>
+				<input type="text" ref="input" :placeholder="commentPlaceholder" class="input" v-model="content"/>
+				<button class="btn" @tap="submit">发送</button>
 			</view>
 		</view>
 	</view>
@@ -31,9 +21,12 @@
 
 <script>
 	import Question from '../../components/questions/question'
+	import Comment from '../../components/questions/comment'
+	import {renderTime} from '../../static/js/common.js'
 	export default {
 		components:{
-			Question
+			Question,
+			Comment
 		},
 		data() {
 			return {
@@ -42,8 +35,105 @@
 				hackReset:true,
 				SERVER:this.development,
 				commentPlaceholder:'请输入评论...',
-				comments:[]		//评论
+				content:'',				//评论内容v-model实现双向绑定
+				comments:[],			//评论
+				replyUserComment:'',	//评论对象
+				isOne:false,
+				text:''
 			};
+		},
+		methods:{
+			// 提交评论
+			submit(){
+				let myDate = renderTime(new Date());
+				if (this.content == "") {
+				    uni.showToast({
+						title:'输入内容不能为空'
+					})
+				}else{
+					let AnserquestionModelId = '';
+					let CommentsModelId = '';
+					let to_user_id = '';
+					if(this.replyUserComment){
+						to_user_id = this.replyUserComment.UsersModelId;
+						CommentsModelId = this.replyUserComment.id;
+					}else{
+						// 添加根评论
+						AnserquestionModelId = this.question.id;
+					}
+					let comment = {
+						AnserquestionModelId:AnserquestionModelId,
+						CommentsModelId:CommentsModelId,
+						to_user_id:to_user_id,
+						level:this.replyUserComment.index2,
+						data:{
+							UsersModelId:this.question.UsersModelId,
+							content:this.content,
+							date:myDate
+						}
+					}
+					this.request({
+						url:`${this.SERVER}/api/comments`,
+						method:'post',
+						data:comment,
+						success:(res) => {
+							console.log('添加成功返回数据',res);
+							uni.showToast({
+								title:'评论成功'
+							})
+							let newComment = {
+								id:res.data.data.id,
+								content:this.content,
+								date:'刚刚',
+								users_model:{
+									icon:this.userInfo.icon,
+									username:this.userInfo.username
+								}
+							}
+							if(!this.replyUserComment){
+								newComment.replay_models = [];
+								this.comments.unshift(newComment);
+								console.log('comments1:',this.comments);
+							}else{
+								let index = this.replyUserComment.index;
+								let index2 = this.replyUserComment.index2
+								if(index2){
+									// newComment.content = '回复@'+ this.replyUserComment.users_model.username + newComment.content;
+									newComment.level = 1;
+									newComment.to_user = {
+										username : this.replyUserComment.users_model.username
+									}
+									console.log("new",newComment);
+									this.comments[index].children.push(newComment);
+								}else{
+									if(this.replyUserComment.countShow){
+										console.log('comments',this.comments);
+										this.comments[index].text = this.content;
+										this.comments[index].replay_models.length = this.comments[index].replay_models.length ?this.comments[index].replay_models.length + 1 : 1;
+										console.log('回复数量：',this.comments[index].replay_models.length);
+									}else{
+										this.comments[index].children.unshift(newComment);
+									}
+								}
+							}
+							this.content = '';
+						}
+					})
+				}
+			},
+			// 回复用户评论
+			replyUser(args,item,index){
+				args = args.detail.__args__;
+				this.replyUserComment = args[0];	//保存评论对象
+				this.replyUserComment.index = index;
+				this.replyUserComment.id = item.id;	
+				this.commentPlaceholder = args[1];	//输入框提示文本
+				console.log('replyUserComment',this.replyUserComment)
+			},
+			getReplay(child,item){
+				item.children = child.detail.__args__[0];
+				console.log(item,this.comments);
+			}
 		},
 		onLoad:function(options){
 			this.question = JSON.parse(decodeURIComponent(options.question));
@@ -53,7 +143,11 @@
 				url:`${this.SERVER}/api/comments/${this.question.id}`,
 				method:'get',
 				success:(res) => {
-					this.comments = res.data.data;
+					this.comments = res.data.data.map(item => {
+						item.date = renderTime(item.date)
+						return item;
+					});
+					
 					console.log('评论',res.data);
 				}
 			})
@@ -106,40 +200,5 @@ page{
 	margin:0 auto;
 	border-radius: 20rpx;
 	padding:0 0 40rpx 10rpx;
-	.user{
-		padding-top:40rpx;
-		.icon-head{
-			width:80rpx;
-			height:80rpx;
-			float:left;
-			image{
-				width:100%;
-				height:100%;
-				border-radius: 100%;
-			}
-		}
-		.phone{line-height:80rpx;margin-left:15rpx;color:#888;font-size:20rpx;}
-	}
-	.box-center,.box-bottom{
-		margin-left:95rpx;
-		margin-right:30rpx;
-	}
-	.box-center{
-		.reply{
-			width:100%;
-			height:72rpx;
-			line-height:72rpx;
-			background:#f7f7f7;
-		}
-	}
-	.box-bottom{
-		display:flex;
-		justify-content: space-between;
-		.btns{
-			.praise-btn,.comment-btn{
-				display:inline-block;
-			}
-		}
-	}
 }
 </style>

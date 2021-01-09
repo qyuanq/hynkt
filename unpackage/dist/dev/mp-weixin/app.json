@@ -117,6 +117,8 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap58.json"
+  "usingComponents": {
+    "comment": "/components/questions/comment"
+  },
+  "sitemapLocation": "sitemap93.json"
 }

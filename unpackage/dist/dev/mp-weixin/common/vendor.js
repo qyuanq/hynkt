@@ -9575,8 +9575,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.renderTime
 var renderTime = function renderTime(date) {
   var dateee = new Date(date).toJSON();
   // 北京处于东八区，所以要加8个小时
-  // return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-  return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
+  // return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
 };exports.renderTime = renderTime;
 
 /***/ }),
@@ -11427,7 +11427,7 @@ var substr = 'ab'.substr(-1) === 'b'
 
 /***/ }),
 
-/***/ 352:
+/***/ 359:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/

@@ -24,46 +24,61 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page {
-  background: #F6F7F8;
+.user {
+  padding-top: 40rpx;
 }
-.published {
-  width: 100%;
+.user .icon-head {
+  width: 80rpx;
   height: 80rpx;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background: #fff;
+  float: left;
+}
+.user .icon-head image {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+.user .phone {
+  line-height: 80rpx;
+  margin-left: 15rpx;
+  color: #888;
+  font-size: 20rpx;
+}
+.box-center, .box-bottom {
+  margin-left: 95rpx;
+  margin-right: 30rpx;
+}
+.box-center .username {
+  color: #507daf;
+  margin-right: 20rpx;
+}
+.box-center .replayCount {
+  margin-top: 10rpx;
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: #F7F7E4;
+  color: #507daf;
+}
+.box-center .replay_content {
+  width: 100%;
+  height: 72rpx;
+  line-height: 72rpx;
+  background: #F7F7E4;
+  color: #507daf;
+}
+.box-center .replay_content .text {
+  color: #333;
+  margin-left: 20rpx;
+}
+.box-bottom {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
-  padding: 15rpx 0;
-  box-sizing: border-box;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
 }
-.published .input {
-  width: 580rpx;
-  height: 50rpx;
-  border: 2rpx solid #ccc;
-  border-radius: 10rpx;
-  margin-left: 10rpx;
-  padding-left: 20rpx;
-}
-.published .btn {
-  width: 120rpx;
-  height: 50rpx;
-  background: #41A5FD;
-  color: #fff;
-  font-size: 24rpx;
-  line-height: 50rpx;
-}
-.comments {
-  margin-top: 10rpx;
-  box-shadow: 2rpx 2rpx 10rpx #e3e2e2;
-  width: 710rpx;
-  margin: 0 auto;
-  border-radius: 20rpx;
-  padding: 0 0 40rpx 10rpx;
+.box-bottom .btns .praise-btn, .box-bottom .btns .comment-btn {
+  display: inline-block;
 }
 
