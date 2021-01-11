@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "praise": "/components/questions/praise",
+    "comment": "/components/questions/comment"
+  },
   "component": true
 }

@@ -1,0 +1,1 @@
+<view class="zan"><icon data-event-opts="{{[['tap',[['giveLike',['$event']]]]]}}" class="{{[up?'active':' ','iconfont','my-icon-dianzan']}}" catchtap="__e"></icon><text class="count">{{count}}</text></view>

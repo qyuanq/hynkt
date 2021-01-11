@@ -150,43 +150,49 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _comment = _interopRequireDefault(__webpack_require__(/*! ./comment */ 347));
-var _common = __webpack_require__(/*! ../../static/js/common.js */ 270);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default = { name: 'comment', components: [_comment.default], props: { comment: { type: Object }, userInfo: { type: Object } }, data: function data() {return { SERVER: this.development, children: null, countShow: true, commentPlaceholder: '', replyUserComment: null, isShow: false };}, methods: { getReplay: function getReplay(commentId) {var _this = this;this.request({ url: "".concat(this.SERVER, "/api/replays/").concat(commentId), method: 'get', success: function success(res) {_this.children = res.data.data.map(function (item) {item.date = (0, _common.renderTime)(item.date);return item;});console.log('children:', _this.children);_this.countShow = false;_this.$emit('getReplay', _this.children);} });
+
+
+
+var _common = __webpack_require__(/*! ../../static/js/common.js */ 270);var comment = function comment() {Promise.resolve(/*! require.ensure */).then((function () {return resolve(__webpack_require__(/*! ./comment */ 347));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var praise = function praise() {Promise.all(/*! require.ensure | components/questions/praise */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/questions/praise")]).then((function () {return resolve(__webpack_require__(/*! ./praise */ 401));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+{
+  name: 'comment',
+  components: { praise: praise, comment: comment },
+  props: {
+    comment: {
+      type: Object },
+
+    userInfo: {
+      type: Object } },
+
+
+  data: function data() {
+    return {
+      SERVER: this.development,
+      children: null,
+      countShow: true,
+      commentPlaceholder: '',
+      replyUserComment: null,
+      isShow: false,
+      url: '' };
+
+  },
+  created: function created() {
+    this.url = "".concat(this.SERVER, "/api/like?userId=").concat(this.userInfo.id, "&comentId=").concat(this.comment.id);
+  },
+  methods: {
+    getReplay: function getReplay(commentId) {var _this = this;
+      this.request({
+        url: "".concat(this.SERVER, "/api/replays/").concat(commentId),
+        method: 'get',
+        success: function success(res) {
+          _this.children = res.data.data.map(function (item) {
+            item.date = (0, _common.renderTime)(item.date);
+            return item;
+          });
+          console.log('children:', _this.children);
+          _this.countShow = false;
+          _this.$emit('getReplay', _this.children);
+        } });
 
     },
     replyUser: function replyUser(comment, level) {

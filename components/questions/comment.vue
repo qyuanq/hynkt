@@ -25,20 +25,22 @@
 		<!-- 点赞封装成组件 -->
 		<view class="box-bottom">
 			<view class="date">{{comment.date}}</view>
-			<view class="btns">
+			<!-- <view class="btns">
 				<view class="praise-btn"><icon :class="[up ? 'active' : ' ','iconfont','my-icon-dianzan',]" @tap.stop="giveLike"/><text class="count">{{praiseCount}}</text></view>
 				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon></view>
-			</view>
+			</view> -->
+			<praise :praiseCount="comment.praise" :url="url"></praise>
 		</view>
 	</view>
 </template>
 
 <script>
 	import comment from './comment';
+	import praise from './praise';
 	import {renderTime} from '../../static/js/common.js'
 	export default{
 		name:'comment',
-		components:[comment],
+		components:{praise,comment},
 		props:{
 			comment:{
 				type:Object
@@ -54,8 +56,12 @@
 				countShow:true,
 				commentPlaceholder:'',
 				replyUserComment:null,
-				isShow:false
+				isShow:false,
+				url:''
 			}
+		},
+		created(){
+			this.url = `${this.SERVER}/api/like?userId=${this.userInfo.id}&comentId=${this.comment.id}`
 		},
 		methods:{
 			getReplay(commentId){
