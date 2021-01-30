@@ -70,6 +70,9 @@
   color: #333;
   margin-left: 20rpx;
 }
+.box-center .more {
+  color: #507daf;
+}
 .box-bottom {
   display: -webkit-box;
   display: -webkit-flex;
@@ -80,5 +83,36 @@
 }
 .box-bottom .btns .praise-btn, .box-bottom .btns .comment-btn {
   display: inline-block;
+}
+.published {
+  width: 100%;
+  height: 80rpx;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  padding: 15rpx 0;
+  box-sizing: border-box;
+}
+.published .input {
+  width: 580rpx;
+  height: 50rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 10rpx;
+  margin-left: 10rpx;
+  padding-left: 20rpx;
+}
+.published .btn {
+  width: 120rpx;
+  height: 50rpx;
+  background: #41A5FD;
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 50rpx;
 }
 

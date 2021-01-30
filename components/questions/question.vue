@@ -8,8 +8,8 @@
 				<text class="phone">{{userInfo.phone}}</text>
 			</view>
 			<view class="btns">
-				<view class="zan"><icon :class="[up ? 'active' : ' ','iconfont','my-icon-dianzan',]" @tap.stop="giveLike"/><text class="count">{{praiseCount}}</text></view>
-				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">0</text></view>
+				<Praise class="zan" :praiseCount="praiseCount" :onLikeUrl="onLikeUrl" :isLikeUrl="isLikeUrl" @changeLike="changeLike"></Praise>
+				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">{{commentCounnt}}</text></view>
 				<!-- <icon class="iconfont my-icon-shanchu" /> -->
 				<slot></slot>
 			</view>
@@ -30,8 +30,12 @@
 </template>
 
 <script>
+	import Praise from './praise';
 	import {renderTime} from '../../static/js/common.js'
 	export default{
+		components:{
+			Praise
+		},
 		props:{
 			userInfo:{
 				type:Object
@@ -48,40 +52,29 @@
 			return{
 				SERVER:this.development,
 				up:false,		//点赞标识
-				date:null,
-				praiseCount:0   //点赞量			
+				date:null,		//发表时间
+				praiseCount:0,  //点赞量	
+				onLikeUrl:'',	//点赞请求url
+				isLikeUrl:''	//是否点赞标识url
+			}
+		},
+		computed:{
+			commentCounnt(){
+				// console.log('查看:',this.question);
+				return this.question.comment
 			}
 		},
 		methods:{
-			async giveLike(){
-				// 已点赞
-				if(this.up){
-					this.up = !this.up;
-					this.praiseCount -= 1;
-				}else{
-					this.up = !this.up;
-					this.praiseCount += 1;
-				}
-				// 发起请求
-				await this.request({
-					url:`${this.SERVER}/api/like?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`,
-					method:'get',
-					success:(res) => {
-						console.log(res)
-					}
-				});
+			// 接收点赞总数
+			changeLike(arg){
+				this.praiseCount = arg;
+				// 通知页面修改点赞总数，参数1：总数；参数2:question下标
 				uni.$emit('change_praise',[this.praiseCount,this.index]);
 			}
 		},
 		created(){
-			this.request({
-				url:`${this.SERVER}/api/isLike?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`,
-				method:'get',
-				success: (res) => {
-					// 获取点赞标识
-					this.up = res.data.data;
-				}
-			});
+			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
+			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
 			// 点赞总量
 			this.praiseCount = this.question.praise;
 			console.log('praise',this.question.praise);
@@ -142,6 +135,8 @@
 			.content{
 				width:100%;
 				height:auto;
+				word-wrap:break-word;
+				word-break:normal; 
 			}
 			.date{color:#ccc;font-size: 20rpx;}
 			.img{

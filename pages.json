@@ -58,7 +58,9 @@
         "navigationBarBackgroundColor" : "#007AFF",
         "backgroundColor" : "#FFFFFF",
 		"usingComponents": {  
-			"comment":"/components/questions/comment"  
+			"comment":"/components/questions/comment",
+			"van-action-sheet": "/static/vant-weapp/action-sheet/index",
+			"van-popup": "/static/vant-weapp/popup/index"
 		}  
     },
     "tabBar" : {
@@ -381,7 +383,8 @@
                     "style" : {
                         "navigationBarTitleText" : "视频提问",
                         "navigationBarBackgroundColor" : "#2890ff",
-                        "navigationBarTextStyle" : "#fff"
+                        "navigationBarTextStyle" : "#fff",
+						"enablePullDownRefresh":true
                     }
                 },
                 {

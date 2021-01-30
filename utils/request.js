@@ -29,4 +29,27 @@ const request = (options) => {
 	}
 }
 
-export default request
+// 分页请求
+import {renderTime} from '../static/js/common.js'
+const pageLoad = async(url,pageSize,comments) => {
+	const [error, res] = await request({
+		url:url,
+		method:'get'
+	})
+	console.log('res',res);
+	// 格式化后端返回的数据
+	let list = res.data.data.result;
+	// 请求初始数据
+	if(pageSize === 1){
+		comments = list;
+		let countPage = res.data.data.countPage;
+		return {comments,countPage}
+		console.log('分页评论值1：',comments);
+	}else{
+		// concat()合并两个数组不会改变原数组，赋值到comments
+		comments = comments.concat(list); 
+		console.log('分页评论值2：',comments);
+		return comments;
+	}
+}
+export {request,pageLoad}

@@ -41,13 +41,29 @@
 					method:'post',
 					data:data,
 					success: (res) => {
-						console.log(res.data)
-						if(uni.getStorageSync('token')){
-							uni.removeStorageSync('token')
-						}
+						// if(uni.getStorageSync('token')){
+						// 	uni.removeStorageSync('token')
+						// }
+						
+						// 存储token
 						uni.setStorage({
 							 key: 'token',
 							 data: res.data.data.token
+						})
+						// 携带token获取用户信息
+						uni.request({
+							url:'http://localhost:7001/api/user',
+							method:'get',
+							header:{
+								"Authorization":'Bearer ' + res.data.data.token
+							},
+							success:(res) => {
+								// 存储用户信息
+								uni.setStorage({
+									 key: 'user',
+									 data: res.data.data
+								})
+							}
 						})
 						uni.reLaunch({
 							url:`/pages/tabBar/index`

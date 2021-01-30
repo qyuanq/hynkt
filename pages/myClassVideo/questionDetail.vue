@@ -7,8 +7,7 @@
 			:key="item.id" 
 			:comment="item" 
 			:userInfo="userInfo"
-			@replyUser="replyUser($event,item,index)"
-			@getReplay="getReplay($event,item)"
+			@deleteComment="deleteComment"
 			>
 			</Comment>
 			<view class="published">
@@ -23,6 +22,7 @@
 	import Question from '../../components/questions/question'
 	import Comment from '../../components/questions/comment'
 	import {renderTime} from '../../static/js/common.js'
+	import {pageLoad} from '../../utils/request.js'
 	export default {
 		components:{
 			Question,
@@ -30,16 +30,20 @@
 		},
 		data() {
 			return {
-				question:null,
-				userInfo:null,
-				hackReset:true,
-				SERVER:this.development,
+				question:null,			//答疑详情
+				index:null,				//答疑列表索引
+				userInfo:null,			//评论持有者的用户名和头像
+				hackReset:true,			//用于刷新页面
+				SERVER:this.development,//服务器地址
 				commentPlaceholder:'请输入评论...',
 				content:'',				//评论内容v-model实现双向绑定
 				comments:[],			//评论
 				replyUserComment:'',	//评论对象
 				isOne:false,
-				text:''
+				text:'',
+				pageSize:1,				//当前分页页码
+				countPage:null,			//后端返回的总页码
+				myInfo:null				//当前用户信息
 			};
 		},
 		methods:{
@@ -51,21 +55,9 @@
 						title:'输入内容不能为空'
 					})
 				}else{
-					let AnserquestionModelId = '';
-					let CommentsModelId = '';
-					let to_user_id = '';
-					if(this.replyUserComment){
-						to_user_id = this.replyUserComment.UsersModelId;
-						CommentsModelId = this.replyUserComment.id;
-					}else{
-						// 添加根评论
-						AnserquestionModelId = this.question.id;
-					}
+					// 定义data传递给后端
 					let comment = {
-						AnserquestionModelId:AnserquestionModelId,
-						CommentsModelId:CommentsModelId,
-						to_user_id:to_user_id,
-						level:this.replyUserComment.index2,
+						AnserquestionModelId:this.question.id,
 						data:{
 							UsersModelId:this.question.UsersModelId,
 							content:this.content,
@@ -76,81 +68,92 @@
 						url:`${this.SERVER}/api/comments`,
 						method:'post',
 						data:comment,
-						success:(res) => {
+						success:async(res) => {
 							console.log('添加成功返回数据',res);
 							uni.showToast({
 								title:'评论成功'
 							})
+							
+							// 获取当前用户的信息
+							const [err,result] = await uni.getStorage({
+								key:'user'
+							});
+							console.log('我的信息',result.data);
+							this.myInfo = result.data;
+							
+							// 前端显示评论信息
 							let newComment = {
+								AnserquestionModelId:this.question.id,
+								UsersModelId:this.question.UsersModelId,
 								id:res.data.data.id,
 								content:this.content,
 								date:'刚刚',
 								users_model:{
-									icon:this.userInfo.icon,
-									username:this.userInfo.username
+									icon:this.myInfo.icon,
+									username:this.myInfo.username
 								}
 							}
-							if(!this.replyUserComment){
-								newComment.replay_models = [];
-								this.comments.unshift(newComment);
-								console.log('comments1:',this.comments);
-							}else{
-								let index = this.replyUserComment.index;
-								let index2 = this.replyUserComment.index2
-								if(index2){
-									// newComment.content = '回复@'+ this.replyUserComment.users_model.username + newComment.content;
-									newComment.level = 1;
-									newComment.to_user = {
-										username : this.replyUserComment.users_model.username
-									}
-									console.log("new",newComment);
-									this.comments[index].children.push(newComment);
-								}else{
-									if(this.replyUserComment.countShow){
-										console.log('comments',this.comments);
-										this.comments[index].text = this.content;
-										this.comments[index].replay_models.length = this.comments[index].replay_models.length ?this.comments[index].replay_models.length + 1 : 1;
-										console.log('回复数量：',this.comments[index].replay_models.length);
-									}else{
-										this.comments[index].children.unshift(newComment);
-									}
-								}
-							}
+							newComment.replay_models = [];
+							this.comments.unshift(newComment);
+							console.log('comments1:',this.comments);
 							this.content = '';
+							// 评论总数 +1
+							this.question.comment += 1;
+							console.log('迷茫的index',this.index);
+							uni.$emit('commentChange',[this.question.comment,this.index]);
 						}
 					})
 				}
 			},
-			// 回复用户评论
-			replyUser(args,item,index){
-				args = args.detail.__args__;
-				this.replyUserComment = args[0];	//保存评论对象
-				this.replyUserComment.index = index;
-				this.replyUserComment.id = item.id;	
-				this.commentPlaceholder = args[1];	//输入框提示文本
-				console.log('replyUserComment',this.replyUserComment)
-			},
-			getReplay(child,item){
-				item.children = child.detail.__args__[0];
-				console.log(item,this.comments);
+			// 删除评论
+			deleteComment:function(arg){
+				// 获取参数评论id
+				let commmentId = arg.detail.__args__[0];
+				this.comments.forEach((item,index) => {
+					if(item.id === commmentId){
+						this.comments.splice(index,1);
+					}
+				});
 			}
 		},
-		onLoad:function(options){
+		watch:{
+			'question.comment':{	//深度监听，监听对象的属性值变化
+				handler(val,oldVal){
+					// 通知videoQuestion修改评论总数
+					uni.$emit('commentChange',[val,this.index]);
+				},
+				deep:true
+			}
+		},
+		onLoad:async function(options){
 			this.question = JSON.parse(decodeURIComponent(options.question));
+			this.index = options.index;
 			this.userInfo = this.question.users_model;
 			console.log('提问详情',this.question)
-			this.request({
-				url:`${this.SERVER}/api/comments/${this.question.id}`,
-				method:'get',
-				success:(res) => {
-					this.comments = res.data.data.map(item => {
-						item.date = renderTime(item.date)
-						return item;
-					});
-					
-					console.log('评论',res.data);
-				}
-			})
+			let url = `${this.SERVER}/api/comments/${this.question.id}`;
+			let res = await this.pageLoad(url,this.pageSize,this.comments);
+			this.comments = res.comments.map(item => {
+				item.date = renderTime(item.date)
+				return item;
+			});
+			this.countPage = res.countPage;
+		},
+		// 上滑加载
+		onReachBottom:async function(){
+			// 当前页加 1
+			this.pageSize += 1;
+			// 判断pageSize 是不是最后一页
+			if(this.pageSize <= this.countPage){
+				let url = `${this.SERVER}/api/comments/${this.question.id}/${this.pageSize}`;
+				const res = await this.pageLoad(url,this.pageSize,this.comments);
+				console.log('上滑数据',res);
+				this.comments = res.map(item => {
+					item.date = renderTime(item.date)
+					return item;
+				});
+			}else{
+				console.log('没有数据了');
+			}
 		},
 		onShow() {
 			this.hackReset = false;
@@ -200,5 +203,6 @@ page{
 	margin:0 auto;
 	border-radius: 20rpx;
 	padding:0 0 40rpx 10rpx;
+	margin-bottom:80rpx;
 }
 </style>

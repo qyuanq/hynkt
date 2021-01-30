@@ -118,7 +118,9 @@
     ]
   },
   "usingComponents": {
-    "comment": "/components/questions/comment"
+    "comment": "/components/questions/comment",
+    "van-action-sheet": "/static/vant-weapp/action-sheet/index",
+    "van-popup": "/static/vant-weapp/popup/index"
   },
-  "sitemapLocation": "sitemap67.json"
+  "sitemapLocation": "sitemap64.json"
 }

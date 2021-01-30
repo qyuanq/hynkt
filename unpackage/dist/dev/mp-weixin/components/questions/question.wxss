@@ -86,6 +86,8 @@
 .question .center .content {
   width: 100%;
   height: auto;
+  word-wrap: break-word;
+  word-break: normal;
 }
 .question .center .date {
   color: #ccc;

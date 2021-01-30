@@ -2,6 +2,7 @@
   "navigationBarTitleText": "视频提问",
   "navigationBarBackgroundColor": "#2890ff",
   "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "question": "/components/questions/question"
   }

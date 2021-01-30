@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 21));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -146,8 +146,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _common = __webpack_require__(/*! ../../static/js/common.js */ 270);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+
+var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);var Praise = function Praise() {__webpack_require__.e(/*! require.ensure | components/questions/praise */ "components/questions/praise").then((function () {return resolve(__webpack_require__(/*! ./praise */ 362));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
+  components: {
+    Praise: Praise },
+
   props: {
     userInfo: {
       type: Object },
@@ -164,40 +168,29 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 270);function
     return {
       SERVER: this.development,
       up: false, //点赞标识
-      date: null,
-      praiseCount: 0 //点赞量			
+      date: null, //发表时间
+      praiseCount: 0, //点赞量	
+      onLikeUrl: '', //点赞请求url
+      isLikeUrl: '' //是否点赞标识url
     };
   },
-  methods: {
-    giveLike: function giveLike() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                // 已点赞
-                if (_this.up) {
-                  _this.up = !_this.up;
-                  _this.praiseCount -= 1;
-                } else {
-                  _this.up = !_this.up;
-                  _this.praiseCount += 1;
-                }
-                // 发起请求
-                _context.next = 3;return _this.request({
-                  url: "".concat(_this.SERVER, "/api/like?userId=").concat(_this.userInfo.id, "&anserQuestionId=").concat(_this.question.id),
-                  method: 'get',
-                  success: function success(res) {
-                    console.log(res);
-                  } });case 3:
-
-                uni.$emit('change_praise', [_this.praiseCount, _this.index]);case 4:case "end":return _context.stop();}}}, _callee);}))();
+  computed: {
+    commentCounnt: function commentCounnt() {
+      // console.log('查看:',this.question);
+      return this.question.comment;
     } },
 
-  created: function created() {var _this2 = this;
-    this.request({
-      url: "".concat(this.SERVER, "/api/isLike?userId=").concat(this.userInfo.id, "&anserQuestionId=").concat(this.question.id),
-      method: 'get',
-      success: function success(res) {
-        // 获取点赞标识
-        _this2.up = res.data.data;
-      } });
+  methods: {
+    // 接收点赞总数
+    changeLike: function changeLike(arg) {
+      this.praiseCount = arg;
+      // 通知页面修改点赞总数，参数1：总数；参数2:question下标
+      uni.$emit('change_praise', [this.praiseCount, this.index]);
+    } },
 
+  created: function created() {
+    this.onLikeUrl = "".concat(this.SERVER, "/api/like?userId=").concat(this.userInfo.id, "&anserQuestionId=").concat(this.question.id);
+    this.isLikeUrl = "".concat(this.SERVER, "/api/isLike?userId=").concat(this.userInfo.id, "&anserQuestionId=").concat(this.question.id);
     // 点赞总量
     this.praiseCount = this.question.praise;
     console.log('praise', this.question.praise);

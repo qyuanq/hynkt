@@ -17,7 +17,7 @@
 				SERVER:this.development,
 				fileList:[],
 				state:false,
-				filePath:' ',
+				filePath:'',
 				text:' ',
 				coureId:null
 			};
@@ -37,41 +37,67 @@
 				this.state = true;
 			},
 			submit(){
-				const token = uni.getStorageSync('token');
+				// 格式化当前时间
 				let date = renderTime(new Date());
-				console.log('date',date);
+				const token = uni.getStorageSync('token');
 				let source;
 				if(uni.getStorageSync('courceName') && uni.getStorageSync('vid_title')){
 					source = '视频 > ' + uni.getStorageSync('courceName') + uni.getStorageSync('vid_title');
 				}		
-				// 上传图片到服务器
-				uni.uploadFile({
-					url:`${this.SERVER}/api/answerQuestion`,
-					filePath: this.filePath,
-					name: 'file',
-					formData:{
-						'content':this.text,
-						'date':date,
-						'source':source,
-						'ClassSingleModelId':this.coureId
-					},
-					header:{
-						"Authorization":'Bearer ' + token,
-						'Content-Type': 'multipart/form-data;charset=utf-8'
-					},
-					success:(res) => {
-						if(res.statusCode === 200){
-							uni.showToast({
-								title:"提交成功",
-								icon:"none"
-							});
-							setTimeout(function(){
-								uni.navigateBack({delta:1})
-							},2000)
+				let data = {
+					'content':this.text,
+					'date':date,
+					'source':source,
+					'ClassSingleModelId':this.coureId
+				}
+				console.log('文件上传',this.filePath);
+				if(this.filePath){
+					console.log('有文件');
+					// 上传图片到服务器
+					uni.uploadFile({
+						url:`${this.SERVER}/api/answerQuestion`,
+						filePath: this.filePath,
+						name: 'file',
+						formData:data,
+						header:{
+							"Authorization":'Bearer ' + token,
+							'Content-Type': 'multipart/form-data;charset=utf-8'
+						},
+						success:(res) => {
+							if(res.statusCode === 200){
+								uni.showToast({
+									title:"提交成功",
+									icon:"none"
+								});
+								setTimeout(function(){
+									uni.navigateBack({delta:1})
+								},2000)
+							}
 						}
-					}
-					
-				});
+						
+					});
+				}else if(this.text && !this.filePath){
+					this.request({
+						url:`${this.SERVER}/api/answerQuestion`,
+						method:'post',
+						data:data,
+						success:(res) => {
+							if(res.statusCode === 200){
+								uni.showToast({
+									title:"提交成功",
+									icon:"none"
+								});
+								setTimeout(function(){
+									uni.navigateBack({delta:1})
+								},2000)
+							}
+						}
+					})
+				}else{
+					uni.showToast({
+						title:'输入不能为空'
+					})
+				}
 			}
 		},
 		onLoad:function(option){
