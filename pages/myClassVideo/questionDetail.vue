@@ -1,13 +1,19 @@
 <template>
 	<view>
-		<Question :question="question" :userInfo="userInfo" v-if="hackReset" ></Question>
+		<Question 
+			:question="question" 
+			:userInfo="userInfo" 
+			:index="index" 
+			v-if="hackReset"
+			@delete="deleteQuestion">
+		</Question>
 		<view class="comments">
 			<Comment 
-			v-for="(item,index) in comments" 
-			:key="item.id" 
-			:comment="item" 
-			:userInfo="userInfo"
-			@deleteComment="deleteComment"
+				v-for="(item,index) in comments" 
+				:key="item.id" 
+				:comment="item" 
+				:userInfo="userInfo"
+				@deleteComment="deleteComment"
 			>
 			</Comment>
 			<view class="published">
@@ -114,6 +120,13 @@
 						this.comments.splice(index,1);
 					}
 				});
+			},
+			// 删除答疑
+			deleteQuestion(index){
+				this.hackReset = false;
+				uni.navigateBack({
+					 delta: 1
+				})
 			}
 		},
 		watch:{
@@ -126,16 +139,25 @@
 			}
 		},
 		onLoad:async function(options){
-			this.question = JSON.parse(decodeURIComponent(options.question));
+			// 接收url传递的参数
+			const questionId = options.questionId;
 			this.index = options.index;
+			// 获答疑详情
+			const [err,result] = await this.request({
+				url:`${this.SERVER}/api/questionsDetail/${questionId}`,
+				method:'get'
+			});
+			this.question = result.data.data;
 			this.userInfo = this.question.users_model;
-			console.log('提问详情',this.question)
+			
+			// 分页获取评论信息
 			let url = `${this.SERVER}/api/comments/${this.question.id}`;
 			let res = await this.pageLoad(url,this.pageSize,this.comments);
 			this.comments = res.comments.map(item => {
 				item.date = renderTime(item.date)
 				return item;
 			});
+			// 共多少分页
 			this.countPage = res.countPage;
 		},
 		// 上滑加载

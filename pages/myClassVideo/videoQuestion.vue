@@ -7,6 +7,7 @@
 			:userInfo="item.users_model" 
 			:index="index" 
 			:key="item.id" 
+			@delete="deleteQuestion"
 			@tap="onDetail(item,index)">
 			</Question>
 		</view>
@@ -45,8 +46,12 @@
 			// 跳转答疑详情
 			onDetail(question,index){
 				uni.navigateTo({
-					url:`./questionDetail?question=${encodeURIComponent(JSON.stringify(question))}&index=${index}`
+					url:`./questionDetail?questionId=${question.id}&index=${index}`
 				})
+			},
+			// 删除答疑
+			deleteQuestion(index){
+				this.question.splice(index,1);
 			}
 		},
 		mounted(){
@@ -55,13 +60,13 @@
 				const index = arg[1];
 				// this.$set(this.question[arg[1]],'praise',arg[0]);
 				this.question[index].praise = arg[0];
-				console.log('测试',this.question[index].praise);
+				console.log('综合测试',this.question[index].praise);
 			});
 			uni.$on('commentChange',(arg) => {
 				console.log('评论参数',arg);
 				const index = arg[1];
 				this.question[index].comment = arg[0];
-			})
+			});
 		},
 		// 刷新页面：与questionDetail点赞数保持一致
 		onShow:function(){
@@ -69,12 +74,14 @@
 			this.$nextTick(() => {
 				this.sonRefresh= true;
 			});
-			// this.onLoad();
-			// 进入页面执行下拉刷新
+			//进入页面执行下拉刷新
 			uni.startPullDownRefresh();
 		},
 		onLoad: async function(option){
-			this.coureId = option.id;
+			if(option){
+				this.coureId = option.id
+			}
+			// this.coureId = option.id || this.coureId;
 			// 获取答疑
 			let url = `${this.SERVER}/api/answerQuestions/${this.coureId}`;
 			const result = await this.pageLoad(url,this.pageSize,this.question);

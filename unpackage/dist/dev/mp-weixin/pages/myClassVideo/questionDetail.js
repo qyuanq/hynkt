@@ -153,6 +153,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
 var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);
 var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Question = function Question() {Promise.all(/*! require.ensure | components/questions/question */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/questions/question")]).then((function () {return resolve(__webpack_require__(/*! ../../components/questions/question */ 340));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var Comment = function Comment() {__webpack_require__.e(/*! require.ensure | components/questions/comment */ "components/questions/comment").then((function () {return resolve(__webpack_require__(/*! ../../components/questions/comment */ 347));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
@@ -246,6 +252,13 @@ var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _i
           _this2.comments.splice(index, 1);
         }
       });
+    },
+    // 删除答疑
+    deleteQuestion: function deleteQuestion(index) {
+      this.hackReset = false;
+      uni.navigateBack({
+        delta: 1 });
+
     } },
 
   watch: {
@@ -257,18 +270,27 @@ var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _i
       deep: true } },
 
 
-  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(options) {var url, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
-              this.question = JSON.parse(decodeURIComponent(options.question));
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(options) {var questionId, _yield$this$request, _yield$this$request2, err, result, url, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+              // 接收url传递的参数
+              questionId = options.questionId;
               this.index = options.index;
+              // 获答疑详情
+              _context2.next = 4;return this.request({
+                url: "".concat(this.SERVER, "/api/questionsDetail/").concat(questionId),
+                method: 'get' });case 4:_yield$this$request = _context2.sent;_yield$this$request2 = _slicedToArray(_yield$this$request, 2);err = _yield$this$request2[0];result = _yield$this$request2[1];
+
+              this.question = result.data.data;
               this.userInfo = this.question.users_model;
-              console.log('提问详情', this.question);
-              url = "".concat(this.SERVER, "/api/comments/").concat(this.question.id);_context2.next = 7;return (
-                this.pageLoad(url, this.pageSize, this.comments));case 7:res = _context2.sent;
+
+              // 分页获取评论信息
+              url = "".concat(this.SERVER, "/api/comments/").concat(this.question.id);_context2.next = 13;return (
+                this.pageLoad(url, this.pageSize, this.comments));case 13:res = _context2.sent;
               this.comments = res.comments.map(function (item) {
                 item.date = (0, _common.renderTime)(item.date);
                 return item;
               });
-              this.countPage = res.countPage;case 10:case "end":return _context2.stop();}}}, _callee2, this);}));function onLoad(_x2) {return _onLoad.apply(this, arguments);}return onLoad;}(),
+              // 共多少分页
+              this.countPage = res.countPage;case 16:case "end":return _context2.stop();}}}, _callee2, this);}));function onLoad(_x2) {return _onLoad.apply(this, arguments);}return onLoad;}(),
 
   // 上滑加载
   onReachBottom: function () {var _onReachBottom = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var url, res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:

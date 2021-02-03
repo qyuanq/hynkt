@@ -59,12 +59,6 @@
           "name": "login",
           "id": 0,
           "pathName": "pages/public/login"
-        },
-        {
-          "id": 1,
-          "name": "pages/public/login",
-          "pathName": "pages/public/login",
-          "query": ""
         }
       ]
     }

@@ -10,8 +10,7 @@
 			<view class="btns">
 				<Praise class="zan" :praiseCount="praiseCount" :onLikeUrl="onLikeUrl" :isLikeUrl="isLikeUrl" @changeLike="changeLike"></Praise>
 				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">{{commentCounnt}}</text></view>
-				<!-- <icon class="iconfont my-icon-shanchu" /> -->
-				<slot></slot>
+				<icon class="iconfont my-icon-shanchu" v-if="userInfo.id === currentUserId" @tap.stop="deleteQuestion(question.id)" />
 			</view>
 		</view>
 		<view class="center">
@@ -51,36 +50,60 @@
 		data(){
 			return{
 				SERVER:this.development,
-				up:false,		//点赞标识
 				date:null,		//发表时间
-				praiseCount:0,  //点赞量	
 				onLikeUrl:'',	//点赞请求url
-				isLikeUrl:''	//是否点赞标识url
+				isLikeUrl:'',	//是否点赞标识url
+				currentUserId:null //当前用户id
 			}
 		},
 		computed:{
 			commentCounnt(){
-				// console.log('查看:',this.question);
 				return this.question.comment
+			},
+			// 点赞总量
+			praiseCount(){
+				console.log('questionpraise',this.question.praise);
+				return this.question.praise
 			}
 		},
 		methods:{
 			// 接收点赞总数
 			changeLike(arg){
-				this.praiseCount = arg;
+				// this.praiseCount = arg;
+				console.log('question接收改变praiseCount',arg)
 				// 通知页面修改点赞总数，参数1：总数；参数2:question下标
-				uni.$emit('change_praise',[this.praiseCount,this.index]);
+				uni.$emit('change_praise',[arg,this.index]);
+			},
+			// 删除该用户的答疑
+			async deleteQuestion(id){
+				const [err,res] = await uni.showModal({
+					content:"确定要删除吗?"
+				})
+				if(res.confirm){
+					const [errdelete,resultdelete] = await this.request({
+						url:`${this.SERVER}/api/answerQuestions/${id}`,
+						method:'delete'
+					})
+					if(resultdelete.data.data){
+						uni.showToast({
+							title:'删除成功'
+						});
+						// 通知页父组件我删除了，参数1：总数；参数2:question下标
+						this.$emit('delete',this.index);
+					}
+				}
 			}
 		},
-		created(){
+		async created(){
+			// 获取当前用户id
+			const [err,res] = await uni.getStorage({
+				key:'user'
+			})
+			this.currentUserId = res.data.id;
 			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
 			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
-			// 点赞总量
-			this.praiseCount = this.question.praise;
-			console.log('praise',this.question.praise);
 			// 日期时间格式化
 			this.date = renderTime(this.question.date);
-			console.log('date详情值',this.date,this.question.date);
 		}
 	}
 </script>

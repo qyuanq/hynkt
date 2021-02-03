@@ -52,7 +52,6 @@
 				}
 				console.log('文件上传',this.filePath);
 				if(this.filePath){
-					console.log('有文件');
 					// 上传图片到服务器
 					uni.uploadFile({
 						url:`${this.SERVER}/api/answerQuestion`,
@@ -76,7 +75,7 @@
 						}
 						
 					});
-				}else if(this.text && !this.filePath){
+				}else if(this.text !== ' ' && !this.filePath){
 					this.request({
 						url:`${this.SERVER}/api/answerQuestion`,
 						method:'post',
@@ -88,7 +87,13 @@
 									icon:"none"
 								});
 								setTimeout(function(){
-									uni.navigateBack({delta:1})
+									// const pages = getCurrentPages(); // 可以获取当前页面栈,上一个页面以及当前页面栈信息
+									// console.log(pages); // 是一个数组，记录了上一个页面与当前页面信息
+									// // 取到上一个页面
+									// const prevPage = pages[pages.length - 2]; // 获取第0个页面,也就是上个页面
+									// console.log(prevPage);
+									// prevPage.onLoad(); // 可以调用上一页面的方法
+									uni.navigateBack({url:'./videoQuestion?id=1'})
 								},2000)
 							}
 						}

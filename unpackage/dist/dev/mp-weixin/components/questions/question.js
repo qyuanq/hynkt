@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 12));
 
 
 
@@ -146,8 +146,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);var Praise = function Praise() {__webpack_require__.e(/*! require.ensure | components/questions/praise */ "components/questions/praise").then((function () {return resolve(__webpack_require__(/*! ./praise */ 362));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var Praise = function Praise() {__webpack_require__.e(/*! require.ensure | components/questions/praise */ "components/questions/praise").then((function () {return resolve(__webpack_require__(/*! ./praise */ 362));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     Praise: Praise },
@@ -167,36 +166,60 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);var Prais
   data: function data() {
     return {
       SERVER: this.development,
-      up: false, //点赞标识
       date: null, //发表时间
-      praiseCount: 0, //点赞量	
       onLikeUrl: '', //点赞请求url
-      isLikeUrl: '' //是否点赞标识url
+      isLikeUrl: '', //是否点赞标识url
+      currentUserId: null //当前用户id
     };
   },
   computed: {
     commentCounnt: function commentCounnt() {
-      // console.log('查看:',this.question);
       return this.question.comment;
+    },
+    // 点赞总量
+    praiseCount: function praiseCount() {
+      console.log('questionpraise', this.question.praise);
+      return this.question.praise;
     } },
 
   methods: {
     // 接收点赞总数
     changeLike: function changeLike(arg) {
-      this.praiseCount = arg;
+      // this.praiseCount = arg;
+      console.log('question接收改变praiseCount', arg);
       // 通知页面修改点赞总数，参数1：总数；参数2:question下标
-      uni.$emit('change_praise', [this.praiseCount, this.index]);
+      uni.$emit('change_praise', [arg, this.index]);
+    },
+    // 删除该用户的答疑
+    deleteQuestion: function deleteQuestion(id) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$uni$showModal, _yield$uni$showModal2, err, res, _yield$_this$request, _yield$_this$request2, errdelete, resultdelete;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+                  uni.showModal({
+                    content: "确定要删除吗?" }));case 2:_yield$uni$showModal = _context.sent;_yield$uni$showModal2 = _slicedToArray(_yield$uni$showModal, 2);err = _yield$uni$showModal2[0];res = _yield$uni$showModal2[1];if (!
+
+                res.confirm) {_context.next = 14;break;}_context.next = 9;return (
+                  _this.request({
+                    url: "".concat(_this.SERVER, "/api/answerQuestions/").concat(id),
+                    method: 'delete' }));case 9:_yield$_this$request = _context.sent;_yield$_this$request2 = _slicedToArray(_yield$_this$request, 2);errdelete = _yield$_this$request2[0];resultdelete = _yield$_this$request2[1];
+
+                if (resultdelete.data.data) {
+                  uni.showToast({
+                    title: '删除成功' });
+
+                  // 通知页父组件我删除了，参数1：总数；参数2:question下标
+                  _this.$emit('delete', _this.index);
+                }case 14:case "end":return _context.stop();}}}, _callee);}))();
+
     } },
 
-  created: function created() {
-    this.onLikeUrl = "".concat(this.SERVER, "/api/like?userId=").concat(this.userInfo.id, "&anserQuestionId=").concat(this.question.id);
-    this.isLikeUrl = "".concat(this.SERVER, "/api/isLike?userId=").concat(this.userInfo.id, "&anserQuestionId=").concat(this.question.id);
-    // 点赞总量
-    this.praiseCount = this.question.praise;
-    console.log('praise', this.question.praise);
-    // 日期时间格式化
-    this.date = (0, _common.renderTime)(this.question.date);
-    console.log('date详情值', this.date, this.question.date);
+  created: function created() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getStorage, _yield$uni$getStorage2, err, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
+
+                uni.getStorage({
+                  key: 'user' }));case 2:_yield$uni$getStorage = _context2.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];res = _yield$uni$getStorage2[1];
+
+              _this2.currentUserId = res.data.id;
+              _this2.onLikeUrl = "".concat(_this2.SERVER, "/api/like?userId=").concat(_this2.userInfo.id, "&anserQuestionId=").concat(_this2.question.id);
+              _this2.isLikeUrl = "".concat(_this2.SERVER, "/api/isLike?userId=").concat(_this2.userInfo.id, "&anserQuestionId=").concat(_this2.question.id);
+              // 日期时间格式化
+              _this2.date = (0, _common.renderTime)(_this2.question.date);case 10:case "end":return _context2.stop();}}}, _callee2);}))();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -153,6 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   components: { Question: Question },
   data: function data() {
@@ -177,8 +178,12 @@ __webpack_require__.r(__webpack_exports__);
     // 跳转答疑详情
     onDetail: function onDetail(question, index) {
       uni.navigateTo({
-        url: "./questionDetail?question=".concat(encodeURIComponent(JSON.stringify(question)), "&index=").concat(index) });
+        url: "./questionDetail?questionId=".concat(question.id, "&index=").concat(index) });
 
+    },
+    // 删除答疑
+    deleteQuestion: function deleteQuestion(index) {
+      this.question.splice(index, 1);
     } },
 
   mounted: function mounted() {var _this = this;
@@ -187,7 +192,7 @@ __webpack_require__.r(__webpack_exports__);
       var index = arg[1];
       // this.$set(this.question[arg[1]],'praise',arg[0]);
       _this.question[index].praise = arg[0];
-      console.log('测试', _this.question[index].praise);
+      console.log('综合测试', _this.question[index].praise);
     });
     uni.$on('commentChange', function (arg) {
       console.log('评论参数', arg);
@@ -201,12 +206,14 @@ __webpack_require__.r(__webpack_exports__);
     this.$nextTick(function () {
       _this2.sonRefresh = true;
     });
-    // this.onLoad();
-    // 进入页面执行下拉刷新
+    //进入页面执行下拉刷新
     uni.startPullDownRefresh();
   },
   onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var url, result, _yield$uni$getStorage, _yield$uni$getStorage2, err, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              this.coureId = option.id;
+              if (option) {
+                this.coureId = option.id;
+              }
+              // this.coureId = option.id || this.coureId;
               // 获取答疑
               url = "".concat(this.SERVER, "/api/answerQuestions/").concat(this.coureId);_context.next = 4;return (
                 this.pageLoad(url, this.pageSize, this.question));case 4:result = _context.sent;
