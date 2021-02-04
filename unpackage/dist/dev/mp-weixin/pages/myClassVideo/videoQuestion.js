@@ -207,7 +207,7 @@ __webpack_require__.r(__webpack_exports__);
       _this2.sonRefresh = true;
     });
     //进入页面执行下拉刷新
-    uni.startPullDownRefresh();
+    // uni.startPullDownRefresh();
   },
   onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var url, result, _yield$uni$getStorage, _yield$uni$getStorage2, err, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
               if (option) {

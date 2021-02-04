@@ -94,17 +94,15 @@
 				}
 			}
 		},
-		async created(){
+		created(){
 			// 获取当前用户id
-			const [err,res] = await uni.getStorage({
-				key:'user'
-			})
-			this.currentUserId = res.data.id;
+			this.currentUserId = uni.getStorageSync('user').id
 			console.log('当前用户',this.currentUserId,this.question);
 			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
 			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
 			// 日期时间格式化
 			this.date = renderTime(this.question.date);
+			console.log('question看看');
 		}
 	}
 </script>

@@ -145,49 +145,50 @@ var _default =
   },
   watch: {
     // 监听props praiseCount的变化
-    praiseCount: function praiseCount() {
+    praiseCount: function praiseCount() {var _this = this;
       // props数据变了,更新data  count的值
       this.count = this.praiseCount;
-      // this.request({
-      // 	url:this.isLikeUrl,
-      // 	method:'get',
-      // 	success: (res) => {
-      // 		// 获取点赞标识
-      // 		this.up = res.data.data;
-      // 	}
-      // });
+      this.request({
+        url: this.isLikeUrl,
+        method: 'get',
+        success: function success(res) {
+          // 获取点赞标识
+          _this.up = res.data.data;
+          console.log('是否点赞', _this.up);
+        } });
+
     } },
 
-  created: function created() {var _this = this;
+  created: function created() {var _this2 = this;
     this.request({
       url: this.isLikeUrl,
       method: 'get',
       success: function success(res) {
         // 获取点赞标识
-        _this.up = res.data.data;
-        console.log('是否点赞', _this.up);
+        _this2.up = res.data.data;
+        console.log('是否点赞', _this2.up);
       } });
 
   },
   methods: {
     // 接收一个url参数，告诉父组件，数量变了
-    giveLike: function giveLike() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+    giveLike: function giveLike() {var _this3 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
 
-                  _this2.request({
-                    url: _this2.onLikeUrl,
+                  _this3.request({
+                    url: _this3.onLikeUrl,
                     method: 'get',
                     success: function success(res) {
                       // 已点赞
-                      if (_this2.up) {
-                        _this2.up = !_this2.up;
-                        _this2.count -= 1;
+                      if (_this3.up) {
+                        _this3.up = !_this3.up;
+                        _this3.count -= 1;
                       } else {
                         // 未点赞
-                        _this2.up = !_this2.up;
-                        _this2.count += 1;
+                        _this3.up = !_this3.up;
+                        _this3.count += 1;
                       }
                       // 通知父组件 点赞总数发生变化
-                      _this2.$emit('changeLike', _this2.count);
+                      _this3.$emit('changeLike', _this3.count);
                     } }));case 2:case "end":return _context.stop();}}}, _callee);}))();
 
     } } };exports.default = _default;

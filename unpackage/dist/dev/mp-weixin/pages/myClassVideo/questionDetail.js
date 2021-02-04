@@ -216,7 +216,6 @@ var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _i
                       _context.next = 4;return uni.getStorage({
                         key: 'user' });case 4:_yield$uni$getStorage = _context.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];result = _yield$uni$getStorage2[1];
 
-                      console.log('我的信息', result.data);
                       _this.myInfo = result.data;
 
                       // 前端显示评论信息
@@ -238,7 +237,7 @@ var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _i
                       // 评论总数 +1
                       _this.question.comment += 1;
                       console.log('迷茫的index', _this.index);
-                      uni.$emit('commentChange', [_this.question.comment, _this.index]);case 18:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                      uni.$emit('commentChange', [_this.question.comment, _this.index]);case 17:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
       }

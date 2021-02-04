@@ -6,7 +6,7 @@ import store from './store'
 
 
 Vue.config.productionTip = false
-Vue.prototype.server = 'http://localhost:7001/public'
+Vue.prototype.server = 'http://192.168.3.7:7001/public'
 // Vue.prototype.development = 'http://localhost:7001'
 Vue.prototype.development = 'http://192.168.3.7:7001'
 Vue.prototype.request = request

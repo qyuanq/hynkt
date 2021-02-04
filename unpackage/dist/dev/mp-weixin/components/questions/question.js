@@ -210,17 +210,15 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
 
     } },
 
-  created: function created() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$uni$getStorage, _yield$uni$getStorage2, err, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-
-                uni.getStorage({
-                  key: 'user' }));case 2:_yield$uni$getStorage = _context2.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];res = _yield$uni$getStorage2[1];
-
-              _this2.currentUserId = res.data.id;
-              console.log('当前用户', _this2.currentUserId, _this2.question);
-              _this2.onLikeUrl = "".concat(_this2.SERVER, "/api/like?userId=").concat(_this2.currentUserId, "&anserQuestionId=").concat(_this2.question.id);
-              _this2.isLikeUrl = "".concat(_this2.SERVER, "/api/isLike?userId=").concat(_this2.currentUserId, "&anserQuestionId=").concat(_this2.question.id);
-              // 日期时间格式化
-              _this2.date = (0, _common.renderTime)(_this2.question.date);case 11:case "end":return _context2.stop();}}}, _callee2);}))();
+  created: function created() {
+    // 获取当前用户id
+    this.currentUserId = uni.getStorageSync('user').id;
+    console.log('当前用户', this.currentUserId, this.question);
+    this.onLikeUrl = "".concat(this.SERVER, "/api/like?userId=").concat(this.currentUserId, "&anserQuestionId=").concat(this.question.id);
+    this.isLikeUrl = "".concat(this.SERVER, "/api/isLike?userId=").concat(this.currentUserId, "&anserQuestionId=").concat(this.question.id);
+    // 日期时间格式化
+    this.date = (0, _common.renderTime)(this.question.date);
+    console.log('question看看');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

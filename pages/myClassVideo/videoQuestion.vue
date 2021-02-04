@@ -75,7 +75,7 @@
 				this.sonRefresh= true;
 			});
 			//进入页面执行下拉刷新
-			uni.startPullDownRefresh();
+			// uni.startPullDownRefresh();
 		},
 		onLoad: async function(option){
 			if(option){

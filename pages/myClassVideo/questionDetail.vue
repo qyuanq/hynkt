@@ -84,7 +84,6 @@
 							const [err,result] = await uni.getStorage({
 								key:'user'
 							});
-							console.log('我的信息',result.data);
 							this.myInfo = result.data;
 							
 							// 前端显示评论信息

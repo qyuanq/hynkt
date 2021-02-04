@@ -32,14 +32,15 @@
 			praiseCount(){
 				// props数据变了,更新data  count的值
 				this.count = this.praiseCount;
-				// this.request({
-				// 	url:this.isLikeUrl,
-				// 	method:'get',
-				// 	success: (res) => {
-				// 		// 获取点赞标识
-				// 		this.up = res.data.data;
-				// 	}
-				// });
+				this.request({
+					url:this.isLikeUrl,
+					method:'get',
+					success: (res) => {
+						// 获取点赞标识
+						this.up = res.data.data;
+						console.log('是否点赞',this.up);
+					}
+				});
 			}
 		},
 		created(){
