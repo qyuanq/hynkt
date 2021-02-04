@@ -9,7 +9,7 @@
 			</view>
 			<view class="btns">
 				<Praise class="zan" :praiseCount="praiseCount" :onLikeUrl="onLikeUrl" :isLikeUrl="isLikeUrl" @changeLike="changeLike"></Praise>
-				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">{{commentCounnt}}</text></view>
+				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">{{commentCount}}</text></view>
 				<icon class="iconfont my-icon-shanchu" v-if="userInfo.id === currentUserId" @tap.stop="deleteQuestion(question.id)" />
 			</view>
 		</view>
@@ -57,7 +57,7 @@
 			}
 		},
 		computed:{
-			commentCounnt(){
+			commentCount(){
 				return this.question.comment
 			},
 			// 点赞总量
@@ -100,8 +100,9 @@
 				key:'user'
 			})
 			this.currentUserId = res.data.id;
-			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
-			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.userInfo.id}&anserQuestionId=${this.question.id}`;
+			console.log('当前用户',this.currentUserId,this.question);
+			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
+			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
 			// 日期时间格式化
 			this.date = renderTime(this.question.date);
 		}

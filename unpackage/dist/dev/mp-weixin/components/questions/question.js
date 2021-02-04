@@ -173,7 +173,7 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
     };
   },
   computed: {
-    commentCounnt: function commentCounnt() {
+    commentCount: function commentCount() {
       return this.question.comment;
     },
     // 点赞总量
@@ -216,10 +216,11 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
                   key: 'user' }));case 2:_yield$uni$getStorage = _context2.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];res = _yield$uni$getStorage2[1];
 
               _this2.currentUserId = res.data.id;
-              _this2.onLikeUrl = "".concat(_this2.SERVER, "/api/like?userId=").concat(_this2.userInfo.id, "&anserQuestionId=").concat(_this2.question.id);
-              _this2.isLikeUrl = "".concat(_this2.SERVER, "/api/isLike?userId=").concat(_this2.userInfo.id, "&anserQuestionId=").concat(_this2.question.id);
+              console.log('当前用户', _this2.currentUserId, _this2.question);
+              _this2.onLikeUrl = "".concat(_this2.SERVER, "/api/like?userId=").concat(_this2.currentUserId, "&anserQuestionId=").concat(_this2.question.id);
+              _this2.isLikeUrl = "".concat(_this2.SERVER, "/api/isLike?userId=").concat(_this2.currentUserId, "&anserQuestionId=").concat(_this2.question.id);
               // 日期时间格式化
-              _this2.date = (0, _common.renderTime)(_this2.question.date);case 10:case "end":return _context2.stop();}}}, _callee2);}))();
+              _this2.date = (0, _common.renderTime)(_this2.question.date);case 11:case "end":return _context2.stop();}}}, _callee2);}))();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

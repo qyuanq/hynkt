@@ -176,9 +176,9 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     // 跳转答疑详情
-    onDetail: function onDetail(question, index) {
+    onDetail: function onDetail(questionId, index) {
       uni.navigateTo({
-        url: "./questionDetail?questionId=".concat(question.id, "&index=").concat(index) });
+        url: "./questionDetail?questionId=".concat(questionId, "&index=").concat(index) });
 
     },
     // 删除答疑

@@ -164,12 +164,13 @@ var _default =
   },
   methods: {
     onLogin: function onLogin() {
+      console.log('登录了');
       var data = {
         phone: this.phone,
         password: this.password };
 
       uni.request({
-        url: 'http://localhost:7001/login',
+        url: 'http://192.168.3.7:7001/login',
         method: 'post',
         data: data,
         success: function success(res) {

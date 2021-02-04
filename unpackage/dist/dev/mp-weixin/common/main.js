@@ -16,7 +16,8 @@ var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 16));func
 
 _vue.default.config.productionTip = false;
 _vue.default.prototype.server = 'http://localhost:7001/public';
-_vue.default.prototype.development = 'http://localhost:7001';
+// Vue.prototype.development = 'http://localhost:7001'
+_vue.default.prototype.development = 'http://192.168.3.7:7001';
 _vue.default.prototype.request = _request.request;
 _vue.default.prototype.pageLoad = _request.pageLoad;
 // 把vuex定义全局组件

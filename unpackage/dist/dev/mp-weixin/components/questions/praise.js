@@ -165,6 +165,7 @@ var _default =
       success: function success(res) {
         // 获取点赞标识
         _this.up = res.data.data;
+        console.log('是否点赞', _this.up);
       } });
 
   },

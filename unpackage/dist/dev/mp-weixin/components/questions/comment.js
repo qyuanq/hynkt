@@ -206,39 +206,47 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
       myInfo: null //当前用户信息
     };
   },
+  created: function created() {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$uni$getStorage, _yield$uni$getStorage2, err, result;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
+
+                uni.getStorage({
+                  key: 'user' }));case 2:_yield$uni$getStorage = _context.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];result = _yield$uni$getStorage2[1];
+
+              console.log('我的信息', result.data);
+              _this.myInfo = result.data;case 8:case "end":return _context.stop();}}}, _callee);}))();
+  },
   computed: {
     commentData: function commentData() {
       return this.comment;
     },
     // 点赞url
     onLikeUrl: function onLikeUrl() {
-      return this.comment.CommentsModelId ? "".concat(this.SERVER, "/api/like?userId=").concat(this.userInfo.id, "&replayId=").concat(this.comment.id) : "".concat(this.SERVER, "/api/like?userId=").concat(this.userInfo.id, "&commentId=").concat(this.comment.id);
+      return this.comment.CommentsModelId ? "".concat(this.SERVER, "/api/like?userId=").concat(this.myInfo.id, "&replayId=").concat(this.comment.id) : "".concat(this.SERVER, "/api/like?userId=").concat(this.myInfo.id, "&commentId=").concat(this.comment.id);
     },
     // 点赞状态url
     isLikeUrl: function isLikeUrl() {
-      return this.comment.CommentsModelId ? "".concat(this.SERVER, "/api/isLike?userId=").concat(this.userInfo.id, "&replayId=").concat(this.comment.id) : "".concat(this.SERVER, "/api/isLike?userId=").concat(this.userInfo.id, "&commentId=").concat(this.comment.id);
+      return this.comment.CommentsModelId ? "".concat(this.SERVER, "/api/isLike?userId=").concat(this.myInfo.id, "&replayId=").concat(this.comment.id) : "".concat(this.SERVER, "/api/isLike?userId=").concat(this.myInfo.id, "&commentId=").concat(this.comment.id);
     } },
 
   methods: {
     // 获取全部回复，参数：评论id
-    getReplay: function getReplay(commentId) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var url, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                url = "".concat(_this.SERVER, "/api/replays/").concat(commentId);_context.next = 3;return (
-                  _this.pageLoad(url, _this.pageSize, _this.children));case 3:res = _context.sent;
+    getReplay: function getReplay(commentId) {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var url, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+                url = "".concat(_this2.SERVER, "/api/replays/").concat(commentId);_context2.next = 3;return (
+                  _this2.pageLoad(url, _this2.pageSize, _this2.children));case 3:res = _context2.sent;
                 console.log('回复第一页', res);
-                _this.children = res.comments.map(function (item) {
+                _this2.children = res.comments.map(function (item) {
                   // 格式化时间
                   item.date = (0, _common.renderTime)(item.date);
                   // 回复存储答疑id
-                  item.AnserquestionModelId = _this.commentData.AnserquestionModelId;
+                  item.AnserquestionModelId = _this2.commentData.AnserquestionModelId;
                   return item;
                 });
                 // 将回复挂载到评论上
-                _this.commentData.children = _this.children;
-                console.log('children:', _this.children);
+                _this2.commentData.children = _this2.children;
+                console.log('children:', _this2.children);
                 // 不显示等多少条回复
-                _this.countShow = false;
+                _this2.countShow = false;
                 // 设置分页页码
-                _this.countPage = res.countPage;case 10:case "end":return _context.stop();}}}, _callee);}))();
+                _this2.countPage = res.countPage;case 10:case "end":return _context2.stop();}}}, _callee2);}))();
     },
     replyUser: function replyUser(comment) {
       // 调起回复输入框
@@ -256,7 +264,7 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
       this.btnShow = false;
     },
     // 回复评论
-    submit: function submit() {var _this2 = this;
+    submit: function submit() {var _this3 = this;
       // 定义当前时间
       var myDate = (0, _common.renderTime)(new Date());
       if (this.content == "") {
@@ -287,72 +295,64 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
           url: "".concat(this.SERVER, "/api/comments"),
           method: 'post',
           data: comment,
-          success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var _yield$uni$getStorage, _yield$uni$getStorage2, err, result, newComment, index2;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+          success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(res) {var newComment, index2;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
                       console.log('添加成功返回数据', comment);
                       uni.showToast({
                         title: '评论成功' });
 
-
-                      // 获取当前用户的信息
-                      _context2.next = 4;return uni.getStorage({
-                        key: 'user' });case 4:_yield$uni$getStorage = _context2.sent;_yield$uni$getStorage2 = _slicedToArray(_yield$uni$getStorage, 2);err = _yield$uni$getStorage2[0];result = _yield$uni$getStorage2[1];
-
-                      console.log('我的信息', result.data);
-                      _this2.myInfo = result.data;
-
                       // 前端显示评论信息
                       newComment = {
-                        AnserquestionModelId: _this2.replyUserComment.AnserquestionModelId,
-                        UsersModelId: _this2.replyUserComment.users_model.id,
+                        AnserquestionModelId: _this3.replyUserComment.AnserquestionModelId,
+                        UsersModelId: _this3.replyUserComment.users_model.id,
                         CommentsModelId: CommentsModelId,
                         id: res.data.data.id,
-                        content: _this2.content,
+                        content: _this3.content,
                         date: '刚刚',
                         users_model: {
                           //显示token 的头像和用户名
-                          id: _this2.myInfo.id,
-                          icon: _this2.myInfo.icon,
-                          username: _this2.myInfo.username } };
+                          id: _this3.myInfo.id,
+                          icon: _this3.myInfo.icon,
+                          username: _this3.myInfo.username } };
 
 
-                      index2 = _this2.replyUserComment.index2;
+                      index2 = _this3.replyUserComment.index2;
                       if (index2) {//回复其他人的回复
                         // newComment.content = '回复@'+ this.replyUserComment.users_model.username + newComment.content;
                         newComment.level = 1;
                         newComment.to_user = {
-                          username: _this2.replyUserComment.users_model.username };
+                          username: _this3.replyUserComment.users_model.username };
 
-                        console.log("new", newComment, _this2.$parent.children);
-                        _this2.$parent.children.push(newComment);
+                        console.log("new", newComment, _this3.$parent.children);
+                        _this3.$parent.children.push(newComment);
                       } else {//回复评论
                         // 等多少条回复显示，说明回复内容未展开
-                        if (_this2.replyUserComment.countShow) {
-                          _this2.commentData.text = _this2.content;
-                          _this2.commentData.replay_models.length = _this2.commentData.replay_models.length ? _this2.commentData.replay_models.length + 1 : 1;
-                          console.log('comments', _this2.commentData.text && _this2.isShow === !_this2.countShow);
+                        if (_this3.replyUserComment.countShow) {
+                          _this3.commentData.text = _this3.content;
+                          _this3.commentData.replay_models.length = _this3.commentData.replay_models.length ? _this3.commentData.replay_models.length + 1 : 1;
+                          console.log('comments', _this3.commentData.text && _this3.isShow === !_this3.countShow);
                         } else {
                           //等多少条回复未显示，说明回复内容已展开
-                          console.log('child', _this2.commentData.children);
-                          _this2.commentData.children.unshift(newComment);
+                          console.log('child', _this3.commentData.children);
+                          _this3.commentData.children.unshift(newComment);
                         }
                       }
-                      _this2.content = '';
-                      _this2.btnShow = false;
+                      _this3.content = '';
+                      _this3.btnShow = false;
                       // 评论总数 + 1
-                      _this2.$root.question.comment += 1;case 16:case "end":return _context2.stop();}}}, _callee2);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                      _this3.$root.question.comment += 1;case 8:case "end":return _context3.stop();}}}, _callee3);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
 
       }
     },
-    pupop: function pupop(userId) {var _this3 = this;
+    pupop: function pupop(userId) {var _this4 = this;
       uni.getStorage({
         key: 'user',
         success: function success(res) {
           // 评论或回复的用户id等于当前用户id，增加删除项
-          if (userId === res.data.id && !_this3.isName) {
-            _this3.actions.push({ name: '删除' });
-            _this3.isName = true;
+          if (userId === res.data.id && !_this4.isName) {
+            _this4.actions.push({ name: '删除' });
+            _this4.isName = true;
           }
         } });
 
@@ -364,7 +364,7 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
     onCancel: function onCancel() {
       this.popupShow = false;
     },
-    onSelect: function onSelect(event, comment) {var _this4 = this;
+    onSelect: function onSelect(event, comment) {var _this5 = this;
       console.log('commentId', comment);
       if (event.detail.name === '回复') {
         // this.replyUser(this.comment,0)
@@ -376,27 +376,27 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
           success: function success(res) {
             if (res.confirm) {
               // 删除评论或回复
-              _this4.request({
-                url: "".concat(_this4.SERVER, "/api/mycomments?comment=").concat(encodeURIComponent(JSON.stringify(comment))),
+              _this5.request({
+                url: "".concat(_this5.SERVER, "/api/mycomments?comment=").concat(encodeURIComponent(JSON.stringify(comment))),
                 method: 'delete',
                 success: function success(res) {
                   console.log(res.data);
                   if (comment.replay_models) {
                     // 删除评论
-                    _this4.$emit('deleteComment', comment.id);
+                    _this5.$emit('deleteComment', comment.id);
                     // 评论总数-1
                     var count = comment.replay_models ? comment.replay_models.length + 1 : 1;
-                    _this4.$root.question.comment -= count;
+                    _this5.$root.question.comment -= count;
                   } else {
                     // 删除回复
-                    _this4.$parent.children.forEach(function (item, index) {
+                    _this5.$parent.children.forEach(function (item, index) {
                       // 找到要删除的回复的下标index
                       if (item.id === comment.id) {
-                        _this4.$parent.children.splice(index, 1);
+                        _this5.$parent.children.splice(index, 1);
                       }
                     });
                     // 评论总数-1
-                    _this4.$root.question.comment -= 1;
+                    _this5.$root.question.comment -= 1;
                   }
                   uni.showToast({
                     title: '删除成功',
@@ -413,26 +413,26 @@ var _common = __webpack_require__(/*! ../../static/js/common.js */ 15);function 
       console.log(event.detail);
     },
     // 展开更多
-    showMore: function showMore(commentId) {var _this5 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var url, res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:
+    showMore: function showMore(commentId) {var _this6 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4() {var url, res;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:
                 // 当前页加 1
-                _this5.pageSize += 1;
+                _this6.pageSize += 1;
                 // 判断pageSize 是不是最后一页
-                if (!(_this5.pageSize <= _this5.countPage)) {_context3.next = 10;break;}
-                url = "".concat(_this5.SERVER, "/api/replays/").concat(commentId, "/").concat(_this5.pageSize);_context3.next = 5;return (
-                  _this5.pageLoad(url, _this5.pageSize, _this5.children));case 5:res = _context3.sent;
-                _this5.children = res.map(function (item) {
+                if (!(_this6.pageSize <= _this6.countPage)) {_context4.next = 10;break;}
+                url = "".concat(_this6.SERVER, "/api/replays/").concat(commentId, "/").concat(_this6.pageSize);_context4.next = 5;return (
+                  _this6.pageLoad(url, _this6.pageSize, _this6.children));case 5:res = _context4.sent;
+                _this6.children = res.map(function (item) {
                   // 格式化时间
                   if (item.date !== '刚刚') {
                     item.date = (0, _common.renderTime)(item.date);
                   }
                   // 回复存储答疑id
-                  item.AnserquestionModelId = _this5.commentData.AnserquestionModelId;
+                  item.AnserquestionModelId = _this6.commentData.AnserquestionModelId;
                   return item;
                 });
                 // 将回复挂载到评论上
-                _this5.commentData.children = _this5.children;_context3.next = 11;break;case 10:
+                _this6.commentData.children = _this6.children;_context4.next = 11;break;case 10:
 
-                console.log('没有数据了');case 11:case "end":return _context3.stop();}}}, _callee3);}))();
+                console.log('没有数据了');case 11:case "end":return _context4.stop();}}}, _callee4);}))();
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

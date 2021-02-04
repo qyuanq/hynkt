@@ -8,7 +8,7 @@
 			:index="index" 
 			:key="item.id" 
 			@delete="deleteQuestion"
-			@tap="onDetail(item,index)">
+			@tap="onDetail(item.id,index)">
 			</Question>
 		</view>
 		<view class="speack-box">
@@ -44,9 +44,9 @@
 				})
 			},
 			// 跳转答疑详情
-			onDetail(question,index){
+			onDetail(questionId,index){
 				uni.navigateTo({
-					url:`./questionDetail?questionId=${question.id}&index=${index}`
+					url:`./questionDetail?questionId=${questionId}&index=${index}`
 				})
 			},
 			// 删除答疑

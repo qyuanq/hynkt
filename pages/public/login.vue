@@ -32,12 +32,13 @@
 		},
 		methods:{
 			onLogin(){
+				console.log('登录了')
 				let data = {
 					phone:this.phone,
 					password:this.password
 				}
 				uni.request({
-					url:'http://localhost:7001/login',
+					url:'http://192.168.3.7:7001/login',
 					method:'post',
 					data:data,
 					success: (res) => {

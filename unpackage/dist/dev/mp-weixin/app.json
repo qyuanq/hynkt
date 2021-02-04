@@ -121,6 +121,5 @@
     "comment": "/components/questions/comment",
     "van-action-sheet": "/static/vant-weapp/action-sheet/index",
     "van-popup": "/static/vant-weapp/popup/index"
-  },
-  "sitemapLocation": "sitemap78.json"
+  }
 }

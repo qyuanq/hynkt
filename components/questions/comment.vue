@@ -90,17 +90,25 @@
 				myInfo:null				//当前用户信息
 			}
 		},
+		async created(){
+			// 获取当前用户的信息
+			const [err,result] = await uni.getStorage({
+				key:'user'
+			});
+			console.log('我的信息',result.data);
+			this.myInfo = result.data;
+		},
 		computed:{
 			commentData(){
 				return this.comment
 			},
 			// 点赞url
 			onLikeUrl(){
-				return this.comment.CommentsModelId ? `${this.SERVER}/api/like?userId=${this.userInfo.id}&replayId=${this.comment.id}` : `${this.SERVER}/api/like?userId=${this.userInfo.id}&commentId=${this.comment.id}`
+				return this.comment.CommentsModelId ? `${this.SERVER}/api/like?userId=${this.myInfo.id}&replayId=${this.comment.id}` : `${this.SERVER}/api/like?userId=${this.myInfo.id}&commentId=${this.comment.id}`
 			},
 			// 点赞状态url
 			isLikeUrl(){
-				return this.comment.CommentsModelId ? `${this.SERVER}/api/isLike?userId=${this.userInfo.id}&replayId=${this.comment.id}` : `${this.SERVER}/api/isLike?userId=${this.userInfo.id}&commentId=${this.comment.id}`
+				return this.comment.CommentsModelId ? `${this.SERVER}/api/isLike?userId=${this.myInfo.id}&replayId=${this.comment.id}` : `${this.SERVER}/api/isLike?userId=${this.myInfo.id}&commentId=${this.comment.id}`
 			}
 		},
 		methods:{
@@ -175,15 +183,7 @@
 							console.log('添加成功返回数据',comment);
 							uni.showToast({
 								title:'评论成功'
-							})
-							
-							// 获取当前用户的信息
-							const [err,result] = await uni.getStorage({
-								key:'user'
 							});
-							console.log('我的信息',result.data);
-							this.myInfo = result.data;
-							
 							// 前端显示评论信息
 							let newComment = {
 								AnserquestionModelId:this.replyUserComment.AnserquestionModelId,

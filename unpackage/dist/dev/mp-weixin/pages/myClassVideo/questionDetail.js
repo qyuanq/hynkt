@@ -314,6 +314,7 @@ var _request = __webpack_require__(/*! ../../utils/request.js */ 11);function _i
     this.$nextTick(function () {
       _this3.hackReset = true;
     });
+    console.log('展示了吗question');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

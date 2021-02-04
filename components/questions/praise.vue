@@ -49,6 +49,7 @@
 				success: (res) => {
 					// 获取点赞标识
 					this.up = res.data.data;
+					console.log('是否点赞',this.up);
 				}
 			});
 		},
