@@ -1,0 +1,23 @@
+{
+  "name": "hynkt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qyuanq/hynkt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qyuanq/hynkt/issues"
+  },
+  "homepage": "https://github.com/qyuanq/hynkt#readme",
+  "dependencies": {
+    "async-validator": "^3.5.1"
+  }
+}

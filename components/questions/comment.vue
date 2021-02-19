@@ -1,6 +1,6 @@
 <template>
 	<view @tap.stop="stop">
-	<view class="comment" @tap.stop="replyUser(comment)" @longpress.stop="pupop(comment.users_model.id)">
+	<view class="comment" @tap.stop="replyUser(commentData)" @longpress.stop="pupop(commentData.users_model.id)">
 		<view class="box-top user">
 			<view class="icon-head">
 				<image :src="SERVER + commentData.users_model.icon" />
@@ -16,12 +16,12 @@
 			<view class="content" v-else>{{commentData.content}}</view>
 			<!-- 没有回复或者回复未展开提交回复时显示 -->
 			<view class="replay_content" v-show="commentData.text && isShow === !countShow">
-				<text>{{'@' + userInfo.username}}</text><text class="text">{{commentData.text}}</text>
+				<text>{{'@' + myInfo.username}}</text><text class="text">{{commentData.text}}</text>
 			</view>
 			<view class="replayCount" v-if="commentData.replay_models.length > 0 && countShow" @tap.stop="getReplay(commentData.id)">等{{commentData.replay_models.length}}条回复</view>
 			<!-- 回复 -->
 			<view class="replay" v-if="children">
-				<comment v-for="comment in commentData.children" :comment="comment" :userInfo="userInfo" :key="comment.id"></comment>
+				<comment v-for="comment in commentData.children" :comment="comment"  :key="comment.id"></comment>
 				<!-- 展开更多回复 -->
 				<view class="more" v-if="pageSize < countPage" @tap.stop="showMore(commentData.id)">展开更多</view>
 			</view>
@@ -64,9 +64,6 @@
 		props:{
 			comment:{
 				type:Object
-			},
-			userInfo:{	//评论持有者的用户名和头像
-				type:Object
 			}
 		},
 		data(){
@@ -90,15 +87,12 @@
 				myInfo:null				//当前用户信息
 			}
 		},
-		async created(){
+		created(){
 			// 获取当前用户的信息
-			const [err,result] = await uni.getStorage({
-				key:'user'
-			});
-			console.log('我的信息',result.data);
-			this.myInfo = result.data;
+			this.myInfo = uni.getStorageSync('user');
 		},
 		computed:{
+			//新值代替接收父组件传递的comment
 			commentData(){
 				return this.comment
 			},
@@ -116,7 +110,6 @@
 			async getReplay(commentId){
 				let url = `${this.SERVER}/api/replays/${commentId}`;
 				const res = await this.pageLoad(url,this.pageSize,this.children);
-				console.log('回复第一页',res);
 				this.children = res.comments.map(item => {
 					// 格式化时间
 					item.date = renderTime(item.date)
@@ -126,7 +119,8 @@
 				});
 				// 将回复挂载到评论上
 				this.commentData.children = this.children;
-				console.log('children:',this.children);
+				// 通知父组件更新评论内容
+				this.$emit('changeCommentContent',this.commentData);
 				// 不显示等多少条回复
 				this.countShow = false;
 				// 设置分页页码
@@ -144,7 +138,6 @@
 			},
 			// 关闭弹窗
 			onPopupClose(){
-				console.log('关闭了');
 				this.btnShow = false;
 			},
 			// 回复评论
@@ -207,18 +200,21 @@
 									username : this.replyUserComment.users_model.username
 								}
 								console.log("new",newComment,this.$parent.children);
-								this.$parent.children.push(newComment);
+								this.$parent.commentData.children.push(newComment);
+								// 派发更新评论内容
+								uni.$emit('changeCommentContent',this.$parent.commentData);
 							}else{	//回复评论
 								// 等多少条回复显示，说明回复内容未展开
 								if(this.replyUserComment.countShow){
 									this.commentData.text = this.content;
 									this.commentData.replay_models.length = this.commentData.replay_models.length ?this.commentData.replay_models.length + 1 : 1;
-									console.log('comments',this.commentData.text && this.isShow === !this.countShow);
 								}else{
-								//等多少条回复未显示，说明回复内容已展开
-								console.log('child',this.commentData.children);
+									//等多少条回复未显示，说明回复内容已展开
 									this.commentData.children.unshift(newComment);
+									this.commentData.replay_models.length = this.commentData.children.length;
 								}
+								// 通知父组件更新评论内容
+								this.$emit('changeCommentContent',this.commentData);
 							}
 							this.content = '';
 							this.btnShow = false;
@@ -229,6 +225,7 @@
 					
 				}
 			},
+			// 是否显示删除项
 			pupop(userId){
 				uni.getStorage({
 					key:'user',
@@ -242,17 +239,24 @@
 				});
 				this.popupShow = true;
 			},
+			//关闭选项菜单
 			onClose(){
 				this.popupShow = false;
 			},
+			// 取消操作
 			onCancel(){
 				this.popupShow = false;
 			},
+			// 选择选项操作
 			onSelect(event,comment){
 				console.log('commentId',comment);
 				if(event.detail.name === '回复'){
-					// this.replyUser(this.comment,0)
+					this.replyUser(this.commentData);
 					console.log('点击了回复');
+				}else if(event.detail.name === '复制评论'){
+					uni.setClipboardData({
+						data:this.commentData.content
+					})
 				}else if(event.detail.name === '删除'){
 					uni.showModal({
 						content:"确定要删除评论吗?",
@@ -294,7 +298,6 @@
 						}
 					})
 				}
-				console.log(event.detail);
 			},
 			// 展开更多
 			async showMore(commentId){

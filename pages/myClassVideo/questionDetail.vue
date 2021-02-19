@@ -1,18 +1,18 @@
 <template>
 	<view>
-		<Question 
+		<QuestionDet 
+			:key="222"
 			:question="question" 
 			:userInfo="userInfo" 
 			:index="index" 
-			v-if="hackReset"
 			@delete="deleteQuestion">
-		</Question>
+		</QuestionDet>
 		<view class="comments">
 			<Comment 
 				v-for="(item,index) in comments" 
 				:key="item.id" 
 				:comment="item" 
-				:userInfo="userInfo"
+				@changeCommentContent="changeCommentContent"
 				@deleteComment="deleteComment"
 			>
 			</Comment>
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-	import Question from '../../components/questions/question'
+	import QuestionDet from '../../components/questions/question'
 	import Comment from '../../components/questions/comment'
 	import {renderTime} from '../../static/js/common.js'
 	import {pageLoad} from '../../utils/request.js'
 	export default {
 		components:{
-			Question,
+			QuestionDet,
 			Comment
 		},
 		data() {
@@ -39,14 +39,10 @@
 				question:null,			//答疑详情
 				index:null,				//答疑列表索引
 				userInfo:null,			//评论持有者的用户名和头像
-				hackReset:true,			//用于刷新页面
 				SERVER:this.development,//服务器地址
 				commentPlaceholder:'请输入评论...',
 				content:'',				//评论内容v-model实现双向绑定
-				comments:[],			//评论
-				replyUserComment:'',	//评论对象
-				isOne:false,
-				text:'',
+				comments:[],			//评论数组
 				pageSize:1,				//当前分页页码
 				countPage:null,			//后端返回的总页码
 				myInfo:null				//当前用户信息
@@ -55,6 +51,7 @@
 		methods:{
 			// 提交评论
 			submit(){
+				//获取当前时间并格式化
 				let myDate = renderTime(new Date());
 				if (this.content == "") {
 				    uni.showToast({
@@ -81,10 +78,7 @@
 							})
 							
 							// 获取当前用户的信息
-							const [err,result] = await uni.getStorage({
-								key:'user'
-							});
-							this.myInfo = result.data;
+							this.myInfo = uni.getStorageSync('user');
 							
 							// 前端显示评论信息
 							let newComment = {
@@ -94,6 +88,7 @@
 								content:this.content,
 								date:'刚刚',
 								users_model:{
+									id:this.myInfo.id,
 									icon:this.myInfo.icon,
 									username:this.myInfo.username
 								}
@@ -109,6 +104,17 @@
 						}
 					})
 				}
+			},
+			//comment组件评论内容同步更新
+			changeCommentContent(arg){
+				const comment = arg.detail.__args__[0];
+				console.log('有参数吗',comment)
+				this.comments.forEach((item,index) => {
+					if(item.id === comment.id){
+						this.comments.splice(index,1,comment);
+					}
+				})
+				console.log('更辛后的',this.comments);
 			},
 			// 删除评论
 			deleteComment:function(arg){
@@ -127,6 +133,16 @@
 					 delta: 1
 				})
 			}
+		},
+		mounted(){
+			uni.$on('changeCommentContent',(arg) => {
+				this.comments.forEach((item,index) => {
+					if(item.id === arg.id){
+						this.comments.splice(index,1,arg);
+					}
+				})
+				console.log('更辛的',this.comments);
+			})
 		},
 		watch:{
 			'question.comment':{	//深度监听，监听对象的属性值变化
@@ -147,6 +163,7 @@
 				method:'get'
 			});
 			this.question = result.data.data;
+			console.log('question是否有值',this.question);
 			this.userInfo = this.question.users_model;
 			
 			// 分页获取评论信息
@@ -177,11 +194,11 @@
 			}
 		},
 		onShow:function() {
-			this.hackReset = false;
-			this.$nextTick(() => {
-				this.hackReset = true;
-			})
-			console.log('展示了吗question')
+			// this.hackReset = false;
+			// this.$nextTick(() => {
+			// 	this.hackReset = true;
+			// })
+			// console.log('展示了吗question')
 		}
 	}
 </script>

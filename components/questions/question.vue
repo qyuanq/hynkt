@@ -10,20 +10,20 @@
 			<view class="btns">
 				<Praise class="zan" :praiseCount="praiseCount" :onLikeUrl="onLikeUrl" :isLikeUrl="isLikeUrl" @changeLike="changeLike"></Praise>
 				<view class="comment-btn"><icon class="iconfont my-icon-pinglun"></icon><text class="count">{{commentCount}}</text></view>
-				<icon class="iconfont my-icon-shanchu" v-if="userInfo.id === currentUserId" @tap.stop="deleteQuestion(question.id)" />
+				<icon class="iconfont my-icon-shanchu" v-if="userInfo.id === currentUserId" @tap.stop="deleteQuestion(dataInfo.id)" />
 			</view>
 		</view>
 		<view class="center">
 			<view class="content">
-				{{question.content}}
+				{{dataInfo.content}}
 			</view>
-			<view class="img" v-if="question.picture">
-				<image class="pic" :src="SERVER + question.picture"></image>
+			<view class="img" v-if="dataInfo.picture">
+				<image class="pic" :src="SERVER + dataInfo.picture"></image>
 			</view>
 			<view class="date">{{date}}</view>
 		</view>
 		<view class="bottom">
-			发自: <text class="bread">  {{question.source}}</text>
+			发自: <text class="bread">  {{dataInfo.source}}</text>
 		</view>
 	</view>
 </template>
@@ -50,23 +50,44 @@
 		data(){
 			return{
 				SERVER:this.development,
+				dataInfo:null,	//question信息
 				date:null,		//发表时间
 				onLikeUrl:'',	//点赞请求url
 				isLikeUrl:'',	//是否点赞标识url
 				currentUserId:null //当前用户id
 			}
 		},
+		watch:{
+			question:{
+				handler(newVal,oldVal){
+					this.dataInfo = newVal;
+					newVal && this.operation();
+					console.log('新的question值',newVal)
+				},
+				immediate:true,
+				deep:true
+			}
+		},
 		computed:{
 			commentCount(){
-				return this.question.comment
+				return this.dataInfo.comment
 			},
 			// 点赞总量
 			praiseCount(){
-				console.log('questionpraise',this.question.praise);
-				return this.question.praise
+				console.log('questionpraise',this.dataInfo.praise);
+				return this.dataInfo.praise
 			}
 		},
 		methods:{
+			// 初始化操作
+			operation(){
+				// 获取当前用户id
+				this.currentUserId = uni.getStorageSync('user').id;
+				this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.currentUserId}&anserQuestionId=${this.dataInfo.id}`;
+				this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.currentUserId}&anserQuestionId=${this.dataInfo.id}`;
+				// 日期时间格式化
+				this.date = renderTime(this.dataInfo.date);
+			},
 			// 接收点赞总数
 			changeLike(arg){
 				// this.praiseCount = arg;
@@ -95,14 +116,10 @@
 			}
 		},
 		created(){
-			// 获取当前用户id
-			this.currentUserId = uni.getStorageSync('user').id
-			console.log('当前用户',this.currentUserId,this.question);
-			this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
-			this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.currentUserId}&anserQuestionId=${this.question.id}`;
-			// 日期时间格式化
-			this.date = renderTime(this.question.date);
-			console.log('question看看');
+			//父组件中的要就要传递的  props  属性 是通过 发生ajax请求回来的, 请求的这个过程是需要时间的，但是子组件的渲染要快于ajax请求过程，所以此时  created 、 mounted  这样的只会执行一次的生命周期钩子，已经执行了，但是 props 还没有流进来（子组件），所以只能拿到默认值。
+			this.dataInfo = this.question;
+			// 如果question不为null直接执行初始化操作
+			this.dataInfo && this.operation();
 		}
 	}
 </script>

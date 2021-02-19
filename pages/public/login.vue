@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<!-- <view class="back-btn"></view> -->
-		<image class="bg" src="/static/loginbg.png"></image>
+		<image class="bg" :src="SERVER + 'public/static/img/loginbg.png'"></image>
 		<view class="wrapper">
 			<view class="input-content">
 				<view class="input-item">
@@ -27,25 +27,29 @@
 		data() {
 			return {
 				phone:'',
-				password:''
+				password:'',
+				SERVER:this.development
 			};
 		},
 		methods:{
 			onLogin(){
-				console.log('登录了')
 				let data = {
 					phone:this.phone,
 					password:this.password
 				}
+				console.log('登录了')
 				uni.request({
-					url:'http://192.168.3.7:7001/login',
+					url:`${this.SERVER}/login`,
 					method:'post',
 					data:data,
+					header:{
+						'content-Type' : 'application/x-www-form-urlencoded'
+					},
 					success: (res) => {
 						// if(uni.getStorageSync('token')){
 						// 	uni.removeStorageSync('token')
 						// }
-						
+						console.log('res',res);
 						// 存储token
 						uni.setStorage({
 							 key: 'token',
@@ -53,7 +57,7 @@
 						})
 						// 携带token获取用户信息
 						uni.request({
-							url:'http://localhost:7001/api/user',
+							url:`${this.SERVER}/api/user`,
 							method:'get',
 							header:{
 								"Authorization":'Bearer ' + res.data.data.token

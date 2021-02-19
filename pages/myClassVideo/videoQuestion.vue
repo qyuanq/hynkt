@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="question-list" v-if="sonRefresh">
+		<view class="question-list">
 			<Question 
 			v-for="(item,index) in question" 
 			:question="item" 
@@ -27,7 +27,6 @@
 		data() {
 			return {
 				SERVER:this.development,
-				sonRefresh: true,
 				userIcon:' ',   //用户头像
 				question:null,
 				userInfo:null,
@@ -69,14 +68,14 @@
 			});
 		},
 		// 刷新页面：与questionDetail点赞数保持一致
-		onShow:function(){
-			this.sonRefresh= false;
-			this.$nextTick(() => {
-				this.sonRefresh= true;
-			});
-			//进入页面执行下拉刷新
-			// uni.startPullDownRefresh();
-		},
+		// onShow:function(){
+		// 	this.sonRefresh= false;
+		// 	this.$nextTick(() => {
+		// 		this.sonRefresh= true;
+		// 	});
+		// 	//进入页面执行下拉刷新
+		// 	// uni.startPullDownRefresh();
+		// },
 		onLoad: async function(option){
 			if(option){
 				this.coureId = option.id
