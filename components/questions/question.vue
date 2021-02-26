@@ -5,7 +5,7 @@
 				<view class="icon-head">
 					<image :src="SERVER + userInfo.icon" />
 				</view>
-				<text class="phone">{{userInfo.phone}}</text>
+				<text class="phone">{{userInfo.username}}</text>
 			</view>
 			<view class="btns">
 				<Praise class="zan" :praiseCount="praiseCount" :onLikeUrl="onLikeUrl" :isLikeUrl="isLikeUrl" @changeLike="changeLike"></Praise>
@@ -41,10 +41,6 @@
 			},
 			question:{
 				type:Object
-			},
-			index:{
-				type:Number,
-				default:0
 			}
 		},
 		data(){
@@ -62,7 +58,7 @@
 				handler(newVal,oldVal){
 					this.dataInfo = newVal;
 					newVal && this.operation();
-					console.log('新的question值',newVal)
+					// console.log('新的question值',newVal)
 				},
 				immediate:true,
 				deep:true
@@ -74,7 +70,6 @@
 			},
 			// 点赞总量
 			praiseCount(){
-				console.log('questionpraise',this.dataInfo.praise);
 				return this.dataInfo.praise
 			}
 		},
@@ -85,15 +80,16 @@
 				this.currentUserId = uni.getStorageSync('user').id;
 				this.onLikeUrl =`${this.SERVER}/api/like?userId=${this.currentUserId}&anserQuestionId=${this.dataInfo.id}`;
 				this.isLikeUrl =`${this.SERVER}/api/isLike?userId=${this.currentUserId}&anserQuestionId=${this.dataInfo.id}`;
+				// console.log('onLikeUrl',this.isLikeUrl);
 				// 日期时间格式化
 				this.date = renderTime(this.dataInfo.date);
 			},
 			// 接收点赞总数
 			changeLike(arg){
 				// this.praiseCount = arg;
-				console.log('question接收改变praiseCount',arg)
+				// console.log('question接收改变praiseCount',arg)
 				// 通知页面修改点赞总数，参数1：总数；参数2:question下标
-				uni.$emit('change_praise',[arg,this.index]);
+				uni.$emit('change_praise',[arg,this.dataInfo.id]);
 			},
 			// 删除该用户的答疑
 			async deleteQuestion(id){
@@ -110,7 +106,7 @@
 							title:'删除成功'
 						});
 						// 通知页父组件我删除了，参数1：总数；参数2:question下标
-						this.$emit('delete',this.index);
+						this.$emit('delete',id);
 					}
 				}
 			}

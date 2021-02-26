@@ -138,6 +138,22 @@
                     "path" : "practice",
                     "style" : {}
                 }
+                ,{
+                    "path" : "testList",
+                    "style" : {}
+                }
+                ,{
+                    "path" : "testDetail",
+                    "style" : {
+						"navigationBarTitleText" : "",
+						"navigationBarBackgroundColor" : "#2890ff",
+						"navigationBarTextStyle" : "white",
+						"usingComponents": {
+						 "van-tabbar": "/static/vant-weapp/tabbar/index",
+						 "van-tabbar-item": "/static/vant-weapp/tabbar-item/index"
+						}
+					}
+                }
             ]
 		},
 		{

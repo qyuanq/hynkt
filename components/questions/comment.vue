@@ -1,11 +1,12 @@
 <template>
-	<view @tap.stop="stop">
-	<view class="comment" @tap.stop="replyUser(commentData)" @longpress.stop="pupop(commentData.users_model.id)">
+	<!--uni-app阻止事件冒泡的方法 -->
+	<view @tap.stop="stop" @longpress.stop="stop">
+	<view class="comment" @tap="replyUser(commentData)" @longpress="pupop(commentData.users_model.id)">
 		<view class="box-top user">
 			<view class="icon-head">
 				<image :src="SERVER + commentData.users_model.icon" />
 			</view>
-			<text class="phone">{{commentData.users ? commentData.users.username : commentData.users_model.username}}</text>
+			<text class="phone">{{username}}</text>
 		</view>
 		<view class="box-center">
 			<view class="content" v-if="commentData.level">
@@ -16,7 +17,7 @@
 			<view class="content" v-else>{{commentData.content}}</view>
 			<!-- 没有回复或者回复未展开提交回复时显示 -->
 			<view class="replay_content" v-show="commentData.text && isShow === !countShow">
-				<text>{{'@' + myInfo.username}}</text><text class="text">{{commentData.text}}</text>
+				<text>{{myInfo.username+':'}}</text><text class="text">{{commentData.text}}</text>
 			</view>
 			<view class="replayCount" v-if="commentData.replay_models.length > 0 && countShow" @tap.stop="getReplay(commentData.id)">等{{commentData.replay_models.length}}条回复</view>
 			<!-- 回复 -->
@@ -70,10 +71,10 @@
 			return{
 				SERVER:this.development,
 				children:null,			//回复集合
-				countShow:true,			//显示等多少条回复
+				countShow:true,			//显示等多少条回复，默认显示
 				commentPlaceholder:'',	//输入框提示值
 				replyUserComment:null,	//评论对象
-				isShow:false,
+				isShow:false,			//标识
 				btnShow:false,			//回复菜单
 				content:'',				//文本框内容
 				popupShow:false,		//长按菜单
@@ -92,6 +93,10 @@
 			this.myInfo = uni.getStorageSync('user');
 		},
 		computed:{
+			// 评论的用户名
+			username(){
+				return this.commentData.users ? this.commentData.users.username : this.commentData.users_model.username
+			},
 			//新值代替接收父组件传递的comment
 			commentData(){
 				return this.comment
@@ -131,7 +136,9 @@
 				this.btnShow = true;
 				// 改变输入框提示内容
 				this.commentPlaceholder = '回复@' + comment.users_model.username;
+				// comment.replay_models存在说明回复评论，不存在说明回复回复信息，index2为区分标识
 				comment.replay_models ? comment.index2 = 0 : comment.index2 = 1;
+				// comment对象保存当前'等多少条回复'显示状态
 				comment.countShow = this.countShow;
 				this.replyUserComment = comment;	//保存当前评论对象
 				console.log('查看to_user',this.replyUserComment)
@@ -173,53 +180,57 @@
 						method:'post',
 						data:comment,
 						success:async (res) => {
-							console.log('添加成功返回数据',comment);
-							uni.showToast({
-								title:'评论成功'
-							});
-							// 前端显示评论信息
-							let newComment = {
-								AnserquestionModelId:this.replyUserComment.AnserquestionModelId,
-								UsersModelId:this.replyUserComment.users_model.id,
-								CommentsModelId:CommentsModelId,
-								id:res.data.data.id,
-								content:this.content,
-								date:'刚刚',
-								users_model:{
-									//显示token 的头像和用户名
-									id:this.myInfo.id,
-									icon:this.myInfo.icon,
-									username:this.myInfo.username
+							if(res.data.code === 0){
+								uni.showToast({
+									title:'评论成功'
+								});
+								// 前端显示评论信息
+								let newComment = {
+									AnserquestionModelId:this.replyUserComment.AnserquestionModelId,
+									UsersModelId:this.replyUserComment.users_model.id,
+									CommentsModelId:CommentsModelId,
+									id:res.data.data.id,
+									content:this.content,
+									date:'刚刚',
+									users_model:{
+										//显示token 的头像和用户名
+										id:this.myInfo.id,
+										icon:this.myInfo.icon,
+										username:this.myInfo.username
+									}
 								}
+								let index2 = this.replyUserComment.index2
+								if(index2){	//回复其他人的回复
+									newComment.level = 1;
+									newComment.to_user = {
+										username : this.replyUserComment.users_model.username
+									}
+									console.log("new",newComment,this.$parent.children);
+									this.$parent.commentData.children.push(newComment);
+									// 派发更新评论内容
+									uni.$emit('changeCommentContent',this.$parent.commentData);
+								}else{	//回复评论
+									// 等多少条回复显示，说明回复内容未展开
+									if(this.replyUserComment.countShow){
+										this.commentData.text = this.content;
+										this.commentData.replay_models.length = this.commentData.replay_models.length ?this.commentData.replay_models.length + 1 : 1;
+									}else{
+										//等多少条回复未显示，说明回复内容已展开
+										this.commentData.children.unshift(newComment);
+										this.commentData.replay_models.length = this.commentData.children.length;
+									}
+									// 通知父组件更新评论内容
+									this.$emit('changeCommentContent',this.commentData);
+								}
+								this.content = '';
+								this.btnShow = false;
+								// 评论总数 + 1
+								this.$root.question.comment += 1;
+							}else{
+								uni.showToast({
+									title:'评论失败'
+								});
 							}
-							let index2 = this.replyUserComment.index2
-							if(index2){	//回复其他人的回复
-								// newComment.content = '回复@'+ this.replyUserComment.users_model.username + newComment.content;
-								newComment.level = 1;
-								newComment.to_user = {
-									username : this.replyUserComment.users_model.username
-								}
-								console.log("new",newComment,this.$parent.children);
-								this.$parent.commentData.children.push(newComment);
-								// 派发更新评论内容
-								uni.$emit('changeCommentContent',this.$parent.commentData);
-							}else{	//回复评论
-								// 等多少条回复显示，说明回复内容未展开
-								if(this.replyUserComment.countShow){
-									this.commentData.text = this.content;
-									this.commentData.replay_models.length = this.commentData.replay_models.length ?this.commentData.replay_models.length + 1 : 1;
-								}else{
-									//等多少条回复未显示，说明回复内容已展开
-									this.commentData.children.unshift(newComment);
-									this.commentData.replay_models.length = this.commentData.children.length;
-								}
-								// 通知父组件更新评论内容
-								this.$emit('changeCommentContent',this.commentData);
-							}
-							this.content = '';
-							this.btnShow = false;
-							// 评论总数 + 1
-							this.$root.question.comment += 1;
 						}
 					});
 					
@@ -248,55 +259,56 @@
 				this.popupShow = false;
 			},
 			// 选择选项操作
-			onSelect(event,comment){
+			async onSelect(event,comment){
 				console.log('commentId',comment);
 				if(event.detail.name === '回复'){
 					this.replyUser(this.commentData);
-					console.log('点击了回复');
 				}else if(event.detail.name === '复制评论'){
 					uni.setClipboardData({
 						data:this.commentData.content
 					})
 				}else if(event.detail.name === '删除'){
-					uni.showModal({
+					const [errModel, resModel] = await uni.showModal({
 						content:"确定要删除评论吗?",
 						showCancel:true,
-						success: (res) => {
-							if(res.confirm){
-								// 删除评论或回复
-								this.request({
-									url:`${this.SERVER}/api/mycomments?comment=${encodeURIComponent(JSON.stringify(comment))}`,
-									method:'delete',
-									success:(res) => {
-										console.log(res.data);
-										if(comment.replay_models){
-											// 删除评论
-											this.$emit('deleteComment',comment.id);
-											// 评论总数-1
-											const count = comment.replay_models ? comment.replay_models.length + 1 : 1;
-											this.$root.question.comment -= count;
-										}else{
-											// 删除回复
-											this.$parent.children.forEach((item,index)=>{
-												// 找到要删除的回复的下标index
-												 if(item.id === comment.id){
-													this.$parent.children.splice(index,1);
-												 }
-											});
-											// 评论总数-1
-											this.$root.question.comment -= 1;
-										}
-										uni.showToast({
-											title:'删除成功',
-											icon:'success'
-										});
-									}
-								})
-							}else if(res.cancel){
-								console.log('用户点击了取消');
-							}
-						}
 					})
+					if(resModel.confirm){
+						// 删除评论或回复
+						const [error,res] = await this.request({
+							url:`${this.SERVER}/api/mycomments?comment=${encodeURIComponent(JSON.stringify(comment))}`,
+							method:'delete'
+						})
+						if(res.data.code === 0){
+							if(comment.replay_models){
+								// 删除评论
+								this.$emit('deleteComment',comment.id);
+								// 评论总数-1
+								const count = comment.replay_models ? comment.replay_models.length + 1 : 1;
+								this.$root.question.comment -= count;
+							}else{
+								// 删除回复
+								this.$parent.commentData.children.forEach((item,index)=>{
+									// 找到要删除的回复的下标index
+									 if(item.id === comment.id){
+										this.$parent.commentData.children.splice(index,1);
+									 }
+								});
+								// 评论总数-1
+								this.$root.question.comment -= 1;
+							}
+							uni.showToast({
+								title:'删除成功',
+								icon:'success'
+							});
+						}else{
+							uni.showToast({
+								title:'删除失败',
+								icon:'none'
+							});
+						}
+					}else if(res.cancel){
+						console.log('用户点击了取消');
+					}
 				}
 			},
 			// 展开更多
@@ -306,7 +318,7 @@
 				// 判断pageSize 是不是最后一页
 				if(this.pageSize <= this.countPage){
 					let url = `${this.SERVER}/api/replays/${commentId}/${this.pageSize}`;
-					const res = await this.pageLoad(url,this.pageSize,this.children);
+					const res = await this.pageLoad(url,this.pageSize,this.commentData.children);
 					this.children = res.map(item => {
 						// 格式化时间
 						if(item.date !== '刚刚'){

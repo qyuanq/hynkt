@@ -23,7 +23,9 @@
     {
       "root": "pages/examQuestion/",
       "pages": [
-        "practice"
+        "practice",
+        "testList",
+        "testDetail"
       ]
     },
     {

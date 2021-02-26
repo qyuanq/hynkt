@@ -4,7 +4,6 @@
 			:key="222"
 			:question="question" 
 			:userInfo="userInfo" 
-			:index="index" 
 			@delete="deleteQuestion">
 		</QuestionDet>
 		<view class="comments">
@@ -37,7 +36,6 @@
 		data() {
 			return {
 				question:null,			//答疑详情
-				index:null,				//答疑列表索引
 				userInfo:null,			//评论持有者的用户名和头像
 				SERVER:this.development,//服务器地址
 				commentPlaceholder:'请输入评论...',
@@ -72,35 +70,38 @@
 						method:'post',
 						data:comment,
 						success:async(res) => {
-							console.log('添加成功返回数据',res);
-							uni.showToast({
-								title:'评论成功'
-							})
-							
-							// 获取当前用户的信息
-							this.myInfo = uni.getStorageSync('user');
-							
-							// 前端显示评论信息
-							let newComment = {
-								AnserquestionModelId:this.question.id,
-								UsersModelId:this.question.UsersModelId,
-								id:res.data.data.id,
-								content:this.content,
-								date:'刚刚',
-								users_model:{
-									id:this.myInfo.id,
-									icon:this.myInfo.icon,
-									username:this.myInfo.username
+							if(res.data.code === 0){
+								uni.showToast({
+									title:'评论成功'
+								})
+								
+								// 获取当前用户的信息
+								this.myInfo = uni.getStorageSync('user');
+								
+								// 前端显示评论信息
+								let newComment = {
+									AnserquestionModelId:this.question.id,
+									UsersModelId:this.question.UsersModelId,
+									id:res.data.data.id,
+									content:this.content,
+									date:'刚刚',
+									users_model:{
+										id:this.myInfo.id,
+										icon:this.myInfo.icon,
+										username:this.myInfo.username
+									}
 								}
+								newComment.replay_models = [];
+								this.comments.unshift(newComment);
+								console.log('comments1:',this.comments);
+								this.content = '';
+								// 评论总数 +1
+								this.question.comment += 1;
+							}else{
+								uni.showToast({
+									title:'评论失败'
+								})
 							}
-							newComment.replay_models = [];
-							this.comments.unshift(newComment);
-							console.log('comments1:',this.comments);
-							this.content = '';
-							// 评论总数 +1
-							this.question.comment += 1;
-							console.log('迷茫的index',this.index);
-							uni.$emit('commentChange',[this.question.comment,this.index]);
 						}
 					})
 				}
@@ -127,28 +128,19 @@
 				});
 			},
 			// 删除答疑
-			deleteQuestion(index){
-				this.hackReset = false;
+			deleteQuestion(id){
+				// 触发删除事件
+				uni.$emit('deleteQuestion',id);
 				uni.navigateBack({
 					 delta: 1
 				})
 			}
 		},
-		mounted(){
-			uni.$on('changeCommentContent',(arg) => {
-				this.comments.forEach((item,index) => {
-					if(item.id === arg.id){
-						this.comments.splice(index,1,arg);
-					}
-				})
-				console.log('更辛的',this.comments);
-			})
-		},
 		watch:{
 			'question.comment':{	//深度监听，监听对象的属性值变化
 				handler(val,oldVal){
 					// 通知videoQuestion修改评论总数
-					uni.$emit('commentChange',[val,this.index]);
+					uni.$emit('commentChange',[val,this.question.id]);
 				},
 				deep:true
 			}
@@ -156,14 +148,13 @@
 		onLoad:async function(options){
 			// 接收url传递的参数
 			const questionId = options.questionId;
-			this.index = options.index;
 			// 获答疑详情
 			const [err,result] = await this.request({
 				url:`${this.SERVER}/api/questionsDetail/${questionId}`,
 				method:'get'
 			});
 			this.question = result.data.data;
-			console.log('question是否有值',this.question);
+			console.log('question是否有值详细值',this.question);
 			this.userInfo = this.question.users_model;
 			
 			// 分页获取评论信息
@@ -175,6 +166,16 @@
 			});
 			// 共多少分页
 			this.countPage = res.countPage;
+		},
+		onReady:function(){
+			uni.$on('changeCommentContent',(arg) => {
+				this.comments.forEach((item,index) => {
+					if(item.id === arg.id){
+						this.comments.splice(index,1,arg);
+					}
+				})
+				console.log('更辛的',this.comments);
+			})
 		},
 		// 上滑加载
 		onReachBottom:async function(){
@@ -193,13 +194,13 @@
 				console.log('没有数据了');
 			}
 		},
-		onShow:function() {
+		//onShow:function() {
 			// this.hackReset = false;
 			// this.$nextTick(() => {
 			// 	this.hackReset = true;
 			// })
 			// console.log('展示了吗question')
-		}
+		//}
 	}
 </script>
 

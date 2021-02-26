@@ -126,16 +126,11 @@ page {
 .container .nav .scroll-view_H {
   width: 100%;
   height: 165rpx;
-}
-.container .nav .scroll-view_H .scroll-block {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
-  padding-top: 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .container .nav .scroll-view_H .demo {
+  padding-top: 20rpx;
   max-width: 150rpx;
   min-width: 150rpx;
   height: 130rpx;

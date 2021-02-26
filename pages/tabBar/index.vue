@@ -45,50 +45,48 @@
 			</view>
 		</view>
 		<view class="nav">
-			<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll" scroll-left="120">
-				<view class="scroll-block">
-					<view id="demo1" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/chapter_practice.png'" mode="widthFix"></image>
-						</view>
-						<text>章节练习</text>
+			<scroll-view class="scroll-view_H" scroll-x="true" @scroll="scroll"  show-scrollbar="true">
+				<view id="demo1" class="scroll-view-item_H demo"  @tap="onTest">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/chapter_practice.png'"></image>
 					</view>
-					<view id="demo2" class="scroll-view-item_H demo" @tap="onProblem">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/simulation_test.png'"></image>
-						</view>
-						<text>模拟考试</text>
+					<text>章节练习</text>
+				</view>
+				<view id="demo2" class="scroll-view-item_H demo" @tap="onProblem">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/simulation_test.png'"></image>
 					</view>
-					<view id="demo3" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/wrong_topic.png'"></image>
-						</view>
-						<text>错题本</text>
+					<text>模拟考试</text>
+				</view>
+				<view id="demo3" class="scroll-view-item_H demo">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/wrong_topic.png'"></image>
 					</view>
-					<view id="demo4" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/favorites.png'"></image>
-						</view>
-						<text>收藏夹</text>
+					<text>错题本</text>
+				</view>
+				<view id="demo4" class="scroll-view-item_H demo">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/favorites.png'"></image>
 					</view>
-					<view id="demo5" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/class_introduce.png'"></image>
-						</view>
-						<text>课程信息</text>
+					<text>收藏夹</text>
+				</view>
+				<view id="demo5" class="scroll-view-item_H demo">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/class_introduce.png'"></image>
 					</view>
-					<view id="demo6" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/learning_process.png'"></image>
-						</view>
-						<text>学习进度</text>
+					<text>课程信息</text>
+				</view>
+				<view id="demo6" class="scroll-view-item_H demo">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/learning_process.png'"></image>
 					</view>
-					<view id="demo7" class="scroll-view-item_H demo">
-						<view class="icon">
-							<image :src="SERVER + '/static/img/icon/file_down.png'"></image>
-						</view>
-						<text>课件下载</text>
+					<text>学习进度</text>
+				</view>
+				<view id="demo7" class="scroll-view-item_H demo">
+					<view class="icon">
+						<image :src="SERVER + '/static/img/icon/file_down.png'"></image>
 					</view>
+					<text>课件下载</text>
 				</view>
 			</scroll-view>
 		</view>
@@ -99,7 +97,7 @@
 			<view class="t2">快去选购课程吧~</view>
 			<button class="btn" @tap="buyCource">选购课程</button>
 		</view>
-		<view v-else="notlesson">
+		<view v-else>
 			<view class="test-time" @tap="getTestTime">
 				<image :src="SERVER + '/static/img/icon/test_time.png'"></image>
 				<text class="text">考试时间:{{classgoryInfo.Exam_time}}</text>
@@ -247,8 +245,11 @@
 					
 					console.log('mycource',this.myCource);
 					console.log('notlesson',this.notlesson);
+					console.log('showLesson',this.showLesson);
+					// 将当前课程Id，存到vuex
+					this.$store.dispatch('myCource/changeId',this.showLesson.class_single_models[0].id);
 				}
-			})
+			});
 		},
 		methods: {
 			// 选课
@@ -284,8 +285,14 @@
 					url:'/pages/tabBar/category'
 				})
 			},
-			onProblem(){
+			onTest(){
 				console.log('点击了章节练习');
+				uni.navigateTo({
+					url:'../examQuestion/testList'
+				})
+			},
+			onProblem(){
+				console.log('点击了模拟考试');
 				let url;
 				this.notlesson ? url = `../user/myCource?notlesson=${this.notlesson}` : url = '../examQuestion/practice';
 				uni.navigateTo({
@@ -298,6 +305,10 @@
 			  // 北京处于东八区，所以要加8个小时
 			  // return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
 			   return new Date(+new Date(dateee)).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+			},
+			scroll(e){
+				console.log(e);
+				// this.old.scrollTop = e.detail.scrollTop
 			}
 		},
 		onLoad: function (option) {
@@ -389,13 +400,10 @@
 			.scroll-view_H{
 				width:100%;
 				height:165rpx;
-				.scroll-block{
-					display:flex;
-					justify-content:space-around;
-					// flex-wrap: wrap;
-					padding-top:20rpx;
-				}
+				white-space: nowrap;
+				overflow:hidden;
 				.demo{
+					padding-top:20rpx;
 					max-width:150rpx;
 					min-width: 150rpx;
 					height:130rpx;

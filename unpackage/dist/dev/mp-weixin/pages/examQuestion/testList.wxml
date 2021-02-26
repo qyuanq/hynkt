@@ -1,0 +1,1 @@
+<view class="chapterTest"><view class="text">章节选择</view><view data-event-opts="{{[['tap',[['onDetail',['$event']]]]]}}" class="testNav" bindtap="__e"><view class="content"><view class="title">普通话测试内容</view><view class="progress">练习进度：0/51</view></view><icon class="iconfont my-icon-jiantouRight"></icon></view></view>

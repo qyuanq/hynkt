@@ -49,33 +49,20 @@
 				})
 			},
 			// 删除答疑
-			deleteQuestion(index){
-				this.question.splice(index,1);
+			deleteQuestion(id){
+				console.log('question222',id);
+				this.question.forEach((item,index) => {
+					if(item.id === id){
+						this.question.splice(index,1);
+					}
+				})
 			}
 		},
-		mounted(){
-			uni.$on('change_praise',(arg) => {
-				console.log('点赞参数',arg);
-				const index = arg[1];
-				// this.$set(this.question[arg[1]],'praise',arg[0]);
-				this.question[index].praise = arg[0];
-				console.log('综合测试',this.question[index].praise);
-			});
-			uni.$on('commentChange',(arg) => {
-				console.log('评论参数',arg);
-				const index = arg[1];
-				this.question[index].comment = arg[0];
-			});
-		},
 		// 刷新页面：与questionDetail点赞数保持一致
-		// onShow:function(){
-		// 	this.sonRefresh= false;
-		// 	this.$nextTick(() => {
-		// 		this.sonRefresh= true;
-		// 	});
-		// 	//进入页面执行下拉刷新
-		// 	// uni.startPullDownRefresh();
-		// },
+		//onShow:function(){
+			//进入页面执行下拉刷新
+			//uni.startPullDownRefresh();
+		//},
 		onLoad: async function(option){
 			if(option){
 				this.coureId = option.id
@@ -92,6 +79,28 @@
 				key:'user'
 			})
 			this.userIcon = this.SERVER + res.data.icon;
+		},
+		onReady(){
+			uni.$on('change_praise',(arg) => {
+				const id = arg[1];
+				this.question.forEach((item,index) => {
+					if(item.id === arg[1]){
+						this.$set(this.question[index],'praise',arg[0]);
+						return;
+					}
+				})
+			});
+			uni.$on('commentChange',(arg) => {
+				console.log('评论数变了',arg);
+				const id = arg[1];
+				this.question.forEach((item,index) => {
+					if(item.id === arg[1])
+					this.$set(this.question[index],'comment',arg[0]);
+				})
+			});
+			uni.$on('deleteQuestion',id =>{
+				this.deleteQuestion(id);
+			})
 		},
 		onReachBottom:async function(){
 			// 当前页+1
