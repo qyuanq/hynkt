@@ -11,7 +11,26 @@
  *
  * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
  */
-
+$color-white:#fff;
+$color-black:#000;
+$color-primary:#41A5FD;
+$margin-top40:40rpx;
+@mixin paneactive($image, $level, $vertical) { 
+  background: url($image) no-repeat $level $vertical;  
+  background-size:100% 100%;
+}
+@mixin boxCenter($height){
+	line-height:$height;
+	text-align: center;
+}
+@mixin font($size,$color){
+	font-size:$size;
+	color:$color;
+}
+@mixin widthCenter($width,$marTop){
+	width:$width;
+	margin:$marTop auto 0;
+}
 /* 颜色变量 */
 
 /* 行为相关颜色 */

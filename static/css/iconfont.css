@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'my-icon';  /* project id 1915821 */
-  src: url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.eot');
-  src: url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1915821_71qb51ykn5i.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.eot');
+  src: url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1915821_gkkl96d37v8.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "my-icon" !important;
@@ -22,6 +22,10 @@
 }
 .my-icon-shoucang:before{
 	content:'\e73d';
+}
+.my-icon-shoucangActive:before{
+	content:'\e73d';
+	color:#41A5FD;
 }
 .my-icon-jiantou:before{
 	content:"\e612";
@@ -139,3 +143,69 @@
 .my-icon-jiantouRight:before{
 	content:"\e600";
 }
+.my-icon-A:before{
+	content:"\e681";
+}
+.my-icon-B:before{
+	content:"\e682";
+}
+.my-icon-C:before{
+	content:"\e683";
+}
+.my-icon-D:before{
+	content:"\e601";
+}
+.my-icon-activeA:before{
+	content:"\e613";
+	color:#41A5FD;
+}
+.my-icon-activeB:before{
+	content:"\e611";
+	color:#41A5FD;
+}
+.my-icon-activeC:before{
+	content:"\e610";
+	color:#41A5FD;
+}
+.my-icon-activeD:before{
+	content:"\e606";
+	color:#41A5FD;
+}
+.my-icon-ckda:before{
+	content:"\e63e";
+}
+.my-icon-ckdaActive:before{
+	content:"\e63e";
+	color:#41A5FD;
+}
+.my-icon-dtk:before{
+	content:"\e663";
+}
+.my-icon-dtkActive:before{
+	content:"\e663";
+	color:#41A5FD;
+}
+.my-icon-ksxx:before{
+	content:"\e80c";
+}
+.my-icon-ksxxActive:before{
+	content:"\e80c";
+	color:#41A5FD;
+}
+.my-icon-xsdy:before{
+	content:"\e886";
+}
+.my-icon-xsdyActive:before{
+	content:"\e886";
+	color:#41A5FD;
+}
+.my-icon-error:before{
+	content:"\e6a5";
+	color:#FF0000;
+}
+.my-icon-correct:before{
+	content:"\e629";
+	color:#41A5FD;
+}
+
+

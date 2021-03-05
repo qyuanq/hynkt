@@ -1,0 +1,20 @@
+$color-white:#fff;
+$color-black:#000;
+$color-primary:#41A5FD;
+$margin-top40:40rpx;
+@mixin paneactive($image, $level, $vertical) { 
+  background: url($image) no-repeat $level $vertical;  
+  background-size:100% 100%;
+}
+@mixin boxCenter($height){
+	line-height:$height;
+	text-align: center;
+}
+@mixin font($size,$color){
+	font-size:$size;
+	color:$color;
+}
+@mixin widthCenter($width,$marTop){
+	width:$width;
+	margin:$marTop auto 0;
+}

@@ -25,7 +25,8 @@
       "pages": [
         "practice",
         "testList",
-        "testDetail"
+        "testDetail",
+        "answerResult"
       ]
     },
     {

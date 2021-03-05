@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2579,7 +2579,7 @@ var renderTime = function renderTime(date) {
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 17));
 var _anQuestion = _interopRequireDefault(__webpack_require__(/*! ./modules/anQuestion.js */ 18));
-var _myCource = _interopRequireDefault(__webpack_require__(/*! ./modules/myCource.js */ 384));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _myCource = _interopRequireDefault(__webpack_require__(/*! ./modules/myCource.js */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 _vue.default.use(_vuex.default);
 var store = new _vuex.default.Store({
   state: {},
@@ -3569,6 +3569,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   actions: {
     changePraise: function changePraise(_ref, count) {var commit = _ref.commit;
       commit("changePraise", count);
+    } } };exports.default = _default;
+
+/***/ }),
+
+/***/ 19:
+/*!******************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/store/modules/myCource.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  namespaced: true,
+  state: {
+    courceId: 0,
+    sectionScore: 0 },
+
+  mutations: {
+    changeId: function changeId(state, id) {
+      state.courceId = id;
+    },
+    changeSectionScore: function changeSectionScore(state, score) {
+      state.sectionScore = score;
+    } },
+
+  getters: {},
+
+
+  actions: {
+    changeId: function changeId(_ref, id) {var commit = _ref.commit;
+      commit("changeId", id);
+    },
+    changeSectionScore: function changeSectionScore(_ref2, score) {var commit = _ref2.commit;
+      commit("changeSectionScore", score);
     } } };exports.default = _default;
 
 /***/ }),
@@ -9103,7 +9138,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9124,14 +9159,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9207,7 +9242,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9633,7 +9668,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 328:
+/***/ 339:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -9753,7 +9788,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof process !== 'undefined' && Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
       if (errors.every(function (e) {
@@ -11080,11 +11115,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 329)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 340)))
 
 /***/ }),
 
-/***/ 329:
+/***/ 340:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11115,7 +11150,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 330);
+        if (!path) path = __webpack_require__(/*! path */ 341);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11129,7 +11164,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 330:
+/***/ 341:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11439,11 +11474,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 329)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 340)))
 
 /***/ }),
 
-/***/ 373:
+/***/ 384:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11549,34 +11584,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 384:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/store/modules/myCource.js ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  namespaced: true,
-  state: {
-    courceId: 0 },
-
-  mutations: {
-    changeId: function changeId(state, id) {
-      state.courceId = id;
-    } },
-
-  getters: {},
-
-
-  actions: {
-    changeId: function changeId(_ref, id) {var commit = _ref.commit;
-      commit("changeId", id);
-    } } };exports.default = _default;
-
-/***/ }),
-
 /***/ 4:
 /*!***************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/pages.json ***!
@@ -11588,7 +11595,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 49:
+/***/ 50:
 /*!**********************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
   \**********************************************************************/

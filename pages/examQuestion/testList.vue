@@ -1,9 +1,9 @@
 <template>
 	<view class="chapterTest">
 		<view class="text">章节选择</view>
-		<view class="testNav" v-for="" @tap="onDetail">
+		<view class="testNav" v-for="item in sectionInfo" :key="item.id" @tap="onDetail(item.id)">
 			<view class="content">
-				<view class="title">普通话测试内容</view>
+				<view class="title">{{item.name}}</view>
 				<view class="progress">练习进度：0/51</view>
 			</view>
 			<icon class="iconfont my-icon-jiantouRight" />
@@ -15,21 +15,27 @@
 	export default {
 		data() {
 			return {
-				
+				SERVER:this.development,
+				sectionInfo:null
 			};
 		},
 		methods:{
-			onDetail(){
+			onDetail(sectionId){
 				uni.navigateTo({
-					url:'./testDetail'
+					url:`./testDetail?sectionId=${sectionId}`
 				})
 			}
 		},
-		onLoad:function(){
+		onLoad:async function(){
 			let courceId = this.$store.state.myCource.courceId;
-			this.request({
-				url:''
+			const [err,res] = await this.request({
+				url:`${this.SERVER}/api/chapterTests/${courceId}`,
+				method:'get'
 			})
+			if(res.data.code === 0){
+				this.sectionInfo = res.data.data;
+			}
+			console.log('res',res);
 			console.log('vuex',this.$store.state.myCource.courceId);
 		},
 		

@@ -4,6 +4,9 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
     "van-tabbar": "/static/vant-weapp/tabbar/index",
-    "van-tabbar-item": "/static/vant-weapp/tabbar-item/index"
+    "van-tabbar-item": "/static/vant-weapp/tabbar-item/index",
+    "van-radio": "/static/vant-weapp/radio/index",
+    "van-radio-group": "/static/vant-weapp/radio-group/index",
+    "van-action-sheet": "/static/vant-weapp/action-sheet/index"
   }
 }
