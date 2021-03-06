@@ -142,8 +142,8 @@ var _default =
             console.log('分数', score);
             _this.$store.dispatch('myCource/changeSectionScore', score);
             console.log('vuex分数', _this.$store.state.myCource.sectionScore);
-            uni.navigateTo({
-              url: './answerResult' });
+            uni.redirectTo({
+              url: "./answerResult?sectionId=".concat(_this.sectionId) });
 
           } else if (res.cancel) {
             console.log('用户点击取消');
@@ -200,17 +200,7 @@ var _default =
               if (res.data.code === 0) {
                 this.topics = res.data.data;
                 console.log('res', res.data.data);
-              }case 8:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
-
-  onShow: function () {var _onShow = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var _yield$this$request3, _yield$this$request4, err, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.next = 2;return (
-                this.request({
-                  url: "".concat(this.SERVER, "/api/topics/").concat(this.sectionId),
-                  method: 'get' }));case 2:_yield$this$request3 = _context2.sent;_yield$this$request4 = _slicedToArray(_yield$this$request3, 2);err = _yield$this$request4[0];res = _yield$this$request4[1];
-
-              if (res.data.code === 0) {
-                this.topics = res.data.data;
-                console.log('res', res.data.data);
-              }case 7:case "end":return _context2.stop();}}}, _callee2, this);}));function onShow() {return _onShow.apply(this, arguments);}return onShow;}() };exports.default = _default;
+              }case 8:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -36,7 +36,6 @@
 				this.sectionInfo = res.data.data;
 			}
 			console.log('res',res);
-			console.log('vuex',this.$store.state.myCource.courceId);
 		},
 		
 		

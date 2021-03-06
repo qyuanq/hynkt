@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<view class="result-box">
-			<view class="result">0%</view>
-			<view class="name">学渣</view>
+			<view class="result">{{correct}}%</view>
+			<view class="name">{{resultName}}</view>
 		</view>
 		<view :class="['queAndAns',index === 0 ? 'border-none' : ' ']" v-for="(item,index) in result" :key="item.title">
 			<text class="test-title">第{{index + 1}}题&nbsp;&nbsp;{{item.title}}</text>
@@ -19,35 +19,45 @@
 	export default {
 		data() {
 			return {
-				result:null	//答题结果
+				result:null,	//答题结果
+				correct:0,		//正确率
+				sectionId:0		//章节id
 			};
+		},
+		computed:{
+			resultName(){
+				console.log('computed',this.correct)
+				if(this.correct < 60){
+					return '学渣'
+				}else if(this.correct >= 60 && this.correct < 80){
+					return '学霸'
+				}else{
+					return '学神'
+				}
+			}
 		},
 		methods:{
 			tryAgain(){
-				uni.navigateTo({
-					url:'./testDetail'
+				uni.redirectTo({
+					url:`./testDetail?sectionId=${this.sectionId}`
 				})
-				// uni.redirectTo({
-				//     url: './testDetail'
-				// });
-				// uni.navigateBack({
-					
-				// })
 			},
 			confirm(){
 				uni.switchTab({
-					url:'pages/tabBar/index'
+					url:'/pages/tabBar/index'
 				})
 			}
 		},
-		onLoad:function(){
+		onLoad:function(option){
+			this.sectionId = option.sectionId;
 			this.result = this.$store.state.myCource.sectionScore;
 			// 答对的个数
-			this.correctCount = this.result.filter(item => {
+			let correctCount = this.result.filter(item => {
 				return item.icon === true;
 			}).length;
+			this.correct = correctCount / this.result.length * 100;
 			
-			console.log('正确率：',this.correctCount);
+			console.log('正确率：',this.correct);
 		}
 	}
 </script>

@@ -151,35 +151,45 @@ var _default =
 {
   data: function data() {
     return {
-      result: null //答题结果
+      result: null, //答题结果
+      correct: 0, //正确率
+      sectionId: 0 //章节id
     };
   },
+  computed: {
+    resultName: function resultName() {
+      console.log('computed', this.correct);
+      if (this.correct < 60) {
+        return '学渣';
+      } else if (this.correct >= 60 && this.correct < 80) {
+        return '学霸';
+      } else {
+        return '学神';
+      }
+    } },
+
   methods: {
     tryAgain: function tryAgain() {
-      uni.navigateTo({
-        url: './testDetail' });
+      uni.redirectTo({
+        url: "./testDetail?sectionId=".concat(this.sectionId) });
 
-      // uni.redirectTo({
-      //     url: './testDetail'
-      // });
-      // uni.navigateBack({
-
-      // })
     },
     confirm: function confirm() {
       uni.switchTab({
-        url: 'pages/tabBar/index' });
+        url: '/pages/tabBar/index' });
 
     } },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
+    this.sectionId = option.sectionId;
     this.result = this.$store.state.myCource.sectionScore;
     // 答对的个数
-    this.correctCount = this.result.filter(function (item) {
+    var correctCount = this.result.filter(function (item) {
       return item.icon === true;
     }).length;
+    this.correct = correctCount / this.result.length * 100;
 
-    console.log('正确率：', this.correctCount);
+    console.log('正确率：', this.correct);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

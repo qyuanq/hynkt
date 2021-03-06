@@ -33,7 +33,7 @@
 			  <view class="content">
 				  <view class="title">单选题</view>
 				  <view class="options">
-					  <view :class="['option',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" @tap="onOption(index)">1</view>
+					  <view :class="['option',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" :key="item.title" @tap="onOption(index)">{{index + 1}}</view>
 				  </view>
 			  </view>
 			  <view class="btn" @tap="onPapers">交卷</view>
@@ -132,8 +132,8 @@
 							console.log('分数',score);
 							this.$store.dispatch('myCource/changeSectionScore',score);
 							console.log('vuex分数',this.$store.state.myCource.sectionScore);
-							uni.navigateTo({
-								url:'./answerResult'
+							uni.redirectTo({
+								url:`./answerResult?sectionId=${this.sectionId}`
 							})
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -183,16 +183,6 @@
 		},
 		onLoad: async function(option){
 			this.sectionId = option.sectionId;
-			const [err,res] = await this.request({
-				url:`${this.SERVER}/api/topics/${this.sectionId}`,
-				method:'get'
-			})
-			if(res.data.code === 0){
-				this.topics = res.data.data;
-				console.log('res',res.data.data);
-			}
-		},
-		onShow:async function(){
 			const [err,res] = await this.request({
 				url:`${this.SERVER}/api/topics/${this.sectionId}`,
 				method:'get'

@@ -167,8 +167,7 @@ var _default =
               if (res.data.code === 0) {
                 this.sectionInfo = res.data.data;
               }
-              console.log('res', res);
-              console.log('vuex', this.$store.state.myCource.courceId);case 10:case "end":return _context.stop();}}}, _callee, this);}));function onLoad() {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
+              console.log('res', res);case 9:case "end":return _context.stop();}}}, _callee, this);}));function onLoad() {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
