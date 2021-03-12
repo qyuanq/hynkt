@@ -147,6 +147,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -171,7 +173,7 @@ var _default =
   methods: {
     tryAgain: function tryAgain() {
       uni.redirectTo({
-        url: "./testDetail?sectionId=".concat(this.sectionId) });
+        url: "./testDetail" });
 
     },
     confirm: function confirm() {
@@ -187,7 +189,7 @@ var _default =
     var correctCount = this.result.filter(function (item) {
       return item.icon === true;
     }).length;
-    this.correct = correctCount / this.result.length * 100;
+    this.correct = Math.floor(correctCount / this.result.length * 100);
 
     console.log('正确率：', this.correct);
   } };exports.default = _default;

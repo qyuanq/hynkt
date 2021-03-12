@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "收藏夹",
+  "navigationBarBackgroundColor": "#2890ff",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-tab": "/static/vant-weapp/tab/index",
+    "van-tabs": "/static/vant-weapp/tabs/index",
+    "topic": "/components/test-topic/topic"
+  }
+}

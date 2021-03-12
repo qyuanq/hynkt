@@ -1,0 +1,207 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+}
+.container .serial {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  margin-top: 30rpx;
+  padding: 0 30rpx;
+}
+.container .serial .headlines {
+  width: 353rpx;
+  height: 36rpx;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAsIAAABICAYAAAD8ppNOAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY2RTNENUYyRjBCNDExRTk4RTE4RjU2Q0U3MUVCMjIxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY2RTNENUYzRjBCNDExRTk4RTE4RjU2Q0U3MUVCMjIxIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjZFM0Q1RjBGMEI0MTFFOThFMThGNTZDRTcxRUIyMjEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjZFM0Q1RjFGMEI0MTFFOThFMThGNTZDRTcxRUIyMjEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7Zxq2eAAAHa0lEQVR42uzd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) no-repeat top center;
+  background-size: 100% 100%;
+  line-height: 36rpx;
+  text-indent: 20rpx;
+  color: #fff;
+}
+.container .serial .count {
+  color: #41A5FD;
+}
+.container .title {
+  padding: 0 30rpx;
+  margin: 40rpx 0;
+}
+.container .options {
+  margin-top: 40rpx;
+}
+.container .options .cell {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  width: 100%;
+  padding: 20rpx 30rpx;
+  border-bottom: 1px solid #ebedf0;
+  box-sizing: border-box;
+}
+.container .options .cell:first-child {
+  border-top: 1px solid #ebedf0;
+}
+.container .options .cell .iconfont {
+  font-size: 48rpx !important;
+  float: left;
+}
+.container .options .cell .text {
+  width: 570rpx;
+  margin-left: 20rpx;
+  margin-top: 6rpx;
+  float: left;
+}
+.container .options .cell .textActive {
+  color: #41A5FD;
+}
+.container .look-answer {
+  padding: 0 20rpx;
+  font-size: 14px;
+}
+.container .look-answer .top {
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 1px solid #ccc;
+}
+.container .look-answer .top .correct-answer {
+  color: #41A5FD;
+}
+.container .look-answer .top .error-answer {
+  color: #DC5044;
+}
+.container .look-answer .parsing .title {
+  font-size: 14px;
+  color: #333333;
+  cont-weight: 700;
+}
+.container .look-answer .parsing .content {
+  padding: 20rpx 10rpx;
+  width: 710rpx;
+  margin: 20rpx auto 0;
+  border: 1px dashed #c6c6c6;
+  background: #F6F7F8;
+  box-sizing: border-box;
+}
+.container .sheet .van-popup {
+  padding-bottom: 30rpx;
+  max-height: 300px !important;
+}
+.container .sheet .content .dtk-title {
+  margin: 0 35rpx;
+}
+.container .sheet .content .options .option {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 17.5rpx 35rpx;
+  border-radius: 50%;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  background: #E2E2E2;
+}
+.container .sheet .content .options .do-mark {
+  background: #3fbf72;
+}
+.container .sheet .content .options .not-rate {
+  background: #ff5500;
+}
+.container .sheet .btn {
+  width: 200rpx;
+  margin: 20rpx auto;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  background: #41A5FD;
+  border-radius: 40rpx;
+}
+.container .tabbar {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  z-index: 1;
+}
+.container .tabbar .active {
+  color: #41A5FD !important;
+}
+.container .tabbar .iconfont {
+  font-size: 18px;
+}
+.container .tabbar .tabbar-name {
+  font-size: 12px;
+  color: #646566;
+}
+.container .suspend-button {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  width: 80rpx;
+  height: 160rpx;
+  background: #41A5FD;
+  opacity: .4;
+  border-radius: 80rpx 0 0 80rpx;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 14px;
+  color: #fff;
+}
+.container .suspend-button .text {
+  position: absolute;
+  top: 35rpx;
+  left: 20rpx;
+  -webkit-writing-mode: tb-rl;
+          writing-mode: tb-rl;
+}
+.container .suspend-button .complete {
+  top: 50rpx !important;
+}
+.container .suspend-button .jt {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  right: 0;
+}
+

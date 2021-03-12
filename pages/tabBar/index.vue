@@ -64,7 +64,7 @@
 					</view>
 					<text>错题本</text>
 				</view>
-				<view id="demo4" class="scroll-view-item_H demo">
+				<view id="demo4" class="scroll-view-item_H demo" @tap="onFavorites">
 					<view class="icon">
 						<image :src="SERVER + '/static/img/icon/favorites.png'"></image>
 					</view>
@@ -297,6 +297,11 @@
 				this.notlesson ? url = `../user/myCource?notlesson=${this.notlesson}` : url = '../examQuestion/practice';
 				uni.navigateTo({
 					url:url
+				})
+			},
+			onFavorites(){
+				uni.navigateTo({
+					url:'../examQuestion/favorites'
 				})
 			},
 			//转化时间

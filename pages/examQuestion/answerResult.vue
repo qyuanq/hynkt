@@ -4,9 +4,11 @@
 			<view class="result">{{correct}}%</view>
 			<view class="name">{{resultName}}</view>
 		</view>
-		<view :class="['queAndAns',index === 0 ? 'border-none' : ' ']" v-for="(item,index) in result" :key="item.title">
-			<text class="test-title">第{{index + 1}}题&nbsp;&nbsp;{{item.title}}</text>
-			<icon :class="['iconfont',item.icon ? 'my-icon-correct' : 'my-icon-error']"></icon>
+		<view class="content">
+			<view :class="['queAndAns',index === 0 ? 'border-none' : ' ']" v-for="(item,index) in result" :key="item.title">
+				<text class="test-title">第{{index + 1}}题&nbsp;&nbsp;{{item.title}}</text>
+				<icon :class="['iconfont',item.icon ? 'my-icon-correct' : 'my-icon-error']"></icon>
+			</view>
 		</view>
 		<view class="btns">
 			<button class="btn try-again" @tap="tryAgain">再测一次</button>
@@ -39,7 +41,7 @@
 		methods:{
 			tryAgain(){
 				uni.redirectTo({
-					url:`./testDetail?sectionId=${this.sectionId}`
+					url:`./testDetail`
 				})
 			},
 			confirm(){
@@ -55,7 +57,7 @@
 			let correctCount = this.result.filter(item => {
 				return item.icon === true;
 			}).length;
-			this.correct = correctCount / this.result.length * 100;
+			this.correct = Math.floor(correctCount / this.result.length * 100);
 			
 			console.log('正确率：',this.correct);
 		}
@@ -80,25 +82,29 @@
 			font-weight:bold;
 		}
 	}
-	.queAndAns{
-		height:100rpx;
-		line-height: 100rpx;
-		padding:0 30rpx;
-		display: flex;
-		justify-content: space-between;
-		border-top:1px dashed $uni-text-color-disable;
-		.test-title{
-			width:580rpx;
-			display: inline-block;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
+	.content{
+		margin-bottom:96rpx;
+		.queAndAns{
+			height:100rpx;
+			line-height: 100rpx;
+			padding:0 30rpx;
+			display: flex;
+			justify-content: space-between;
+			border-top:1px dashed $uni-text-color-disable;
+			.test-title{
+				width:580rpx;
+				display: inline-block;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 		}
 	}
 	.border-none{
 		border-top:none;
 	}
 	.btns{
+		background-color: #fff;
 		position: fixed;
 		bottom:0;
 		left:0;

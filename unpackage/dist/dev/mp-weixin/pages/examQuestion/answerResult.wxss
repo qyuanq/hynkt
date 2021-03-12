@@ -43,7 +43,10 @@
   color: #fff;
   font-weight: bold;
 }
-.container .queAndAns {
+.container .content {
+  margin-bottom: 96rpx;
+}
+.container .content .queAndAns {
   height: 100rpx;
   line-height: 100rpx;
   padding: 0 30rpx;
@@ -55,7 +58,7 @@
           justify-content: space-between;
   border-top: 1px dashed #c0c0c0;
 }
-.container .queAndAns .test-title {
+.container .content .queAndAns .test-title {
   width: 580rpx;
   display: inline-block;
   white-space: nowrap;
@@ -66,6 +69,7 @@
   border-top: none;
 }
 .container .btns {
+  background-color: #fff;
   position: fixed;
   bottom: 0;
   left: 0;

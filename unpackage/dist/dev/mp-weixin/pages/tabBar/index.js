@@ -1,21 +1,5 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/tabBar/index"],{
 
-/***/ 20:
-/*!**********************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/main.js?{"page":"pages%2FtabBar%2Findex"} ***!
-  \**********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/tabBar/index.vue */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
-
-/***/ }),
-
 /***/ 21:
 /*!***************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/pages/tabBar/index.vue ***!
@@ -431,6 +415,11 @@ var _default =
         url: url });
 
     },
+    onFavorites: function onFavorites() {
+      uni.navigateTo({
+        url: '../examQuestion/favorites' });
+
+    },
     //转化时间
     renderTime: function renderTime(date) {
       var dateee = new Date(date).toJSON();
@@ -494,7 +483,23 @@ __webpack_require__.r(__webpack_exports__);
     if(false) { var cssReload; }
   
 
+/***/ }),
+
+/***/ 413:
+/*!**********************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/main.js?{"page":"pages%2FtabBar%2Findex"} ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 4);
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/tabBar/index.vue */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createPage"]))
+
 /***/ })
 
-},[[20,"common/runtime","common/vendor"]]]);
+},[[413,"common/runtime","common/vendor"]]]);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/tabBar/index.js.map

@@ -67,7 +67,8 @@
 								uni.setStorage({
 									 key: 'user',
 									 data: res.data.data
-								})
+								});
+								this.$store.dispatch('User/changeUser',res.data.data);
 							}
 						})
 						uni.reLaunch({

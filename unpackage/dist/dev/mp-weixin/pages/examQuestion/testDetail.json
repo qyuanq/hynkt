@@ -1,12 +1,13 @@
 {
-  "navigationBarTitleText": "",
-  "navigationBarBackgroundColor": "#2890ff",
-  "navigationBarTextStyle": "white",
+  "navigationStyle": "custom",
   "usingComponents": {
     "van-tabbar": "/static/vant-weapp/tabbar/index",
     "van-tabbar-item": "/static/vant-weapp/tabbar-item/index",
     "van-radio": "/static/vant-weapp/radio/index",
     "van-radio-group": "/static/vant-weapp/radio-group/index",
-    "van-action-sheet": "/static/vant-weapp/action-sheet/index"
+    "van-action-sheet": "/static/vant-weapp/action-sheet/index",
+    "van-nav-bar": "/static/vant-weapp/nav-bar/index",
+    "van-icon": "/static/vant-weapp/icon/index",
+    "topic": "/components/test-topic/topic"
   }
 }
