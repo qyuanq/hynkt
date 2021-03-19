@@ -2,5 +2,7 @@
   "navigationBarTitleText": "答题结果",
   "navigationBarBackgroundColor": "#2890ff",
   "navigationBarTextStyle": "white",
-  "usingComponents": {}
+  "usingComponents": {
+    "test-result": "/components/test-topic/testResult"
+  }
 }

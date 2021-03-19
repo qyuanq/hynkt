@@ -47,6 +47,9 @@
   text-indent: 20rpx;
   color: #fff;
 }
+.container .serial .score {
+  color: #ff6600;
+}
 .container .serial .count {
   color: #41A5FD;
 }
@@ -161,6 +164,7 @@
           justify-content: space-around;
   text-align: center;
   border-top: 1px solid #ccc;
+  box-sizing: border-box;
   z-index: 1;
 }
 .container .tabbar .active {

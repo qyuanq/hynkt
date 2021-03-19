@@ -294,7 +294,7 @@
 			onProblem(){
 				console.log('点击了模拟考试');
 				let url;
-				this.notlesson ? url = `../user/myCource?notlesson=${this.notlesson}` : url = '../examQuestion/practice';
+				this.notlesson ? url = `../user/myCource?notlesson=${this.notlesson}` : url = '../examQuestion/simulationTest';
 				uni.navigateTo({
 					url:url
 				})

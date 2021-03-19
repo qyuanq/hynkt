@@ -31,6 +31,14 @@
   border-bottom: 10rpx solid #F6F7F8;
   box-sizing: border-box;
 }
+.container .result-box .result-text {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  margin-top: 40rpx;
+}
 .container .result-box .result {
   width: 160rpx;
   margin: 0 auto 0;
@@ -42,31 +50,6 @@
   font-size: 48rpx;
   color: #fff;
   font-weight: bold;
-}
-.container .content {
-  margin-bottom: 96rpx;
-}
-.container .content .queAndAns {
-  height: 100rpx;
-  line-height: 100rpx;
-  padding: 0 30rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  border-top: 1px dashed #c0c0c0;
-}
-.container .content .queAndAns .test-title {
-  width: 580rpx;
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.container .border-none {
-  border-top: none;
 }
 .container .btns {
   background-color: #fff;

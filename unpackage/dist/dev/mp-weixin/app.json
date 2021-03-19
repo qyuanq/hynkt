@@ -27,7 +27,9 @@
         "testList",
         "testDetail",
         "answerResult",
-        "favorites"
+        "favorites",
+        "simulationTest",
+        "testQuestion"
       ]
     },
     {

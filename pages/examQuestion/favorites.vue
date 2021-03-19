@@ -5,7 +5,8 @@
 			  内容 1
 		  </van-tab>
 		  <van-tab title="收藏练习">
-			  <topic :data="topics" isType="collection"></topic>
+			  <view v-if="isNoneTest" class="">没有练习啦</view>
+			  <topic v-else :data="topics" isType="collection" @notTest="notTest"></topic>
 		  </van-tab>
 		</van-tabs>
 	</view>
@@ -18,7 +19,8 @@
 		data() {
 			return {
 				topics:null,	//收藏的题
-				SERVER:this.development
+				SERVER:this.development,
+				isNoneTest:false	//是否有收藏习题，默认有
 			};
 		},
 		computed:{
@@ -26,6 +28,11 @@
 			users(){
 				return uni.getStorageSync('user');
 			}	
+		},
+		methods:{
+			notTest(isNot){
+				this.isNoneTest = isNot;
+			}
 		},
 		onLoad:async function(){
 			// 获取章节下所有习题

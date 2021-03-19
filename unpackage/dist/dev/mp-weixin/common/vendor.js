@@ -2580,7 +2580,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 17));
 var _anQuestion = _interopRequireDefault(__webpack_require__(/*! ./modules/anQuestion.js */ 18));
 var _myCource = _interopRequireDefault(__webpack_require__(/*! ./modules/myCource.js */ 19));
-var _user = _interopRequireDefault(__webpack_require__(/*! ./modules/user.js */ 460));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _user = _interopRequireDefault(__webpack_require__(/*! ./modules/user.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 _vue.default.use(_vuex.default);
 var store = new _vuex.default.Store({
   state: {},
@@ -3587,10 +3587,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   namespaced: true,
   state: {
     courceId: 0,
-    sectionId: 0,
-    sectionName: '',
-    sectionScore: 0 },
-
+    sectionId: 0, //章节id
+    sectionName: '', //章节名字
+    sectionScore: 0, //章节练习 / 模拟考试 分数
+    sectionRecord: [], //章节练习记录
+    simulationTest: {} //当前模拟考试信息
+  },
   mutations: {
     changeId: function changeId(state, id) {
       state.courceId = id;
@@ -3601,6 +3603,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     changeSectinInfo: function changeSectinInfo(state, info) {
       state.sectionId = info.id;
       state.sectionName = info.name;
+    },
+    changeRecord: function changeRecord(state, record) {
+      state.sectionRecord = record;
+    },
+    changeSimulationTest: function changeSimulationTest(state, testInfo) {
+      state.simulationTest = testInfo;
     } },
 
   getters: {},
@@ -3615,6 +3623,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     changeSectinInfo: function changeSectinInfo(_ref3, info) {var commit = _ref3.commit;
       commit('changeSectinInfo', info);
+    },
+    changeRecord: function changeRecord(_ref4, record) {var commit = _ref4.commit;
+      commit('changeRecord', record);
+    },
+    changeSimulationTest: function changeSimulationTest(_ref5, testInfo) {var commit = _ref5.commit;
+      commit('changeSimulationTest', testInfo);
     } } };exports.default = _default;
 
 /***/ }),
@@ -9648,6 +9662,34 @@ internalMixin(Vue);
 
 /***/ }),
 
+/***/ 20:
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/store/modules/user.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  namespaced: true,
+  state: {
+    user: null },
+
+  mutations: {
+    changeUser: function changeUser(state, user) {
+      state.user = user;
+    } },
+
+  getters: {},
+
+
+  actions: {
+    changeUser: function changeUser(_ref, user) {var commit = _ref.commit;
+      commit("changeUser", user);
+    } } };exports.default = _default;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9679,7 +9721,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 354:
+/***/ 385:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -11126,11 +11168,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 355)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 386)))
 
 /***/ }),
 
-/***/ 355:
+/***/ 386:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11161,7 +11203,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 356);
+        if (!path) path = __webpack_require__(/*! path */ 387);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11175,7 +11217,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 356:
+/***/ 387:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11485,11 +11527,22 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 355)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 386)))
 
 /***/ }),
 
-/***/ 399:
+/***/ 4:
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/pages.json ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ 430:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11595,18 +11648,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 4:
-/*!***************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/pages.json ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 402:
+/***/ 433:
 /*!*******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio-group/index.js ***!
   \*******************************************************************************************/
@@ -11614,7 +11656,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 403);
+var _component = __webpack_require__(/*! ../common/component */ 434);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11649,7 +11691,7 @@ var _component = __webpack_require__(/*! ../common/component */ 403);
 
 /***/ }),
 
-/***/ 403:
+/***/ 434:
 /*!******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/component.js ***!
   \******************************************************************************************/
@@ -11657,7 +11699,7 @@ var _component = __webpack_require__(/*! ../common/component */ 403);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 404);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 435);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var relationFunctions = {
   ancestor: {
     linked: function linked(parent) {
@@ -11760,7 +11802,7 @@ function VantComponent() {var vantOptions = arguments.length > 0 && arguments[0]
 
 /***/ }),
 
-/***/ 404:
+/***/ 435:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/mixins/basic.js ***!
   \**************************************************************************************/
@@ -11796,7 +11838,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 
 /***/ }),
 
-/***/ 405:
+/***/ 436:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio/index.js ***!
   \*************************************************************************************/
@@ -11804,7 +11846,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 403);
+var _component = __webpack_require__(/*! ../common/component */ 434);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11853,35 +11895,337 @@ var _component = __webpack_require__(/*! ../common/component */ 403);
 
 /***/ }),
 
-/***/ 460:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/store/modules/user.js ***!
-  \**************************************************************************/
+/***/ 437:
+/*!****************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox/index.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
-  namespaced: true,
-  state: {
-    user: null },
+var _component = __webpack_require__(/*! ../common/component */ 434);
+function emit(target, value) {
+  target.$emit('input', value);
+  target.$emit('change', value);
+}
+(0, _component.VantComponent)({
+  field: true,
+  relation: {
+    name: 'checkbox-group',
+    type: 'ancestor',
+    current: 'checkbox' },
 
-  mutations: {
-    changeUser: function changeUser(state, user) {
-      state.user = user;
-    } },
+  classes: ['icon-class', 'label-class'],
+  props: {
+    value: Boolean,
+    disabled: Boolean,
+    useIconSlot: Boolean,
+    checkedColor: String,
+    labelPosition: String,
+    labelDisabled: Boolean,
+    shape: {
+      type: String,
+      value: 'round' },
 
-  getters: {},
+    iconSize: {
+      type: null,
+      value: 20 } },
 
 
-  actions: {
-    changeUser: function changeUser(_ref, user) {var commit = _ref.commit;
-      commit("changeUser", user);
-    } } };exports.default = _default;
+  data: {
+    parentDisabled: false },
+
+  methods: {
+    emitChange: function emitChange(value) {
+      if (this.parent) {
+        this.setParentValue(this.parent, value);
+      } else {
+        emit(this, value);
+      }
+    },
+    toggle: function toggle() {var _this$data =
+      this.data,parentDisabled = _this$data.parentDisabled,disabled = _this$data.disabled,value = _this$data.value;
+      if (!disabled && !parentDisabled) {
+        this.emitChange(!value);
+      }
+    },
+    onClickLabel: function onClickLabel() {var _this$data2 =
+      this.data,labelDisabled = _this$data2.labelDisabled,parentDisabled = _this$data2.parentDisabled,disabled = _this$data2.disabled,value = _this$data2.value;
+      if (!disabled && !labelDisabled && !parentDisabled) {
+        this.emitChange(!value);
+      }
+    },
+    setParentValue: function setParentValue(parent, value) {
+      var parentValue = parent.data.value.slice();var
+      name = this.data.name;var
+      max = parent.data.max;
+      if (value) {
+        if (max && parentValue.length >= max) {
+          return;
+        }
+        if (parentValue.indexOf(name) === -1) {
+          parentValue.push(name);
+          emit(parent, parentValue);
+        }
+      } else {
+        var index = parentValue.indexOf(name);
+        if (index !== -1) {
+          parentValue.splice(index, 1);
+          emit(parent, parentValue);
+        }
+      }
+    } } });
 
 /***/ }),
 
-/***/ 50:
+/***/ 438:
+/*!**********************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox-group/index.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _component = __webpack_require__(/*! ../common/component */ 434);
+(0, _component.VantComponent)({
+  field: true,
+  relation: {
+    name: 'checkbox',
+    type: 'descendant',
+    current: 'checkbox-group',
+    linked: function linked(target) {
+      this.updateChild(target);
+    } },
+
+  props: {
+    max: Number,
+    value: {
+      type: Array,
+      observer: 'updateChildren' },
+
+    disabled: {
+      type: Boolean,
+      observer: 'updateChildren' } },
+
+
+  methods: {
+    updateChildren: function updateChildren() {var _this = this;
+      (this.children || []).forEach(function (child) {return _this.updateChild(child);});
+    },
+    updateChild: function updateChild(child) {var _this$data =
+      this.data,value = _this$data.value,disabled = _this$data.disabled;
+      child.setData({
+        value: value.indexOf(child.data.name) !== -1,
+        parentDisabled: disabled });
+
+    } } });
+
+/***/ }),
+
+/***/ 439:
+/*!*************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/index.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _component = __webpack_require__(/*! ../common/component */ 434);
+var _props = __webpack_require__(/*! ./props */ 440);
+(0, _component.VantComponent)({
+  field: true,
+  classes: ['input-class', 'right-icon-class', 'label-class'],
+  props: Object.assign(
+  Object.assign(
+  Object.assign(Object.assign({}, _props.commonProps), _props.inputProps),
+  _props.textareaProps),
+
+  {
+    size: String,
+    icon: String,
+    label: String,
+    error: Boolean,
+    center: Boolean,
+    isLink: Boolean,
+    leftIcon: String,
+    rightIcon: String,
+    autosize: [Boolean, Object],
+    required: Boolean,
+    iconClass: String,
+    clickable: Boolean,
+    inputAlign: String,
+    customStyle: String,
+    errorMessage: String,
+    arrowDirection: String,
+    showWordLimit: Boolean,
+    errorMessageAlign: String,
+    readonly: {
+      type: Boolean,
+      observer: 'setShowClear' },
+
+    clearable: {
+      type: Boolean,
+      observer: 'setShowClear' },
+
+    border: {
+      type: Boolean,
+      value: true },
+
+    titleWidth: {
+      type: String,
+      value: '6.2em' } }),
+
+
+
+  data: {
+    focused: false,
+    innerValue: '',
+    showClear: false },
+
+  created: function created() {
+    this.value = this.data.value;
+    this.setData({ innerValue: this.value });
+  },
+  methods: {
+    onInput: function onInput(event) {var _ref =
+      event.detail || {},_ref$value = _ref.value,value = _ref$value === void 0 ? '' : _ref$value;
+      this.value = value;
+      this.setShowClear();
+      this.emitChange();
+    },
+    onFocus: function onFocus(event) {
+      this.focused = true;
+      this.setShowClear();
+      this.$emit('focus', event.detail);
+    },
+    onBlur: function onBlur(event) {
+      this.focused = false;
+      this.setShowClear();
+      this.$emit('blur', event.detail);
+    },
+    onClickIcon: function onClickIcon() {
+      this.$emit('click-icon');
+    },
+    onClear: function onClear() {var _this = this;
+      this.setData({ innerValue: '' });
+      this.value = '';
+      this.setShowClear();
+      wx.nextTick(function () {
+        _this.emitChange();
+        _this.$emit('clear', '');
+      });
+    },
+    onConfirm: function onConfirm(event) {var _ref2 =
+      event.detail || {},_ref2$value = _ref2.value,value = _ref2$value === void 0 ? '' : _ref2$value;
+      this.value = value;
+      this.setShowClear();
+      this.$emit('confirm', value);
+    },
+    setValue: function setValue(value) {
+      this.value = value;
+      this.setShowClear();
+      if (value === '') {
+        this.setData({ innerValue: '' });
+      }
+      this.emitChange();
+    },
+    onLineChange: function onLineChange(event) {
+      this.$emit('linechange', event.detail);
+    },
+    onKeyboardHeightChange: function onKeyboardHeightChange(event) {
+      this.$emit('keyboardheightchange', event.detail);
+    },
+    emitChange: function emitChange() {var _this2 = this;
+      this.setData({ value: this.value });
+      wx.nextTick(function () {
+        _this2.$emit('input', _this2.value);
+        _this2.$emit('change', _this2.value);
+      });
+    },
+    setShowClear: function setShowClear() {var _this$data =
+      this.data,clearable = _this$data.clearable,readonly = _this$data.readonly;var
+      focused = this.focused,value = this.value;
+      this.setData({
+        showClear: !!clearable && !!focused && !!value && !readonly });
+
+    },
+    noop: function noop() {} } });
+
+/***/ }),
+
+/***/ 440:
+/*!*************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/props.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.textareaProps = exports.inputProps = exports.commonProps = void 0;var commonProps = {
+  value: {
+    type: String,
+    observer: function observer(value) {
+      if (value !== this.value) {
+        this.setData({ innerValue: value });
+        this.value = value;
+      }
+    } },
+
+  placeholder: String,
+  placeholderStyle: String,
+  placeholderClass: String,
+  disabled: Boolean,
+  maxlength: {
+    type: Number,
+    value: -1 },
+
+  cursorSpacing: {
+    type: Number,
+    value: 50 },
+
+  autoFocus: Boolean,
+  focus: Boolean,
+  cursor: {
+    type: Number,
+    value: -1 },
+
+  selectionStart: {
+    type: Number,
+    value: -1 },
+
+  selectionEnd: {
+    type: Number,
+    value: -1 },
+
+  adjustPosition: {
+    type: Boolean,
+    value: true },
+
+  holdKeyboard: Boolean };exports.commonProps = commonProps;
+
+var inputProps = {
+  type: {
+    type: String,
+    value: 'text' },
+
+  password: Boolean,
+  confirmType: String,
+  confirmHold: Boolean };exports.inputProps = inputProps;
+
+var textareaProps = {
+  autoHeight: Boolean,
+  fixed: Boolean,
+  showConfirmBar: {
+    type: Boolean,
+    value: true },
+
+  disableDefaultPadding: {
+    type: Boolean,
+    value: true } };exports.textareaProps = textareaProps;
+
+/***/ }),
+
+/***/ 51:
 /*!**********************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
   \**********************************************************************/

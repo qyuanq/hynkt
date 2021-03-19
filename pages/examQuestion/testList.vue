@@ -4,7 +4,7 @@
 			<view class="box">
 				<view class="box-text">章节练习正确率</view>
 				 <progress 
-					percent="20" 
+					:percent="correct" 
 					show-info 
 					stroke-width="6" 
 					activeColor="#fff" 
@@ -17,7 +17,7 @@
 			<view class="box">
 				<view class="box-text">章节练习完成率</view>
 				 <progress
-					percent="20" 
+					:percent="completion" 
 					show-info 
 					stroke-width="6" 
 					activeColor="#fff" 
@@ -32,7 +32,7 @@
 		<view class="testNav" v-for="item in sectionInfo" :key="item.id" @tap="onDetail(item.id,item.name)">
 			<view class="content">
 				<view class="title">{{item.name}}</view>
-				<view class="section-progress">练习进度：0/{{item.chapter_test_models[0].count}}</view>
+				<view class="section-progress">练习进度：{{item.haveCount ? item.haveCount : 0}}/{{item.chapter_test_models[0].count}}</view>
 			</view>
 			<icon class="iconfont my-icon-jiantouRight" />
 		</view>
@@ -45,7 +45,9 @@
 		data() {
 			return {
 				SERVER:this.development,
-				sectionInfo:null
+				sectionInfo:null,	//章节信息
+				correct:0,			//正确率
+				completion:0		//完成率
 			};
 		},
 		computed:{
@@ -60,6 +62,7 @@
 					url:`${this.SERVER}/api/myTest/?userId=${this.user.id}&classId=${this.$store.state.myCource.courceId}&sectionId=${sectionId}`,
 					method:'get'
 				})
+				console.log('查看新纪录',resTest.data.data)
 				if(resTest.data.code === 0 && resTest.data.data.chapterTestModelId){
 					let content = `您在${renderTime(resTest.data.data.date)}有未完成的练习,确认继续上次的练习？`
 					// 有没有上次保存的进度
@@ -70,10 +73,15 @@
 						success:(res) => {
 							if(res.confirm){
 								let qid = resTest.data.data.chapterTestModelId;
+								let record = resTest.data.data['test_record_models.record'];
+								record = JSON.parse(record);
+								// 将章节练习记录存入vuex
+								this.$store.dispatch('myCource/changeRecord',record);
 								uni.navigateTo({
 									url:`./testDetail?qid=${qid}`
 								})
 							}else if(res.cancel){
+								// this.$store.dispatch('myCource/changeRecord',null);
 								uni.navigateTo({
 									url:`./testDetail`
 								})
@@ -81,17 +89,38 @@
 						}
 					})
 				}
+			},
+			// 子页面调用刷新数据
+			changeData(){
+				console.log('刷新了');
+				this.getData();
+			},
+			//数据初始化
+			async getData(){
+				// 获取课程id
+				let courceId = this.$store.state.myCource.courceId;
+				const [err,res] = await this.request({
+					url:`${this.SERVER}/api/chapterTests/${courceId}`,
+					method:'get'
+				})
+				if(res.data.code === 0){
+					this.sectionInfo = res.data.data;
+					let testCount = 0;	//习题总数
+					let haveCount = 0;	//练习总数
+					let rightCount = 0; //正确总数
+					this.sectionInfo.forEach(item => {
+						if(item.chapter_test_models.length > 0)
+						testCount += item.chapter_test_models[0].count;
+						haveCount += item.haveCount || 0;
+						rightCount += item.rightCount || 0;
+					})
+					this.correct = Math.floor(rightCount / testCount * 100);
+					this.completion =Math.floor(haveCount / testCount * 100);
+				}
 			}
 		},
-		onLoad:async function(){
-			let courceId = this.$store.state.myCource.courceId;
-			const [err,res] = await this.request({
-				url:`${this.SERVER}/api/chapterTests/${courceId}`,
-				method:'get'
-			})
-			if(res.data.code === 0){
-				this.sectionInfo = res.data.data;
-			}
+		onLoad:function(){
+			this.getData();
 		}
 	}
 </script>

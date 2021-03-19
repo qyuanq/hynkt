@@ -1,51 +1,108 @@
 <template>
-	<view class="container" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
-		<view class="serial">
-			<view class="headlines">第{{qid + 1}}题（单选）</view>
-			<view class="count">({{(qid + 1) + '/' + topics.length}})</view>
-		</view>
-		<view class="title">{{topics[qid].title}}</view>
-		<vanRadioGroup @change.native="onChoose" class="options">
-			<view class="cell" v-for="item in options" :key="item.id">
-				<vanRadio use-icon-slot :name="item.name" class="clearfix">
-					<icon :class="['iconfont',(topics[qid]['myAnswer'] === item.name) ? item.actIcon : item.icon]"></icon>
-					<view :class="['text',topics[qid]['myAnswer'] === item.name ? 'textActive' : ' ']">{{topics[qid][item.value]}}</view>
-				</vanRadio>
+	<view class="container">
+		<swiper class="swiper" :style="{height:swiperHeight + 'px'}" @change="changeQid" :current="current">
+			<swiper-item v-for="(topic,qid) in topics" :key="topic.title">
+				<view class="serial">
+					<view class="headlines">
+						第{{qid + 1}}题
+						<text v-if="topic.type === 1">(单选)</text>
+						<text v-else-if="topic.type === 2">(多选)</text>
+						<text v-else-if="topic.type === 3">(判断)</text>
+						<text v-else-if="topic.type === 4">(填空)</text>
+						<text v-else-if="topic.type === 5">(问答)</text>
+					</view>
+					<view class="score" v-if="isType==='simulation'">({{topic.score}}分)</view>
+					<view class="count">({{(qid + 1) + '/' + topics.length}})</view>
+				</view>
+				<view class="title">{{topic.title}}</view>
+				<!-- 单选 -->
+				<vanRadioGroup @change.native="onChoose" class="options" v-if="topic.type === 1">
+					<view class="cell" v-for="item in options" :key="item.id">
+						<vanRadio use-icon-slot :name="item.name" class="clearfix">
+							<icon :class="['iconfont',(topic['myAnswer'] === item.name) ? item.actIcon : item.icon]"></icon>
+							<view :class="['text',topic['myAnswer'] === item.name ? 'textActive' : ' ']">{{topic[item.value]}}</view>
+						</vanRadio>
+					</view>
+				</vanRadioGroup>
+				<!-- 多选 -->
+				<vanCheckboxGroup class="options" :value="topic['myAnswer']" @change.native="onSelect" v-else-if="topic.type === 2">
+					<view class="cell" v-for="item in options" :key="item.id">
+						<van-checkbox use-icon-slot :name="item.name" class="clearfix">
+							<icon :class="['iconfont',(topic['myAnswer'].indexOf(item.name) > -1) ? item.actIcon : item.icon]"></icon>
+							<view :class="['text',(topic['myAnswer'].indexOf(item.name) > -1) ? 'textActive' : ' ']">{{topic[item.value]}}</view>
+						</van-checkbox>
+					</view>
+				</vanCheckboxGroup>
+				<!-- 判断 -->
+				<vanRadioGroup @change.native="onChoose" class="options" v-else-if="topic.type === 3">
+					<view class="cell">
+						<vanRadio use-icon-slot name="A" class="clearfix">
+							<icon :class="['iconfont',(topic['myAnswer'] === 'A') ? 'my-icon-activeA' : 'my-icon-A']"></icon>
+							<view :class="['text',topic['myAnswer'] === 'A' ? 'textActive' : ' ']">{{topic['optionA']}}</view>
+						</vanRadio>
+					</view>
+					<view class="cell">
+						<vanRadio use-icon-slot name="B" class="clearfix">
+							<icon :class="['iconfont',(topics[qid]['myAnswer'] === 'B') ? 'my-icon-activeB' : 'my-icon-B']"></icon>
+							<view :class="['text',topics[qid]['myAnswer'] === 'B' ? 'textActive' : ' ']">{{topics[qid]['optionB']}}</view>
+						</vanRadio>
+					</view>
+				</vanRadioGroup>
+				<!-- 填空 -->
+				<vanField
+					v-else-if="topic.type === 4"
+				    :value="topic['myAnswer']"
+					label="回答"
+				    placeholder="请输入答案"
+				    @change.native="inBlank"
+				 />
+				<!-- 问答 -->
+				<vanField
+					v-else-if="topic.type === 5"
+				    :value="topic['myAnswer']"
+				    label="回答"
+				    type="textarea"
+				    placeholder="请输入答案1000字以内"
+				    autosize
+					@change.native="inBlank"
+				 />
+				<!-- 查看答案 -->
+				<view class="look-answer" v-show="isAnswer">
+					<view class="top">
+						正确答案是<text class="correct-answer">{{topic.answer}}</text>
+						<text>{{topic.myAnswer ? '(您的选择 ' : '(您未作答)'}}</text>
+						<text v-show="topic.myAnswer" :class="topic.myAnswer === topic.answer ? 'correct-answer':'.error-answer'">{{topic.myAnswer}} {{topic.myAnswer === topic.answer ? '回答正确' : '回答错误'}}</text>
+						<text v-show="topic.myAnswer">)</text>
+					</view>
+					<view class="parsing">
+						<view class="title">解析</view>
+						<view class="content">{{topic.parse}}</view>
+					</view>
+					<view class="correct">平均正确率<text class="rate">100</text>%</view>
+				</view>
+				<!-- 答题卡 -->
+				<view class="sheet">
+					<van-action-sheet :show="sheetShow" title="答题卡"  @close="closeSheet">
+					  <view class="content">
+						  <view class="dtk-title">单选题</view>
+						  <view class="options clearfix">
+							  <view :class="['option','fl',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" :key="item.optionA" @tap="onOption(index)">{{index + 1}}</view>
+						  </view>
+					  </view>
+					  <view class="btn" @tap="onPapers">交卷</view>
+					</van-action-sheet>
+				</view>
+			</swiper-item>
+		</swiper>
+		<!-- 底部导航-->
+		<slot name="tabbar">
+			<view class="tabbar">
+				<view class="tabbar-item" v-for="(item,index) in tabs" :key="item.id" @tap="tapTab(index)">
+					<icon :class="['iconfont',item.icon]"/>
+					<view :class="['tabbar-name',isAnswer && index === 0 ? 'active' : ' ']">{{item.name}}</view>
+				</view>
 			</view>
-		</vanRadioGroup>
-		<!-- 查看答案 -->
-		<view class="look-answer" v-show="isAnswer">
-			<view class="top">
-				正确答案是<text class="correct-answer">{{topics[qid].answer}}</text>
-				<text>{{topics[qid].myAnswer ? '(您的选择 ' : '(您未作答)'}}</text>
-				<text v-show="topics[qid].myAnswer" :class="topics[qid].myAnswer === topics[qid].answer ? 'correct-answer':'.error-answer'">{{topics[qid].myAnswer}} {{topics[qid].myAnswer === topics[qid].answer ? '回答正确' : '回答错误'}}</text>
-				<text v-show="topics[qid].myAnswer">)</text>
-			</view>
-			<view class="parsing">
-				<view class="title">解析</view>
-				<view class="content">{{topics[qid].parse}}</view>
-			</view>
-			<view class="correct">平均正确率<text class="rate">100</text>%</view>
-		</view>
-		<!-- 答题卡 -->
-		<view class="sheet">
-			<van-action-sheet :show="sheetShow" title="答题卡"  @close="closeSheet">
-			  <view class="content">
-				  <view class="dtk-title">单选题</view>
-				  <view class="options clearfix">
-					  <view :class="['option','fl',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" :key="item.title" @tap="onOption(index)">{{index + 1}}</view>
-				  </view>
-			  </view>
-			  <view class="btn" @tap="onPapers">交卷</view>
-			</van-action-sheet>
-		</view>
-		<!-- 底部选项 -->
-		<view class="tabbar">
-			<view class="tabbar-item" v-for="(item,index) in tabs" :key="item.id" @tap="tapTab(index)">
-				<icon :class="['iconfont',item.icon]"/>
-				<view :class="['tabbar-name',isAnswer && index === 0 ? 'active' : ' ']">{{item.name}}</view>
-			</view>
-		</view>
+		</slot>
 		<!-- 悬浮按钮 -->
 		<view class="suspend-button" @tap="nextTest"><text :class="['text',qid === topics.length - 1 ? 'complete' : ' ']">{{qid === topics.length - 1 ? '完成' : '下一题'}}</text><text class="jt">></text></view>
 	</view>
@@ -54,14 +111,20 @@
 <script>
 	import vanRadioGroup from '@/static/vant-weapp/radio-group/index'
 	import vanRadio from '@/static/vant-weapp/radio/index'
+	import vanCheckbox from '@/static/vant-weapp/checkbox/index'
+	import vanCheckboxGroup from '@/static/vant-weapp/checkbox-group/index'
+	import vanField from  "@/static/vant-weapp/field/index"
 	export default {
 		components:{
 			vanRadioGroup,
-			vanRadio
+			vanRadio,
+			vanCheckbox,
+			vanCheckboxGroup,
+			vanField
 		},
 		props:{
 			data:{
-				type:Object,String
+				type:Array,String
 			},
 			isType:{
 				type:String
@@ -74,7 +137,7 @@
 			return {
 				topics:null,	//题
 				SERVER:this.development,
-				qid:this.idx,			//题号
+				current:this.idx,		//题号
 				options:[		//ABCD选项
 					{id:'pid1',value:'optionA',name:'A',icon:'my-icon-A',actIcon:'my-icon-activeA'},
 					{id:'pid2',value:'optionB',name:'B',icon:'my-icon-B',actIcon:'my-icon-activeB'},
@@ -90,19 +153,26 @@
 				],
 				isAnswer:false,	//是否显示查看答案
 				sheetShow:false,	//是否显示答题卡
+				swiperHeight:0,		//swiper高度
 				//监听左右滑动
 				startX: '', // 横向移动开始的位置
 				endX: '', // 横向移动结束的位置
-				moveFlag: true // 判断是否在滑动
+				moveFlag: true, // 判断是否在滑动
 			};
 		},
 		computed:{
 			// 当前用户信息
 			users(){
 				return uni.getStorageSync('user');
-			},	
+			}
 		},
 		methods:{
+			//左右滑动题
+			changeQid(event){
+				this.isAnswer = false;
+				this.$set(this.tabs[0],'icon','my-icon-ckda');
+				this.current = event.detail.current;
+			},
 			// 点击底部导航
 			async tapTab(index){
 				if(index === 0){	//查看答案
@@ -115,7 +185,7 @@
 				}else if(index === 1){	//收藏
 					if(this.isType === 'test'){
 						const [err,res] = await this.request({
-							url:`${this.SERVER}/api/collection?userId=${this.users.id}&testId=${this.topics[this.qid].id}`,
+							url:`${this.SERVER}/api/collection?userId=${this.users.id}&testId=${this.topics[this.current].id}`,
 							method:'get'
 						});
 						if(res.data.code === 0){
@@ -134,7 +204,7 @@
 								})
 							}
 							// this.$set(this.topics[this.qid],'collection',0);
-							this.topics[this.qid].collection = !this.topics[this.qid].collection;
+							this.topics[this.current].collection = !this.topics[this.current].collection;
 						}else{
 							uni.showToast({
 								title:'收藏失败',
@@ -143,19 +213,39 @@
 						}
 					}else if(this.isType === 'collection'){
 						const [err,res] = await this.request({
-							url:`${this.SERVER}/api/collection?userId=${this.users.id}&testId=${this.topics[this.qid].id}`,
+							url:`${this.SERVER}/api/collection?userId=${this.users.id}&testId=${this.topics[this.current].id}`,
 							method:'get'
 						});
 						if(res.data.code === 0){
 							// 移除收藏成功
-							const index = this.topics.forEach((item,index) => {
-								item.id === this.topics[this.qid].id
-								return index;
-							})
-							console.log('index',index);
-							this.topics.slice(index,1);
+							for(let i = 0; i < this.topics.length; i++){
+								console.log('循环了',i,this.current)
+								if(this.topics[i].id === this.topics[this.current].id){
+									// 如果数组仅剩一项数据
+									if(this.topics.length === 1){
+										// 显示没有练习
+										this.topics.splice(i,1);
+										this.$emit('notTest',true);
+										break;
+									}else{
+										//如果删除的是数组的末尾一项
+										if(i === this.topics.length - 1){
+											this.current -= 1; 
+										}
+										this.topics.splice(i,1);
+										uni.showToast({
+											title:'移除收藏成功',
+											icon:'none'
+										})
+										break;
+									}
+								}
+							}
 						}else{
-							
+							uni.showToast({
+								title:'移除收藏失败',
+								icon:'none'
+							})
 						}
 					}else if(this.isType === 'wrong'){
 						
@@ -164,23 +254,49 @@
 					this.sheetShow = true;
 				}
 			},
-			  onChoose(event){
-				  console.log('单选',event.detail)
-				  this.radio = event.detail;
-				  // 我的答案
-				  this.$set(this.topics[this.qid],'myAnswer',event.detail);
-				  console.log(this.topics[this.qid]);
-			  },
-			  // 关闭答题卡
-			  closeSheet(){
-				  this.sheetShow = false;
-			  },
-			  // 答题卡上跳题
-			  onOption(index){
-				  this.qid = index;
-				  // 关闭弹出层
-				  this.sheetShow = false;
-			  },
+			// 关闭答题卡
+			closeSheet(){
+				this.sheetShow = false;
+			},
+			// 答题卡上跳题
+			onOption(index){
+				// 关闭弹出层
+				this.sheetShow = false;
+				//关闭显示答案
+				this.isAnswer = false;
+				this.$set(this.tabs[0],'icon','my-icon-ckda');
+				this.current = index;
+			},
+			// 悬浮按钮点击事件
+			nextTest(){
+				if(this.current < this.topics.length - 1){
+					// 关闭显示答案
+					this.isAnswer = false;
+					this.$set(this.tabs[0],'icon','my-icon-ckda');
+					// 下一题
+					this.current += 1;
+				}else{
+					//完成交卷
+					this.onPapers();
+				}
+			},
+			// 单选
+		    onChoose(event){
+			    // 我的答案
+			    this.$set(this.topics[this.current],'myAnswer',event.detail);
+			    console.log('单选',this.topics,this.current);
+		    },
+			//多选
+			onSelect(event){
+			    console.log('多选',event.detail);
+			    this.$set(this.topics[this.current],'myAnswer',event.detail);
+			    console.log('多选',this.topics,this.current);
+			},
+			//填空
+			inBlank(event){
+				 console.log('填空',event.detail);
+				this.$set(this.topics[this.current],'myAnswer',event.detail);
+			},
 			// 交卷
 			onPapers(){
 				uni.showModal({
@@ -188,23 +304,44 @@
 					success:(res) => {
 						if (res.confirm) {
 							console.log('所有答案',this.topics);
-							let score = this.topics.map(item => {
-								if(item.myAnswer){
-									if(item.answer === item.myAnswer){
-										item.icon = true;
+							let score;
+							let userTime;
+							if(this.isType === 'test'){
+								score = this.topics.map(item => {
+									if(item.myAnswer){
+										if(item.answer === item.myAnswer){
+											item.icon = true;
+										}else{
+											item.icon = false
+										}
 									}else{
 										item.icon = false
 									}
-								}else{
-									item.icon = false
-								}
-								return {title:item.title,icon:item.icon}
-							});
+									return {title:item.title,icon:item.icon}
+								});
+							}else if(this.isType === 'simulation'){
+								//获取考试所用时长时间
+								userTime = 7200000 - this.$parent.remainTime;
+								score = this.topics.map(item => {
+									if(item.myAnswer){
+										if(item.answer === item.myAnswer){
+											item.icon = true;
+										}else{
+											item.icon = false;
+											item.score = 0;
+										}
+									}else{
+										item.icon = false;
+										item.score = 0;
+									}
+									return {title:item.title,icon:item.icon,score:item.score}
+								});
+							}
 							console.log('分数',score);
 							this.$store.dispatch('myCource/changeSectionScore',score);
-							console.log('vuex分数',this.$store.state.myCource.sectionScore);
+							let url = this.isType === 'simulation' ? `./answerResult?isType=${this.isType}&userTime=${userTime}` : `./answerResult?isType=${this.isType}`
 							uni.redirectTo({
-								url:`./answerResult?sectionId=${this.sectionId}`
+								url:url
 							})
 						} else if (res.cancel) {
 							console.log('用户点击取消');
@@ -212,45 +349,35 @@
 					}
 				})
 			},
-			 // 手指触摸动作开始
-			  touchStart (e) {
-				this.startX = e.touches[0].pageX // 开始触摸时的原点
-				this.moveFlag = true
-			  },
-			  // 手指触摸后移动 50 为设定的移动距离
-			  touchMove (e) {
-				this.endX = e.touches[0].pageX // 结束触摸时的原点
-				if (this.moveFlag) {
-				  if (this.endX - this.startX > 50) {
-					console.log('上一题')
-					if(this.qid > 0){
-						this.qid -= 1;
-					}
-					this.moveFlag = false
-				  }
-				  if (this.startX - this.endX > 50) {
-					console.log('下一题')
-					if(this.qid < this.topics.length - 1){
-						this.qid += 1;
-					}
-					this.moveFlag = false
-				  }
-				}
-			  },
-			  // 手指触摸动作结束
-			  touchEnd () {
-				this.moveFlag = true
-			  },
-			  // 悬浮按钮点击事件
-			  nextTest(){
-				  if(this.qid < this.topics.length - 1){
-					  // 下一题
-				  	this.qid += 1;
-				  }else{
-					  //完成交卷
-					  this.onPapers();
-				  }
-			  }
+			 // // 手指触摸动作开始
+			 //  touchStart (e) {
+				// this.startX = e.touches[0].pageX // 开始触摸时的原点
+				// this.moveFlag = true
+			 //  },
+			 //  // 手指触摸后移动 50 为设定的移动距离
+			 //  touchMove (e) {
+				// this.endX = e.touches[0].pageX // 结束触摸时的原点
+				// if (this.moveFlag) {
+				//   if (this.endX - this.startX > 50) {
+				// 	console.log('上一题')
+				// 	if(this.qid > 0){
+				// 		this.qid -= 1;
+				// 	}
+				// 	this.moveFlag = false
+				//   }
+				//   if (this.startX - this.endX > 50) {
+				// 	console.log('下一题')
+				// 	if(this.qid < this.topics.length - 1){
+				// 		this.qid += 1;
+				// 	}
+				// 	this.moveFlag = false
+				//   }
+				// }
+			 //  },
+			 //  // 手指触摸动作结束
+			 //  touchEnd () {
+				// this.moveFlag = true
+			 //  }
 		},
 		watch:{
 			data:{
@@ -261,12 +388,12 @@
 			},
 			idx:{
 				handler(n,o){
-					this.qid = n;
+					this.current = n;
 				},
 				immediate:true
 			},
 			// 监听题号变化，动态获取题目收藏状态
-			async qid(val){
+			async current(val){
 				this.$emit('changeQid',val);
 				// 收藏图标默认灰色
 				this.$set(this.tabs[1],'icon','my-icon-shoucang');
@@ -287,6 +414,11 @@
 			}
 		},
 		created(){
+			uni.getSystemInfo({
+				success:res => {
+					this.swiperHeight = res.windowHeight - 88 - 50;
+				}
+			})
 			console.log('子组件',this.qid);
 			if(this.isType === 'test'){
 				this.tabs[1].name = '收藏';
@@ -316,6 +448,9 @@
 			line-height:36rpx;
 			text-indent: 20rpx;
 			color:$color-white;
+		}
+		.score{
+			color:#ff6600;
 		}
 		.count{
 			color:$color-primary;
@@ -419,6 +554,7 @@
 		justify-content: space-around;
 		text-align: center;
 		border-top:1px solid #ccc;
+		box-sizing: border-box;
 		z-index:1;
 		.active{
 			color:$color-primary !important;

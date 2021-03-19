@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "van-nav-bar": "/static/vant-weapp/nav-bar/index",
+    "van-count-down": "/static/vant-weapp/count-down/index",
+    "van-icon": "/static/vant-weapp/icon/index",
+    "new-topic": "/components/test-topic/newTopic"
+  }
+}
