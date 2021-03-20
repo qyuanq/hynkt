@@ -59,17 +59,12 @@
 		methods:{
 			tryAgain(){
 				// 清空做题记录
-				this.$store.dispatch('myCource/changeRecord',null);
+				this.$store.dispatch('myCource/changeRecord',[]);
 				uni.redirectTo({
 					url:`./testDetail`
 				})
 			},
 			confirm(){
-				//发起请求 清空进度记录 更新完成个数和正确个数
-				let url;
-				// if(this.isType === 'test'){
-				// 	url = 
-				// }
 				uni.switchTab({
 					url:'/pages/tabBar/index'
 				})
@@ -88,10 +83,9 @@
 		},
 		onLoad:async function(option){
 			this.isType = option.isType;
+			this.score = option.score;
 			this.testName = this.$store.state.myCource.simulationTest.title;
-			// 有错
 			this.userTime = this.formatDuring(option.userTime);
-			console.log('用时',this.userTime);
 			this.result = this.$store.state.myCource.sectionScore;
 			if(this.isType === 'test'){
 				// 答对的个数
@@ -100,23 +94,7 @@
 				}).length;
 				this.correct = Math.floor(correctCount / this.result.length * 100);
 			}else if(this.isType === 'simulation'){
-				this.result.forEach(item => {
-					this.score += item.score;
-				})
-				let data = {
-					testId:this.$store.state.myCource.simulationTest.id,
-					score:this.score
-				}
-				const [err,res] = await this.request({
-					url:`${this.SERVER}/api/testScore`,
-					method:'post',
-					data:data
-				})
-				if(res.data.code === 0){
-					console.log('更新分数成功');
-				}
 			}
-			console.log('正确率：',this.correct);
 		}
 	}
 </script>

@@ -32,7 +32,7 @@
 		<view class="testNav" v-for="item in sectionInfo" :key="item.id" @tap="onDetail(item.id,item.name)">
 			<view class="content">
 				<view class="title">{{item.name}}</view>
-				<view class="section-progress">练习进度：{{item.haveCount ? item.haveCount : 0}}/{{item.chapter_test_models[0].count}}</view>
+				<view class="section-progress">练习进度：{{item.haveCount ? item.haveCount : 0}}/{{item.chapter_test_models.length}}</view>
 			</view>
 			<icon class="iconfont my-icon-jiantouRight" />
 		</view>
@@ -63,30 +63,41 @@
 					method:'get'
 				})
 				console.log('查看新纪录',resTest.data.data)
-				if(resTest.data.code === 0 && resTest.data.data.chapterTestModelId){
-					let content = `您在${renderTime(resTest.data.data.date)}有未完成的练习,确认继续上次的练习？`
-					// 有没有上次保存的进度
-					uni.showModal({
-						content:content,
-						cancelText:'否',
-						confirmText:'是',
-						success:(res) => {
-							if(res.confirm){
-								let qid = resTest.data.data.chapterTestModelId;
-								let record = resTest.data.data['test_record_models.record'];
-								record = JSON.parse(record);
-								// 将章节练习记录存入vuex
-								this.$store.dispatch('myCource/changeRecord',record);
-								uni.navigateTo({
-									url:`./testDetail?qid=${qid}`
-								})
-							}else if(res.cancel){
-								// this.$store.dispatch('myCource/changeRecord',null);
-								uni.navigateTo({
-									url:`./testDetail`
-								})
+				if(resTest.data.code === 0){
+					let record = resTest.data.data['test_record_models.record'];
+					record = JSON.parse(record);
+					// 将章节练习记录存入vuex,[]或者数组
+					this.$store.dispatch('myCource/changeRecord',record);
+					if(resTest.data.data && resTest.data.data.chapterTestModelId > 0){
+						let content = `您在${renderTime(resTest.data.data.date)}有未完成的练习,确认继续上次的练习？`
+						// 有没有上次保存的进度
+						uni.showModal({
+							content:content,
+							cancelText:'否',
+							confirmText:'是',
+							success:(res) => {
+								if(res.confirm){
+									let qid = resTest.data.data.chapterTestModelId;
+									uni.navigateTo({
+										url:`./testDetail?qid=${qid}`
+									})
+								}else if(res.cancel){
+									this.$store.dispatch('myCource/changeRecord',[]);
+									uni.navigateTo({
+										url:`./testDetail`
+									})
+								}
 							}
-						}
+						})
+					}else{
+						uni.navigateTo({
+							url:`./testDetail`
+						})
+					}
+				}else{
+					uni.showToast({
+						title:'数据获取失败',
+						icon:'none'
 					})
 				}
 			},
@@ -105,12 +116,13 @@
 				})
 				if(res.data.code === 0){
 					this.sectionInfo = res.data.data;
+					console.log('章节练习',this.sectionInfo);
 					let testCount = 0;	//习题总数
 					let haveCount = 0;	//练习总数
 					let rightCount = 0; //正确总数
 					this.sectionInfo.forEach(item => {
 						if(item.chapter_test_models.length > 0)
-						testCount += item.chapter_test_models[0].count;
+						testCount += item.chapter_test_models.length;
 						haveCount += item.haveCount || 0;
 						rightCount += item.rightCount || 0;
 					})

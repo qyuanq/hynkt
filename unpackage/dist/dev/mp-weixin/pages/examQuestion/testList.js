@@ -188,37 +188,48 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
     } },
 
   methods: {
-    onDetail: function onDetail(sectionId, sectionName) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$_this$request, _yield$_this$request2, errTest, resTest, content;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    onDetail: function onDetail(sectionId, sectionName) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$_this$request, _yield$_this$request2, errTest, resTest, record, content;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 _this.$store.dispatch('myCource/changeSectinInfo', { id: sectionId, name: sectionName });_context.next = 3;return (
                   _this.request({
                     url: "".concat(_this.SERVER, "/api/myTest/?userId=").concat(_this.user.id, "&classId=").concat(_this.$store.state.myCource.courceId, "&sectionId=").concat(sectionId),
                     method: 'get' }));case 3:_yield$_this$request = _context.sent;_yield$_this$request2 = _slicedToArray(_yield$_this$request, 2);errTest = _yield$_this$request2[0];resTest = _yield$_this$request2[1];
 
                 console.log('查看新纪录', resTest.data.data);
-                if (resTest.data.code === 0 && resTest.data.data.chapterTestModelId) {
-                  content = "\u60A8\u5728".concat((0, _common.renderTime)(resTest.data.data.date), "\u6709\u672A\u5B8C\u6210\u7684\u7EC3\u4E60,\u786E\u8BA4\u7EE7\u7EED\u4E0A\u6B21\u7684\u7EC3\u4E60\uFF1F");
-                  // 有没有上次保存的进度
-                  uni.showModal({
-                    content: content,
-                    cancelText: '否',
-                    confirmText: '是',
-                    success: function success(res) {
-                      if (res.confirm) {
-                        var qid = resTest.data.data.chapterTestModelId;
-                        var record = resTest.data.data['test_record_models.record'];
-                        record = JSON.parse(record);
-                        // 将章节练习记录存入vuex
-                        _this.$store.dispatch('myCource/changeRecord', record);
-                        uni.navigateTo({
-                          url: "./testDetail?qid=".concat(qid) });
+                if (resTest.data.code === 0) {
+                  record = resTest.data.data['test_record_models.record'];
+                  record = JSON.parse(record);
+                  // 将章节练习记录存入vuex,[]或者数组
+                  _this.$store.dispatch('myCource/changeRecord', record);
+                  if (resTest.data.data && resTest.data.data.chapterTestModelId > 0) {
+                    content = "\u60A8\u5728".concat((0, _common.renderTime)(resTest.data.data.date), "\u6709\u672A\u5B8C\u6210\u7684\u7EC3\u4E60,\u786E\u8BA4\u7EE7\u7EED\u4E0A\u6B21\u7684\u7EC3\u4E60\uFF1F");
+                    // 有没有上次保存的进度
+                    uni.showModal({
+                      content: content,
+                      cancelText: '否',
+                      confirmText: '是',
+                      success: function success(res) {
+                        if (res.confirm) {
+                          var qid = resTest.data.data.chapterTestModelId;
+                          uni.navigateTo({
+                            url: "./testDetail?qid=".concat(qid) });
 
-                      } else if (res.cancel) {
-                        // this.$store.dispatch('myCource/changeRecord',null);
-                        uni.navigateTo({
-                          url: "./testDetail" });
+                        } else if (res.cancel) {
+                          _this.$store.dispatch('myCource/changeRecord', []);
+                          uni.navigateTo({
+                            url: "./testDetail" });
 
-                      }
-                    } });
+                        }
+                      } });
+
+                  } else {
+                    uni.navigateTo({
+                      url: "./testDetail" });
+
+                  }
+                } else {
+                  uni.showToast({
+                    title: '数据获取失败',
+                    icon: 'none' });
 
                 }case 9:case "end":return _context.stop();}}}, _callee);}))();
     },
@@ -237,12 +248,13 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
 
                 if (res.data.code === 0) {
                   _this2.sectionInfo = res.data.data;
+                  console.log('章节练习', _this2.sectionInfo);
                   testCount = 0; //习题总数
                   haveCount = 0; //练习总数
                   rightCount = 0; //正确总数
                   _this2.sectionInfo.forEach(function (item) {
                     if (item.chapter_test_models.length > 0)
-                    testCount += item.chapter_test_models[0].count;
+                    testCount += item.chapter_test_models.length;
                     haveCount += item.haveCount || 0;
                     rightCount += item.rightCount || 0;
                   });

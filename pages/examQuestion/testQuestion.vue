@@ -43,7 +43,7 @@
 </template>
 
 <script>
-	import newTopic from '../../components/test-topic/newTopic.vue';
+	import newTopic from '../../components/test-topic/topic.vue';
 	export default {
 		components:{
 			newTopic
@@ -60,6 +60,7 @@
 			};
 		},
 		methods:{
+			// 导航返回操作
 			onClickLeft(){
 				uni.showModal({
 					content:'本次模考没有完成，是否保存本次模考',
@@ -94,6 +95,8 @@
 								title:toastTitle,
 								icon:'none',
 								success:(res) => {
+									// 刷新上一页数据
+									this.changePrePage();
 									setTimeout(function(){
 										uni.navigateBack({
 											delta:1
@@ -113,10 +116,12 @@
 			onSheet(){
 				this.$children[0].tapTab(2);
 			},
+			//剩余倒计时时间
 			changeTime(e){
 				this.timeData = e.detail;
 				this.remainTime = (this.timeData.hours * 3600 + this.timeData.minutes * 60 + this.timeData.seconds) * 1000 + this.timeData.milliseconds;
 			},
+			//倒计时结束
 			finished(){
 				uni.showToast({
 					title:'时间结束，自动交卷',
@@ -128,10 +133,17 @@
 						,2000)
 					}
 				})
+			},
+			// 刷新上一页数据
+			changePrePage(){
+				//获取当前页面栈
+				let pages = getCurrentPages();
+				//获取上一页
+				let beforePage = pages[pages.length - 2];
+				beforePage.$vm.initData();
 			}
 		},
 		onLoad:async function(option){
-			console.log('时间子组件')
 			this.testId = option.testId;
 			let record = [];
 			if(this.$store.state.myCource.simulationTest){

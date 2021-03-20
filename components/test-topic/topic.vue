@@ -104,7 +104,7 @@
 			</view>
 		</slot>
 		<!-- 悬浮按钮 -->
-		<view class="suspend-button" @tap="nextTest"><text :class="['text',qid === topics.length - 1 ? 'complete' : ' ']">{{qid === topics.length - 1 ? '完成' : '下一题'}}</text><text class="jt">></text></view>
+		<view class="suspend-button" @tap="nextTest"><text :class="['text',current === topics.length - 1 ? 'complete' : ' ']">{{current === topics.length - 1 ? '完成' : '下一题'}}</text><text class="jt">></text></view>
 	</view>
 </template>
 
@@ -154,10 +154,6 @@
 				isAnswer:false,	//是否显示查看答案
 				sheetShow:false,	//是否显示答题卡
 				swiperHeight:0,		//swiper高度
-				//监听左右滑动
-				startX: '', // 横向移动开始的位置
-				endX: '', // 横向移动结束的位置
-				moveFlag: true, // 判断是否在滑动
 			};
 		},
 		computed:{
@@ -190,7 +186,7 @@
 						});
 						if(res.data.code === 0){
 							// 说明已收藏
-							if(this.topics[this.qid].collection){
+							if(this.topics[this.current].collection){
 								this.$set(this.tabs[index],'icon','my-icon-shoucang');
 								uni.showToast({
 									title:'取消收藏成功',
@@ -301,16 +297,20 @@
 			onPapers(){
 				uni.showModal({
 					content:'确认交卷?',
-					success:(res) => {
+					success:async (res) => {
 						if (res.confirm) {
-							console.log('所有答案',this.topics);
-							let score;
-							let userTime;
+							let score;			//正误情况
+							let userTime;		//所用考试时间
+							let testScorces = 0; //真实考试成绩
 							if(this.isType === 'test'){
+								let haveCount = 0; //完成个数
+								let rightCount = 0;//做对个数
 								score = this.topics.map(item => {
 									if(item.myAnswer){
+										haveCount += 1;
 										if(item.answer === item.myAnswer){
 											item.icon = true;
+											rightCount += 1;
 										}else{
 											item.icon = false
 										}
@@ -319,6 +319,24 @@
 									}
 									return {title:item.title,icon:item.icon}
 								});
+								let data = {
+									myProgress:{
+										classSingleModelId:this.$store.state.myCource.courceId,
+										courceSectionModelId:this.$store.state.myCource.sectionId,
+										chapterTestModelId:0,//当前界面显示题
+										haveCount:haveCount,
+										rightCount:rightCount
+									},
+									record:"[]"
+								}
+								const [errTest,resTest] = await this.request({
+									url:`${this.SERVER}/api/myTest/`,
+									method:'post',
+									data:data
+								});
+								if(resTest.data.code === 0){
+									console.log('交卷清楚历史进度记录');
+								}
 							}else if(this.isType === 'simulation'){
 								//获取考试所用时长时间
 								userTime = 7200000 - this.$parent.remainTime;
@@ -334,12 +352,27 @@
 										item.icon = false;
 										item.score = 0;
 									}
+									testScorces += item.score
 									return {title:item.title,icon:item.icon,score:item.score}
 								});
+								let data = {
+									simulationTestModelId:this.$store.state.myCource.simulationTest.id,
+									record:"[]",
+									time:7200000,
+									score:testScorces
+								}
+								const [err,res] = await this.request({
+									url:`${this.SERVER}/api/testRecord`,
+									method:'post',
+									data:data
+								})
+								if(res.data.code === 0){
+									console.log('清空记录',res.data.data);
+								}
 							}
 							console.log('分数',score);
 							this.$store.dispatch('myCource/changeSectionScore',score);
-							let url = this.isType === 'simulation' ? `./answerResult?isType=${this.isType}&userTime=${userTime}` : `./answerResult?isType=${this.isType}`
+							let url = this.isType === 'simulation' ? `./answerResult?isType=${this.isType}&userTime=${userTime}&score=${testScorces}` : `./answerResult?isType=${this.isType}`
 							uni.redirectTo({
 								url:url
 							})
@@ -348,36 +381,7 @@
 						}
 					}
 				})
-			},
-			 // // 手指触摸动作开始
-			 //  touchStart (e) {
-				// this.startX = e.touches[0].pageX // 开始触摸时的原点
-				// this.moveFlag = true
-			 //  },
-			 //  // 手指触摸后移动 50 为设定的移动距离
-			 //  touchMove (e) {
-				// this.endX = e.touches[0].pageX // 结束触摸时的原点
-				// if (this.moveFlag) {
-				//   if (this.endX - this.startX > 50) {
-				// 	console.log('上一题')
-				// 	if(this.qid > 0){
-				// 		this.qid -= 1;
-				// 	}
-				// 	this.moveFlag = false
-				//   }
-				//   if (this.startX - this.endX > 50) {
-				// 	console.log('下一题')
-				// 	if(this.qid < this.topics.length - 1){
-				// 		this.qid += 1;
-				// 	}
-				// 	this.moveFlag = false
-				//   }
-				// }
-			 //  },
-			 //  // 手指触摸动作结束
-			 //  touchEnd () {
-				// this.moveFlag = true
-			 //  }
+			}
 		},
 		watch:{
 			data:{
@@ -394,7 +398,7 @@
 			},
 			// 监听题号变化，动态获取题目收藏状态
 			async current(val){
-				this.$emit('changeQid',val);
+				// this.$emit('changeQid',val);
 				// 收藏图标默认灰色
 				this.$set(this.tabs[1],'icon','my-icon-shoucang');
 				//是否收藏
@@ -419,7 +423,6 @@
 					this.swiperHeight = res.windowHeight - 88 - 50;
 				}
 			})
-			console.log('子组件',this.qid);
 			if(this.isType === 'test'){
 				this.tabs[1].name = '收藏';
 				this.tabs[1].icon = 'my-icon-shoucang';

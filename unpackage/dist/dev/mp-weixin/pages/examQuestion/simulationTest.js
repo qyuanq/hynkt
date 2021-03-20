@@ -179,18 +179,22 @@ var _default =
           }
         } });
 
+    },
+    initData: function initData() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var courceId, _yield$_this2$request, _yield$_this2$request2, err, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                courceId = _this2.$store.state.myCource.courceId;_context.next = 3;return (
+                  _this2.request({
+                    url: "".concat(_this2.SERVER, "/api/alltests/").concat(courceId),
+                    method: 'get' }));case 3:_yield$_this2$request = _context.sent;_yield$_this2$request2 = _slicedToArray(_yield$_this2$request, 2);err = _yield$_this2$request2[0];res = _yield$_this2$request2[1];
+
+                if (res.data.code === 0) {
+                  _this2.simTest = res.data.data;
+                  console.log('考试', res.data.data);
+                }case 8:case "end":return _context.stop();}}}, _callee);}))();
     } },
 
-  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var courceId, _yield$this$request, _yield$this$request2, err, res;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-              courceId = this.$store.state.myCource.courceId;_context.next = 3;return (
-                this.request({
-                  url: "".concat(this.SERVER, "/api/alltests/").concat(courceId),
-                  method: 'get' }));case 3:_yield$this$request = _context.sent;_yield$this$request2 = _slicedToArray(_yield$this$request, 2);err = _yield$this$request2[0];res = _yield$this$request2[1];
-
-              if (res.data.code === 0) {
-                this.simTest = res.data.data;
-                console.log('考试', res.data.data);
-              }case 8:case "end":return _context.stop();}}}, _callee, this);}));function onLoad() {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
+  onLoad: function onLoad() {
+    this.initData();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

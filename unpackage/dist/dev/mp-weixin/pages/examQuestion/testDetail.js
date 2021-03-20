@@ -43,7 +43,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var topic = function topic() {__webpack_require__.e(/*! require.ensure | components/test-topic/topic */ "components/test-topic/topic").then((function () {return resolve(__webpack_require__(/*! ../../components/test-topic/topic.vue */ 352));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: { topic: topic },
@@ -63,46 +62,37 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
     } },
 
   methods: {
-    //监听子组件习题号发生变化
-    changeQid: function changeQid(qid) {
-      this.qid = qid;
-    },
     onClickLeft: function onClickLeft() {var _this = this;
       uni.showModal({
         content: '本次练习没有完成,是否保存本次练习',
         cancelText: '不保存',
         confirmText: '保存',
-        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(res) {var date, currentTime, haveCount, rightCount, record, data, _yield$_this$request, _yield$_this$request2, errTest, resTest;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!
-                    res.confirm) {_context.next = 18;break;}
+        success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(res) {var date, currentTime, haveCount, record, data, _yield$_this$request, _yield$_this$request2, errTest, resTest;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!
+                    res.confirm) {_context.next = 16;break;}
                     date = new Date();
-                    currentTime = (0, _common.renderTime)(date);
-                    // 获取完成个数
-                    haveCount = 0;
-                    rightCount = 0;
-                    record = [];
+                    currentTime = (0, _common.renderTime)(date); //获取当前时间并格式化
+                    haveCount = 0; // 获取完成个数
+                    record = []; //进度记录
                     _this.$refs['topic'].topics.forEach(function (item) {
                       if (item.myAnswer) {
                         record.push({ id: item.id, myAnswer: item.myAnswer });
                         haveCount += 1;
-                        rightCount += item.myAnswer === item.answer ? 1 : 0;
                       }
                     });
-                    // 获取正确个数
                     data = {
-                      userId: _this.users.id,
-                      classId: _this.$store.state.myCource.courceId,
-                      sectionId: _this.sectionId,
-                      testId: _this.qid + 1,
-                      date: currentTime,
-                      haveCount: haveCount,
-                      rightCount: rightCount,
-                      record: JSON.stringify(record) };
+                      myProgress: {
+                        classSingleModelId: _this.$store.state.myCource.courceId,
+                        courceSectionModelId: _this.sectionId,
+                        chapterTestModelId: _this.$refs['topic'].topics[_this.$refs['topic'].current].id, //当前界面显示题
+                        date: currentTime,
+                        haveCount: haveCount },
 
-                    console.log('json', JSON.stringify(record));_context.next = 11;return (
+                      record: JSON.stringify(record) };_context.next = 9;return (
+
                       _this.request({
                         url: "".concat(_this.SERVER, "/api/myTest/"),
                         method: 'post',
-                        data: data }));case 11:_yield$_this$request = _context.sent;_yield$_this$request2 = _slicedToArray(_yield$_this$request, 2);errTest = _yield$_this$request2[0];resTest = _yield$_this$request2[1];
+                        data: data }));case 9:_yield$_this$request = _context.sent;_yield$_this$request2 = _slicedToArray(_yield$_this$request, 2);errTest = _yield$_this$request2[0];resTest = _yield$_this$request2[1];
 
                     if (resTest.data.code === 0) {
                       uni.showToast({
@@ -131,12 +121,12 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
                           }, 2000);
                         } });
 
-                    }_context.next = 19;break;case 18:
+                    }_context.next = 17;break;case 16:
                     if (res.cancel) {
                       uni.navigateBack({
                         delta: 1 });
 
-                    }case 19:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                    }case 17:case "end":return _context.stop();}}}, _callee);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
     },
@@ -147,7 +137,7 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
       beforePage.$vm.changeData();
     } },
 
-  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(option) {var _yield$this$request, _yield$this$request2, err, res, record, j, i, _yield$this$request3, _yield$this$request4, errColl, resColl;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(option) {var _yield$this$request, _yield$this$request2, err, res, record, j, i, _i2, _yield$this$request3, _yield$this$request4, errColl, resColl;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
               this.sectionId = this.$store.state.myCource.sectionId;
               this.sectionName = this.$store.state.myCource.sectionName;
               // 获取章节下所有习题
@@ -161,8 +151,8 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
                 return item;
               });
               //进度处理记录 
-              record = this.$store.state.myCource.sectionRecord;if (!
-              record) {_context2.next = 25;break;}
+              record = this.$store.state.myCource.sectionRecord;if (!(
+              record.length > 0)) {_context2.next = 25;break;}
               j = 0;case 13:if (!(j < record.length)) {_context2.next = 25;break;}
               i = 0;case 15:if (!(i < this.topics.length)) {_context2.next = 22;break;}if (!(
               record[j].id === this.topics[i].id)) {_context2.next = 19;break;}
@@ -173,12 +163,19 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
 
 
 
-              // 防止报错，先传topics后传qid
-              this.qid = option.qid - 1 || 0;
-              // 判断第一题是否收藏
-              _context2.next = 28;return this.request({
-                url: "".concat(this.SERVER, "/api/isCollection?userId=").concat(this.users.id, "&testId=").concat(this.topics[this.qid].id),
-                method: 'get' });case 28:_yield$this$request3 = _context2.sent;_yield$this$request4 = _slicedToArray(_yield$this$request3, 2);errColl = _yield$this$request4[0];resColl = _yield$this$request4[1];
+
+              _i2 = 0;case 26:if (!(_i2 < this.topics.length)) {_context2.next = 36;break;}if (!(
+              this.topics[_i2].id == option.qid)) {_context2.next = 32;break;}
+              this.qid = _i2;return _context2.abrupt("break", 36);case 32:
+
+
+              this.qid = 0;case 33:_i2++;_context2.next = 26;break;case 36:_context2.next = 38;return (
+
+
+
+                this.request({
+                  url: "".concat(this.SERVER, "/api/isCollection?userId=").concat(this.users.id, "&testId=").concat(this.topics[this.qid].id),
+                  method: 'get' }));case 38:_yield$this$request3 = _context2.sent;_yield$this$request4 = _slicedToArray(_yield$this$request3, 2);errColl = _yield$this$request4[0];resColl = _yield$this$request4[1];
 
               if (resColl.data.code === 0) {
                 //第一个题已收藏
@@ -188,7 +185,7 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
                   //设置子组件收藏图标为选中
                   this.$set(this.$children[0].tabs[1], 'icon', 'my-icon-shoucangActive');
                 }
-              }case 33:case "end":return _context2.stop();}}}, _callee2, this);}));function onLoad(_x2) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
+              }case 43:case "end":return _context2.stop();}}}, _callee2, this);}));function onLoad(_x2) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

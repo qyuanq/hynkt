@@ -47,18 +47,21 @@
 						}
 					}
 				})
+			},
+			async initData(){
+				let courceId = this.$store.state.myCource.courceId;
+				const [err,res] = await this.request({
+					url:`${this.SERVER}/api/alltests/${courceId}`,
+					method:'get'
+				})
+				if(res.data.code === 0){
+					this.simTest =res.data.data;
+					console.log('考试',res.data.data);
+				}
 			}
 		},
-		onLoad:async function(){
-			let courceId = this.$store.state.myCource.courceId;
-			const [err,res] = await this.request({
-				url:`${this.SERVER}/api/alltests/${courceId}`,
-				method:'get'
-			})
-			if(res.data.code === 0){
-				this.simTest =res.data.data;
-				console.log('考试',res.data.data);
-			}
+		onLoad:function(){
+			this.initData()
 		}
 	}
 </script>
