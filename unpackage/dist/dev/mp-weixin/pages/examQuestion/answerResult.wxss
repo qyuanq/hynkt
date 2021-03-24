@@ -81,4 +81,10 @@
 .container .btns .try-again {
   background-color: #FF6600;
 }
+.container .van-nav-bar {
+  background-color: #2890ff !important;
+}
+.container .van-nav-bar__title {
+  color: #fff !important;
+}
 

@@ -51,23 +51,23 @@
 				<!-- 填空 -->
 				<vanField
 					v-else-if="topic.type === 4"
-				    :value="topic['myAnswer']"
+					:value="topic['myAnswer']"
 					label="回答"
-				    placeholder="请输入答案"
-				    @change.native="inBlank"
+					placeholder="请输入答案"
+					@change.native="inBlank"
 				 />
 				<!-- 问答 -->
 				<vanField
 					v-else-if="topic.type === 5"
-				    :value="topic['myAnswer']"
-				    label="回答"
-				    type="textarea"
-				    placeholder="请输入答案1000字以内"
-				    autosize
+					:value="topic['myAnswer']"
+					label="回答"
+					type="textarea"
+					placeholder="请输入答案1000字以内"
+					autosize
 					@change.native="inBlank"
 				 />
 				<!-- 查看答案 -->
-				<view class="look-answer" v-show="isAnswer">
+				<view class="look-answer" v-show="topic.isAnswer">
 					<view class="top">
 						正确答案是<text class="correct-answer">{{topic.answer}}</text>
 						<text>{{topic.myAnswer ? '(您的选择 ' : '(您未作答)'}}</text>
@@ -80,20 +80,21 @@
 					</view>
 					<view class="correct">平均正确率<text class="rate">100</text>%</view>
 				</view>
-				<!-- 答题卡 -->
-				<view class="sheet">
-					<van-action-sheet :show="sheetShow" title="答题卡"  @close="closeSheet">
-					  <view class="content">
-						  <view class="dtk-title">单选题</view>
-						  <view class="options clearfix">
-							  <view :class="['option','fl',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" :key="item.optionA" @tap="onOption(index)">{{index + 1}}</view>
-						  </view>
-					  </view>
-					  <view class="btn" @tap="onPapers">交卷</view>
-					</van-action-sheet>
-				</view>
+				
 			</swiper-item>
 		</swiper>
+		<!-- 答题卡 -->
+		<view class="sheet">
+			<van-action-sheet :show="sheetShow" title="答题卡"  @close="closeSheet">
+			  <view class="content">
+				  <view class="dtk-title">单选题</view>
+				  <view class="options clearfix">
+					  <view :class="['option','fl',topics[index].myAnswer ? 'do-mark' : ' ']" v-for="(item,index) in topics" :key="item.optionA" @tap="onOption(index)">{{index + 1}}</view>
+				  </view>
+			  </view>
+			  <view class="btn" @tap="onPapers">交卷</view>
+			</van-action-sheet>
+		</view>
 		<!-- 底部导航-->
 		<slot name="tabbar">
 			<view class="tabbar">
@@ -151,7 +152,6 @@
 					{id:'tab4',name:'开始学习',icon:'my-icon-ksxx',iconActive:'my-icon-ksxxActive'},
 					{id:'tab5',name:'学生答疑',icon:'my-icon-xsdy',iconActive:'my-icon-xsdyActive'}
 				],
-				isAnswer:false,	//是否显示查看答案
 				sheetShow:false,	//是否显示答题卡
 				swiperHeight:0,		//swiper高度
 			};
@@ -165,15 +165,14 @@
 		methods:{
 			//左右滑动题
 			changeQid(event){
-				this.isAnswer = false;
 				this.$set(this.tabs[0],'icon','my-icon-ckda');
 				this.current = event.detail.current;
 			},
 			// 点击底部导航
 			async tapTab(index){
 				if(index === 0){	//查看答案
-					this.isAnswer = !this.isAnswer; 
-					if(this.isAnswer){
+					this.topics[this.current].isAnswer = !this.topics[this.current].isAnswer
+					if(this.topics[this.current].isAnswer){
 						this.$set(this.tabs[index],'icon','my-icon-ckdaActive');
 					}else{
 						this.$set(this.tabs[index],'icon','my-icon-ckda');
@@ -199,7 +198,6 @@
 									icon:'none'
 								})
 							}
-							// this.$set(this.topics[this.qid],'collection',0);
 							this.topics[this.current].collection = !this.topics[this.current].collection;
 						}else{
 							uni.showToast({
@@ -258,16 +256,12 @@
 			onOption(index){
 				// 关闭弹出层
 				this.sheetShow = false;
-				//关闭显示答案
-				this.isAnswer = false;
 				this.$set(this.tabs[0],'icon','my-icon-ckda');
 				this.current = index;
 			},
 			// 悬浮按钮点击事件
 			nextTest(){
 				if(this.current < this.topics.length - 1){
-					// 关闭显示答案
-					this.isAnswer = false;
 					this.$set(this.tabs[0],'icon','my-icon-ckda');
 					// 下一题
 					this.current += 1;
@@ -369,6 +363,19 @@
 								if(res.data.code === 0){
 									console.log('清空记录',res.data.data);
 								}
+							}else if(this.isType === 'collection'){
+								score = this.topics.map(item => {
+									if(item.myAnswer){
+										if(item.answer === item.myAnswer){
+											item.icon = true;
+										}else{
+											item.icon = false
+										}
+									}else{
+										item.icon = false
+									}
+									return {title:item.title,icon:item.icon}
+								});
 							}
 							console.log('分数',score);
 							this.$store.dispatch('myCource/changeSectionScore',score);
@@ -420,7 +427,11 @@
 		created(){
 			uni.getSystemInfo({
 				success:res => {
-					this.swiperHeight = res.windowHeight - 88 - 50;
+					let navHeight = 0;
+					if(this.isType !== 'collection'){
+						navHeight = 50
+					}
+					this.swiperHeight = res.windowHeight - 88 - navHeight;
 				}
 			})
 			if(this.isType === 'test'){

@@ -64,10 +64,14 @@
 				})
 				console.log('查看新纪录',resTest.data.data)
 				if(resTest.data.code === 0){
-					let record = resTest.data.data['test_record_models.record'];
-					record = JSON.parse(record);
-					// 将章节练习记录存入vuex,[]或者数组
-					this.$store.dispatch('myCource/changeRecord',record);
+					//有记录
+					if(resTest.data.data){
+						let record = resTest.data.data['test_record_models.record'];
+						record = JSON.parse(record);
+						// 将章节练习记录存入vuex,[]或者数组
+						this.$store.dispatch('myCource/changeRecord',record);
+					}
+					//有进度
 					if(resTest.data.data && resTest.data.data.chapterTestModelId > 0){
 						let content = `您在${renderTime(resTest.data.data.date)}有未完成的练习,确认继续上次的练习？`
 						// 有没有上次保存的进度

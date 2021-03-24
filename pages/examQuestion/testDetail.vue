@@ -121,7 +121,10 @@
 			})
 			if(res.data.code === 0){
 				this.topics = res.data.data.map(item => {
+					//我的答案
 					item.myAnswer = '';
+					//是否显示查看答案
+					item.isAnswer = false;
 					return item;
 				});
 				//进度处理记录 

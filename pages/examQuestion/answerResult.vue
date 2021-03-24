@@ -1,6 +1,9 @@
 <template>
 	<view class="container">
-		<view class="result-box" v-if="isType === 'test'">
+		<van-nav-bar
+			title="答题结果"
+		/>
+		<view class="result-box" v-if="isType === 'test' || 'collection'">
 			<view class="result">{{correct}}%</view>
 			<view class="name">{{resultName}}</view>
 		</view>
@@ -87,7 +90,7 @@
 			this.testName = this.$store.state.myCource.simulationTest.title;
 			this.userTime = this.formatDuring(option.userTime);
 			this.result = this.$store.state.myCource.sectionScore;
-			if(this.isType === 'test'){
+			if(this.isType === 'test' || 'collection'){
 				// 答对的个数
 				let correctCount = this.result.filter(item => {
 					return item.icon === true;
@@ -146,6 +149,12 @@
 		.try-again{
 			background-color: #FF6600;
 		}
+	}
+	.van-nav-bar{
+		background-color:#2890ff !important;
+	}
+	.van-nav-bar__title{
+		color:#fff !important;
 	}
 }
 </style>

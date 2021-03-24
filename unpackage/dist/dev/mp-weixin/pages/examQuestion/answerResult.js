@@ -161,6 +161,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 {
   components: {
     testResult: testResult },
@@ -219,7 +222,7 @@ __webpack_require__.r(__webpack_exports__);
               this.testName = this.$store.state.myCource.simulationTest.title;
               this.userTime = this.formatDuring(option.userTime);
               this.result = this.$store.state.myCource.sectionScore;
-              if (this.isType === 'test') {
+              if (this.isType === 'test' || 'collection') {
                 // 答对的个数
                 correctCount = this.result.filter(function (item) {
                   return item.icon === true;

@@ -164,7 +164,11 @@
                     "style" : {
 						"navigationBarTitleText" : "答题结果",
 						"navigationBarBackgroundColor" : "#2890ff",
-						"navigationBarTextStyle" : "white"
+						"navigationBarTextStyle" : "white",
+						"navigationStyle":"custom",
+						"usingComponents": {
+							"van-nav-bar": "/static/vant-weapp/nav-bar/index"
+						}
 					}
                 }
                 ,{

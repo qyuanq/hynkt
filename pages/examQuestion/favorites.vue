@@ -41,7 +41,13 @@
 				method:'get'
 			})
 			if(res.data.code === 0){
-				this.topics = res.data.data;
+				this.topics = res.data.data.map(item => {
+					// 我的答案
+					item.myAnswer = '';
+					// 是否显示答案
+					item.isAnswer = false;
+					return item;
+				});
 				console.log('收藏的练习',res.data.data);
 			}
 		}

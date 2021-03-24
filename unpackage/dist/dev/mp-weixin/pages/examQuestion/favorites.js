@@ -173,7 +173,13 @@ __webpack_require__.r(__webpack_exports__);
                   method: 'get' }));case 2:_yield$this$request = _context.sent;_yield$this$request2 = _slicedToArray(_yield$this$request, 2);err = _yield$this$request2[0];res = _yield$this$request2[1];
 
               if (res.data.code === 0) {
-                this.topics = res.data.data;
+                this.topics = res.data.data.map(function (item) {
+                  // 我的答案
+                  item.myAnswer = '';
+                  // 是否显示答案
+                  item.isAnswer = false;
+                  return item;
+                });
                 console.log('收藏的练习', res.data.data);
               }case 7:case "end":return _context.stop();}}}, _callee, this);}));function onLoad() {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

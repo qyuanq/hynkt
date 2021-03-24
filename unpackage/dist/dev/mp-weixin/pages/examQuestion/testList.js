@@ -196,10 +196,14 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
 
                 console.log('查看新纪录', resTest.data.data);
                 if (resTest.data.code === 0) {
-                  record = resTest.data.data['test_record_models.record'];
-                  record = JSON.parse(record);
-                  // 将章节练习记录存入vuex,[]或者数组
-                  _this.$store.dispatch('myCource/changeRecord', record);
+                  //有记录
+                  if (resTest.data.data) {
+                    record = resTest.data.data['test_record_models.record'];
+                    record = JSON.parse(record);
+                    // 将章节练习记录存入vuex,[]或者数组
+                    _this.$store.dispatch('myCource/changeRecord', record);
+                  }
+                  //有进度
                   if (resTest.data.data && resTest.data.data.chapterTestModelId > 0) {
                     content = "\u60A8\u5728".concat((0, _common.renderTime)(resTest.data.data.date), "\u6709\u672A\u5B8C\u6210\u7684\u7EC3\u4E60,\u786E\u8BA4\u7EE7\u7EED\u4E0A\u6B21\u7684\u7EC3\u4E60\uFF1F");
                     // 有没有上次保存的进度

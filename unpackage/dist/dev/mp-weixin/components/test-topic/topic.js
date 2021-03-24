@@ -255,6 +255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 {
   components: {
     vanRadioGroup: vanRadioGroup,
@@ -292,7 +293,6 @@ __webpack_require__.r(__webpack_exports__);
       { id: 'tab4', name: '开始学习', icon: 'my-icon-ksxx', iconActive: 'my-icon-ksxxActive' },
       { id: 'tab5', name: '学生答疑', icon: 'my-icon-xsdy', iconActive: 'my-icon-xsdyActive' }],
 
-      isAnswer: false, //是否显示查看答案
       sheetShow: false, //是否显示答题卡
       swiperHeight: 0 //swiper高度
     };
@@ -306,15 +306,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //左右滑动题
     changeQid: function changeQid(event) {
-      this.isAnswer = false;
       this.$set(this.tabs[0], 'icon', 'my-icon-ckda');
       this.current = event.detail.current;
     },
     // 点击底部导航
     tapTab: function tapTab(index) {var _this = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _yield$_this$request, _yield$_this$request2, err, res, _yield$_this$request3, _yield$_this$request4, _err, _res, i;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (!(
                 index === 0)) {_context.next = 5;break;} //查看答案
-                _this.isAnswer = !_this.isAnswer;
-                if (_this.isAnswer) {
+                _this.topics[_this.current].isAnswer = !_this.topics[_this.current].isAnswer;
+                if (_this.topics[_this.current].isAnswer) {
                   _this.$set(_this.tabs[index], 'icon', 'my-icon-ckdaActive');
                 } else {
                   _this.$set(_this.tabs[index], 'icon', 'my-icon-ckda');
@@ -340,7 +339,6 @@ __webpack_require__.r(__webpack_exports__);
                       icon: 'none' });
 
                   }
-                  // this.$set(this.topics[this.qid],'collection',0);
                   _this.topics[_this.current].collection = !_this.topics[_this.current].collection;
                 } else {
                   uni.showToast({
@@ -399,16 +397,12 @@ __webpack_require__.r(__webpack_exports__);
     onOption: function onOption(index) {
       // 关闭弹出层
       this.sheetShow = false;
-      //关闭显示答案
-      this.isAnswer = false;
       this.$set(this.tabs[0], 'icon', 'my-icon-ckda');
       this.current = index;
     },
     // 悬浮按钮点击事件
     nextTest: function nextTest() {
       if (this.current < this.topics.length - 1) {
-        // 关闭显示答案
-        this.isAnswer = false;
         this.$set(this.tabs[0], 'icon', 'my-icon-ckda');
         // 下一题
         this.current += 1;
@@ -439,7 +433,7 @@ __webpack_require__.r(__webpack_exports__);
       uni.showModal({
         content: '确认交卷?',
         success: function () {var _success = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(res) {var score, userTime, testScorces, haveCount, rightCount, data, _yield$_this2$request, _yield$_this2$request2, errTest, resTest, _data, _yield$_this2$request3, _yield$_this2$request4, err, _res2, url;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:if (!
-                    res.confirm) {_context2.next = 33;break;}
+                    res.confirm) {_context2.next = 36;break;}
                     //正误情况
                     //所用考试时间
                     testScorces = 0; //真实考试成绩
@@ -477,8 +471,8 @@ __webpack_require__.r(__webpack_exports__);
 
                     if (resTest.data.code === 0) {
                       console.log('交卷清楚历史进度记录');
-                    }_context2.next = 27;break;case 16:if (!(
-                    _this2.isType === 'simulation')) {_context2.next = 27;break;}
+                    }_context2.next = 30;break;case 16:if (!(
+                    _this2.isType === 'simulation')) {_context2.next = 29;break;}
                     //获取考试所用时长时间
                     userTime = 7200000 - _this2.$parent.remainTime;
                     score = _this2.topics.map(function (item) {
@@ -509,17 +503,30 @@ __webpack_require__.r(__webpack_exports__);
 
                     if (_res2.data.code === 0) {
                       console.log('清空记录', _res2.data.data);
-                    }case 27:
-
+                    }_context2.next = 30;break;case 29:
+                    if (_this2.isType === 'collection') {
+                      score = _this2.topics.map(function (item) {
+                        if (item.myAnswer) {
+                          if (item.answer === item.myAnswer) {
+                            item.icon = true;
+                          } else {
+                            item.icon = false;
+                          }
+                        } else {
+                          item.icon = false;
+                        }
+                        return { title: item.title, icon: item.icon };
+                      });
+                    }case 30:
                     console.log('分数', score);
                     _this2.$store.dispatch('myCource/changeSectionScore', score);
                     url = _this2.isType === 'simulation' ? "./answerResult?isType=".concat(_this2.isType, "&userTime=").concat(userTime, "&score=").concat(testScorces) : "./answerResult?isType=".concat(_this2.isType);
                     uni.redirectTo({
-                      url: url });_context2.next = 34;break;case 33:
+                      url: url });_context2.next = 37;break;case 36:
 
                     if (res.cancel) {
                       console.log('用户点击取消');
-                    }case 34:case "end":return _context2.stop();}}}, _callee2);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
+                    }case 37:case "end":return _context2.stop();}}}, _callee2);}));function success(_x) {return _success.apply(this, arguments);}return success;}() });
 
 
     } },
@@ -561,7 +568,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {var _this4 = this;
     uni.getSystemInfo({
       success: function success(res) {
-        _this4.swiperHeight = res.windowHeight - 88 - 50;
+        var navHeight = 0;
+        if (_this4.isType !== 'collection') {
+          navHeight = 50;
+        }
+        _this4.swiperHeight = res.windowHeight - 88 - navHeight;
       } });
 
     if (this.isType === 'test') {

@@ -147,7 +147,10 @@ var _common = __webpack_require__(/*! @/static/js/common.js */ 15);function _int
 
               res.data.code === 0)) {_context2.next = 25;break;}
               this.topics = res.data.data.map(function (item) {
+                //我的答案
                 item.myAnswer = '';
+                //是否显示查看答案
+                item.isAnswer = false;
                 return item;
               });
               //进度处理记录 
