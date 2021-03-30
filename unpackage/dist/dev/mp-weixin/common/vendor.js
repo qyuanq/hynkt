@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2547,6 +2547,40 @@ if (hadRuntime) {
   })() || Function("return this")()
 );
 
+
+/***/ }),
+
+/***/ 148:
+/*!********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/create.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+// 创建函数接收要创建组件定义
+function create(Component, props) {
+  // 创建一个vue新实例
+  var vm = new _vue.default({
+    render: function render(h) {
+      // render函数将传入组件配置对象转换为虚拟dom
+      return h(Component, { props: props });
+    } }).
+  $mount(); //执行挂载函数，但未指定挂载目标，表示只执行初始化工作
+  // 将生成的dom元素追加至body
+  document.body.appendChild(vm.$el);
+  // 给组件实例添加销毁方法
+  var comp = vm.$children[0];
+  comp.remove = function () {
+    document.body.removeChild(vm.$el);
+    vm.$destroy();
+  };
+  return comp;
+}var _default =
+
+create;exports.default = _default;
 
 /***/ }),
 
@@ -9163,7 +9197,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9184,14 +9218,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9267,7 +9301,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9721,7 +9755,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 378:
+/***/ 393:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -9841,7 +9875,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof process !== 'undefined' && Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
       if (errors.every(function (e) {
@@ -11168,11 +11202,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 379)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 394)))
 
 /***/ }),
 
-/***/ 379:
+/***/ 394:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11203,7 +11237,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 380);
+        if (!path) path = __webpack_require__(/*! path */ 395);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11217,7 +11251,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 380:
+/***/ 395:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11527,7 +11561,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 379)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 394)))
 
 /***/ }),
 
@@ -11542,7 +11576,7 @@ var substr = 'ab'.substr(-1) === 'b'
 
 /***/ }),
 
-/***/ 423:
+/***/ 438:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11648,7 +11682,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 426:
+/***/ 441:
 /*!*******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio-group/index.js ***!
   \*******************************************************************************************/
@@ -11656,7 +11690,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 427);
+var _component = __webpack_require__(/*! ../common/component */ 442);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11691,7 +11725,7 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 
 /***/ }),
 
-/***/ 427:
+/***/ 442:
 /*!******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/component.js ***!
   \******************************************************************************************/
@@ -11699,7 +11733,7 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 428);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 443);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var relationFunctions = {
   ancestor: {
     linked: function linked(parent) {
@@ -11802,7 +11836,7 @@ function VantComponent() {var vantOptions = arguments.length > 0 && arguments[0]
 
 /***/ }),
 
-/***/ 428:
+/***/ 443:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/mixins/basic.js ***!
   \**************************************************************************************/
@@ -11838,7 +11872,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 
 /***/ }),
 
-/***/ 429:
+/***/ 444:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio/index.js ***!
   \*************************************************************************************/
@@ -11846,7 +11880,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 427);
+var _component = __webpack_require__(/*! ../common/component */ 442);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11895,7 +11929,7 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 
 /***/ }),
 
-/***/ 430:
+/***/ 445:
 /*!****************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox/index.js ***!
   \****************************************************************************************/
@@ -11903,7 +11937,7 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 427);
+var _component = __webpack_require__(/*! ../common/component */ 442);
 function emit(target, value) {
   target.$emit('input', value);
   target.$emit('change', value);
@@ -11978,7 +12012,7 @@ function emit(target, value) {
 
 /***/ }),
 
-/***/ 431:
+/***/ 446:
 /*!**********************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox-group/index.js ***!
   \**********************************************************************************************/
@@ -11986,7 +12020,7 @@ function emit(target, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 427);
+var _component = __webpack_require__(/*! ../common/component */ 442);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -12022,7 +12056,7 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 
 /***/ }),
 
-/***/ 432:
+/***/ 447:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/index.js ***!
   \*************************************************************************************/
@@ -12030,8 +12064,8 @@ var _component = __webpack_require__(/*! ../common/component */ 427);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 427);
-var _props = __webpack_require__(/*! ./props */ 433);
+var _component = __webpack_require__(/*! ../common/component */ 442);
+var _props = __webpack_require__(/*! ./props */ 448);
 (0, _component.VantComponent)({
   field: true,
   classes: ['input-class', 'right-icon-class', 'label-class'],
@@ -12153,7 +12187,7 @@ var _props = __webpack_require__(/*! ./props */ 433);
 
 /***/ }),
 
-/***/ 433:
+/***/ 448:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/props.js ***!
   \*************************************************************************************/

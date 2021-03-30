@@ -76,13 +76,13 @@
 					</view>
 					<text>课程信息</text>
 				</view>
-				<view id="demo6" class="scroll-view-item_H demo">
+				<view id="demo6" class="scroll-view-item_H demo" @tap="onProgress">
 					<view class="icon">
 						<image :src="SERVER + '/static/img/icon/learning_process.png'"></image>
 					</view>
 					<text>学习进度</text>
 				</view>
-				<view id="demo7" class="scroll-view-item_H demo">
+				<view id="demo7" class="scroll-view-item_H demo" @tap="onFile">
 					<view class="icon">
 						<image :src="SERVER + '/static/img/icon/file_down.png'"></image>
 					</view>
@@ -302,6 +302,18 @@
 			onFavorites(){
 				uni.navigateTo({
 					url:'../examQuestion/favorites'
+				})
+			},
+			onFile(){
+				// 点击课件下载
+				uni.navigateTo({
+					url:'../dowload/dowloadFile'
+				})
+			},
+			onProgress(){
+				// 点击了学习进度
+				uni.navigateTo({
+					url:'../examQuestion/learnProcess'
 				})
 			},
 			//转化时间

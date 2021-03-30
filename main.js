@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import App from './App'
 import {request,pageLoad} from './utils/request'
+import Notice from 'components/general/notice.vue'
 // 导入vuex
 import store from './store'
 
-
+Vue.component('notice',Notice);
 Vue.config.productionTip = false
 // 家里
 // Vue.prototype.server = 'http://192.168.1.5:7001/public'

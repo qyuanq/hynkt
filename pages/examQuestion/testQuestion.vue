@@ -77,6 +77,7 @@
 							console.log('考试记录',record)
 							let data = {
 								simulationTestModelId:this.$store.state.myCource.simulationTest.id,
+								classSingleModelId:this.$store.state.myCource.courceId,
 								record:JSON.stringify(record),
 								time:this.remainTime
 							}

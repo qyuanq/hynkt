@@ -29,7 +29,14 @@
         "answerResult",
         "favorites",
         "simulationTest",
-        "testQuestion"
+        "testQuestion",
+        "learnProcess"
+      ]
+    },
+    {
+      "root": "pages/dowload/",
+      "pages": [
+        "dowloadFile"
       ]
     },
     {
@@ -126,6 +133,7 @@
   "usingComponents": {
     "comment": "/components/questions/comment",
     "van-action-sheet": "/static/vant-weapp/action-sheet/index",
-    "van-popup": "/static/vant-weapp/popup/index"
+    "van-popup": "/static/vant-weapp/popup/index",
+    "notice": "/components/general/notice"
   }
 }

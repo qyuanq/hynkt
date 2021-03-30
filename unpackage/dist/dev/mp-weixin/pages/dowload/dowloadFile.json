@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "课程资料",
+  "usingComponents": {
+    "van-cell": "/static/vant-weapp/cell/index",
+    "van-cell-group": "/static/vant-weapp/cell-group/index"
+  }
+}

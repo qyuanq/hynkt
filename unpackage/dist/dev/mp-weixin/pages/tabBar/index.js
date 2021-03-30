@@ -436,6 +436,18 @@ var _default =
         url: '../examQuestion/favorites' });
 
     },
+    onFile: function onFile() {
+      // 点击课件下载
+      uni.navigateTo({
+        url: '../dowload/dowloadFile' });
+
+    },
+    onProgress: function onProgress() {
+      // 点击了学习进度
+      uni.navigateTo({
+        url: '../examQuestion/learnProcess' });
+
+    },
     //转化时间
     renderTime: function renderTime(date) {
       var dateee = new Date(date).toJSON();

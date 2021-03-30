@@ -351,6 +351,7 @@
 								});
 								let data = {
 									simulationTestModelId:this.$store.state.myCource.simulationTest.id,
+									classSingleModelId:this.$store.state.myCource.courceId,
 									record:"[]",
 									time:7200000,
 									score:testScorces
@@ -405,7 +406,6 @@
 			},
 			// 监听题号变化，动态获取题目收藏状态
 			async current(val){
-				// this.$emit('changeQid',val);
 				// 收藏图标默认灰色
 				this.$set(this.tabs[1],'icon','my-icon-shoucang');
 				//是否收藏

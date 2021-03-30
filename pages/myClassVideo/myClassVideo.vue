@@ -12,7 +12,7 @@
 				@timeupdate="setCurrentTime"
 				:initial-time="current"></video>
 			</view>
-			<view v-else="videoShow" class="videoEnd">
+			<view v-else class="videoEnd">
 				<view class="content">
 					<view class="text">该视频已完成</view>
 					<view class="btns">
@@ -151,6 +151,7 @@
 				console.log('视频播完了');
 				
 				// 设置进度操作
+				// id 视频id
 				let id = this.goodVideos.content[this.sec_selected].value[this.vid_selected].id;
 				// 获取当前章节数组
 				let arr = this.arrs[this.sec_selected].proarr;
@@ -215,8 +216,8 @@
 					proarr:JSON.stringify(this.arrs)
 				}
 				//存储进度信息
-				uni.request({
-					url:`${this.development}/updateProgress`,
+				this.request({
+					url:`${this.development}/api/updateProgress`,
 					method:'post',
 					data:data,
 					success: (res) => {
@@ -232,43 +233,54 @@
 			})
 			this.courceId = option.id;
 			this.mycourceId = option.mycourceId;
+			console.log('1',this.mycourceId);
+			// 获取所有视频
 			this.request({
-				url:`${this.development}/goodVideos/${option.id}`,
+				url:`${this.development}/api/goodVideos/${option.id}`,
 				method:'get',
 				success: (res) => {
 					this.goodVideos = res.data.data;
 					console.log('goodVideos',this.goodVideos);
+					// 获取观看记录
 					this.request({
-						url:`${this.development}/myProgress/${option.mycourceId}`,
+						url:`${this.development}/api/myProgress/${option.mycourceId}`,
 						method:'get',
 						success: (res) => {
-							console.log(res.data.data.proarr);
-							this.videoStorage = res.data.data;
-							//章节索引
-							this.sec_selected = this.videoStorage.sec_selected;
-							//视频索引
-							this.vid_selected = this.videoStorage.vid_selected;
-							//标题
-							this.title = this.videoStorage.vid_title;
-							//播放历史位置
-							this.current = this.videoStorage.currentTime;
-							//视频地址
-							this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
-							// 展开折叠面板
-							this.activeNames.push(this.sec_selected + 1);
-							
-							let proarr = this.videoStorage.proarr;
-							if(proarr){
-								this.arrs = JSON.parse(proarr);
-								this.arrs.forEach(item => {
-									// 设置总数
-									this.proCount += item.progress;
-								})
-								console.log('总数：',this.proCount);
+							console.log('用户进度',res);
+							if(res.data.code === 0){
+								this.videoStorage = res.data.data;
+								//章节索引
+								this.sec_selected = this.videoStorage.sec_selected;
+								//视频索引
+								this.vid_selected = this.videoStorage.vid_selected;
+								//标题
+								this.title = this.videoStorage.vid_title;
+								//播放历史位置
+								this.current = this.videoStorage.currentTime;
+								//视频地址
+								this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
+								// 展开折叠面板
+								this.activeNames.push(this.sec_selected + 1);
+								
+								let proarr = JSON.parse(this.videoStorage.proarr);
+								console.log('proarr',proarr.length);
+								if(proarr.length > 0){
+									//数组：存放播放完的视频
+									this.arrs = proarr;
+									this.arrs.forEach(item => {
+										// 设置总数
+										this.proCount += item.progress;
+									})
+								}else{
+									//初始化已播放数组
+									this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
+								}
+								// console.log('arrs',this.arrs);
 							}else{
+								//视频地址
+								this.videoPath = this.goodVideos.content[this.sec_selected].value[this.vid_selected].path;
 								this.arrs = this.goodVideos.content.map(item => {return {progress:0,proarr:[]}});
 							}
-							console.log('arrs',this.arrs);
 						}
 					})
 				
