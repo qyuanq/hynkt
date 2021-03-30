@@ -76,10 +76,10 @@
 			})
 			if(res.data.code === 0){
 				this.progress = res.data.data;
-				this.sectionProgress = Math.floor(this.progress.haveCount / this.progress.sectionTestCount) * 100;
-				this.simTestProgress = Math.floor(this.progress.simCount / this.progress.mySimCount) * 100;
-				this.videoProgress = Math.floor(this.progress.watchVideo / this.progress.videoCount) * 100;
-				console.log('学习进度',this.simTestProgress,this.videoProgress);
+				console.log(this.progress.haveCount / this.progress.sectionTestCount)
+				this.sectionProgress = Math.floor(this.progress.haveCount / this.progress.sectionTestCount * 100);
+				this.simTestProgress = Math.floor(this.progress.simCount / this.progress.mySimCount * 100) ;
+				this.videoProgress = Math.floor(this.progress.watchVideo / this.progress.videoCount * 100);
 			}
 		}
 	}
