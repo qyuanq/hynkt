@@ -1,0 +1,1 @@
+<view class="cart"><image src="{{img}}"></image><view class="content"><view class="title"></view><slot name="label"></slot><block wx:if="{{option}}"><view class="option"></view></block><view class="priceAndNumber"><view class="price">￥12.8</view><block wx:if="{{number}}"><view class="number"></view></block></view></view></view>

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的购物车",
+  "usingComponents": {
+    "cart-pane": "/components/shop-pane/cart-pane"
+  }
+}

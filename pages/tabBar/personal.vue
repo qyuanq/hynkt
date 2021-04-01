@@ -22,6 +22,16 @@
 			</view>
 			<view class="cell-group">
 				<van-cell-group>
+					<van-cell title="我的购物车" is-link link-type="navigateTo" url="/pages/personal/shopCart/shopCart" >
+						<div slot="icon">
+							<!-- <van-icon class="iconfont my-icon-dingdan"></van-icon> -->
+							<van-icon class="iconfont" class-prefix="my-icon" name="cart" />
+						</div>
+					</van-cell>
+				</van-cell-group>
+			</view>
+			<view class="cell-group">
+				<van-cell-group>
 					<van-cell title="邀请好友" is-link link-type="navigateTo" url="/pages/personal/invite/invite" >
 						<div slot="icon">
 							<van-icon class="iconfont my-icon-yaoqinghaoyou"></van-icon>

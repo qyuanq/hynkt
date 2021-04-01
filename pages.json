@@ -390,6 +390,12 @@
 						"navigationBarTextStyle" : "black"
 					}
 				}
+                ,{
+                    "path" : "shopCart/shopCart",
+                    "style" : {
+						"navigationBarTitleText" : "我的购物车"
+					}
+                }
             ]
         },
         {

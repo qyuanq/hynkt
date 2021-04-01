@@ -9755,7 +9755,18 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 393:
+/***/ 4:
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/pages.json ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
+/***/ 406:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -11202,11 +11213,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 394)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 407)))
 
 /***/ }),
 
-/***/ 394:
+/***/ 407:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11237,7 +11248,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 395);
+        if (!path) path = __webpack_require__(/*! path */ 408);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11251,7 +11262,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 395:
+/***/ 408:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11561,22 +11572,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 394)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 407)))
 
 /***/ }),
 
-/***/ 4:
-/*!***************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/pages.json ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ 438:
+/***/ 458:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11682,7 +11682,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 441:
+/***/ 461:
 /*!*******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio-group/index.js ***!
   \*******************************************************************************************/
@@ -11690,7 +11690,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 442);
+var _component = __webpack_require__(/*! ../common/component */ 462);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11725,7 +11725,7 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 
 /***/ }),
 
-/***/ 442:
+/***/ 462:
 /*!******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/component.js ***!
   \******************************************************************************************/
@@ -11733,7 +11733,7 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 443);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 463);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var relationFunctions = {
   ancestor: {
     linked: function linked(parent) {
@@ -11836,7 +11836,7 @@ function VantComponent() {var vantOptions = arguments.length > 0 && arguments[0]
 
 /***/ }),
 
-/***/ 443:
+/***/ 463:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/mixins/basic.js ***!
   \**************************************************************************************/
@@ -11872,7 +11872,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 
 /***/ }),
 
-/***/ 444:
+/***/ 464:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio/index.js ***!
   \*************************************************************************************/
@@ -11880,7 +11880,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 442);
+var _component = __webpack_require__(/*! ../common/component */ 462);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11929,7 +11929,7 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 
 /***/ }),
 
-/***/ 445:
+/***/ 465:
 /*!****************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox/index.js ***!
   \****************************************************************************************/
@@ -11937,7 +11937,7 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 442);
+var _component = __webpack_require__(/*! ../common/component */ 462);
 function emit(target, value) {
   target.$emit('input', value);
   target.$emit('change', value);
@@ -12012,7 +12012,7 @@ function emit(target, value) {
 
 /***/ }),
 
-/***/ 446:
+/***/ 466:
 /*!**********************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox-group/index.js ***!
   \**********************************************************************************************/
@@ -12020,7 +12020,7 @@ function emit(target, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 442);
+var _component = __webpack_require__(/*! ../common/component */ 462);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -12056,7 +12056,7 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 
 /***/ }),
 
-/***/ 447:
+/***/ 467:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/index.js ***!
   \*************************************************************************************/
@@ -12064,8 +12064,8 @@ var _component = __webpack_require__(/*! ../common/component */ 442);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 442);
-var _props = __webpack_require__(/*! ./props */ 448);
+var _component = __webpack_require__(/*! ../common/component */ 462);
+var _props = __webpack_require__(/*! ./props */ 468);
 (0, _component.VantComponent)({
   field: true,
   classes: ['input-class', 'right-icon-class', 'label-class'],
@@ -12187,7 +12187,7 @@ var _props = __webpack_require__(/*! ./props */ 448);
 
 /***/ }),
 
-/***/ 448:
+/***/ 468:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/props.js ***!
   \*************************************************************************************/

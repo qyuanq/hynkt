@@ -71,7 +71,8 @@
         "question/question",
         "setcenter/setcenter",
         "editInfo/edit-info",
-        "editInfo/setPhone"
+        "editInfo/setPhone",
+        "shopCart/shopCart"
       ]
     },
     {

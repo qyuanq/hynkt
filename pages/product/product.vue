@@ -130,7 +130,7 @@
 		<van-goods-action>
 		  <van-goods-action-icon icon="chat-o" text="客服" />
 		  <van-goods-action-icon icon="cart-o" text="收藏" info="5" />
-		  <van-goods-action-button color="#be99ff" text="加入购物车" type="warning" />
+		  <van-goods-action-button color="#be99ff" text="加入购物车" type="warning" @tap="onCart(cource.id)" />
 		  <van-goods-action-button color="#7232dd" text="立即购买" @tap="onBuy(cource)" />
 		</van-goods-action>
 	</view>
@@ -203,7 +203,7 @@
 				console.log('listen:',id);
 				console.log('index',index);
 				await this.request({
-					url:`${this.development}/goodVideos/${id}`,
+					url:`${this.development}/api/goodVideos/${id}`,
 					method:'get',
 					success:(res) => {
 						// 所有视频
@@ -257,6 +257,34 @@
 				uni.navigateTo({
 					url:`../order/detail?cource=${encodeURIComponent(JSON.stringify(orderCource))}`
 				})
+			},
+			
+			// 加入购物车
+			async onCart(courceId){
+				let mealId;
+				let singleId;
+				let url;
+				if(this.cource.class_single_models){
+					mealId = this.cource.id;
+					url = `${this.development}/api/carts?mealId=${mealId}`
+				}else{
+					singleId = this.cource.id;
+					url = `${this.development}/api/carts?singleId=${singleId}`
+				}
+				const [err,res] = await this.request({
+					url:url,
+					method:'get'
+				})
+				if(res.data.code === 0){
+					uni.showToast({
+						title:'成功加入购物车'
+					})
+				}else{
+					uni.showToast({
+						title:'加入购物车失败',
+						icon:'none'
+					})
+				}
 			}
 		},
 		onLoad: async function(option) { //option为object类型，会序列化上个页面传递的参数
@@ -292,7 +320,7 @@
 					}
 					
 					// 根据班型不同请求不同课程视频API
-					let video_url = option.type === 'single' ? `${this.development}/goodVideos/${option.id}` : `${this.development}/goodVideos/${this.cource.class_single_models[0].id}`;
+					let video_url = option.type === 'single' ? `${this.development}/api/goodVideos/${option.id}` : `${this.development}/api/goodVideos/${this.cource.class_single_models[0].id}`;
 					await this.request({
 						url:video_url,
 						method:'get',
