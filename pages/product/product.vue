@@ -251,8 +251,8 @@
 				let orderCource = {
 					name:this.cource.name,
 					head_picture:this.cource.head_picture,
-					disc_price:this.cource.disc_price,
-					type:this.cource.class_single_models ? '套餐班' : '单科班'
+					price:this.cource.disc_price,
+					productType:this.cource.class_single_models ? 'single' : 'meal'
 				}
 				uni.navigateTo({
 					url:`../order/detail?cource=${encodeURIComponent(JSON.stringify(orderCource))}`

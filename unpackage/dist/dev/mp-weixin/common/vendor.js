@@ -2550,7 +2550,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 148:
+/***/ 149:
 /*!********************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/create.js ***!
   \********************************************************************/
@@ -2614,7 +2614,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 17));
 var _anQuestion = _interopRequireDefault(__webpack_require__(/*! ./modules/anQuestion.js */ 18));
 var _myCource = _interopRequireDefault(__webpack_require__(/*! ./modules/myCource.js */ 19));
-var _user = _interopRequireDefault(__webpack_require__(/*! ./modules/user.js */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _user = _interopRequireDefault(__webpack_require__(/*! ./modules/user.js */ 20));
+var _cart = _interopRequireDefault(__webpack_require__(/*! ./modules/cart.js */ 21));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 _vue.default.use(_vuex.default);
 var store = new _vuex.default.Store({
   state: {},
@@ -2623,7 +2624,8 @@ var store = new _vuex.default.Store({
   modules: {
     Anquestion: _anQuestion.default,
     myCource: _myCource.default,
-    User: _user.default } });var _default =
+    User: _user.default,
+    Cart: _cart.default } });var _default =
 
 
 store;exports.default = _default;
@@ -9724,6 +9726,212 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ 21:
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/store/modules/cart.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 12));var _request = __webpack_require__(/*! @/utils/request */ 11);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _slicedToArray(arr, i) {return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();}function _nonIterableRest() {throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(n);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function _iterableToArrayLimit(arr, i) {if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;var _arr = [];var _n = true;var _d = false;var _e = undefined;try {for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {_arr.push(_s.value);if (i && _arr.length === i) break;}} catch (err) {_d = true;_e = err;} finally {try {if (!_n && _i["return"] != null) _i["return"]();} finally {if (_d) throw _e;}}return _arr;}function _arrayWithHoles(arr) {if (Array.isArray(arr)) return arr;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var _default =
+{
+  namespaced: true,
+  state: {
+    cart: [] //购物车信息
+  },
+  mutations: {
+    // 获取购物车商品
+    getCart: function getCart(state, cart) {
+      state.cart = cart;
+    },
+    // 修改数量
+    changeCount: function changeCount(state, _ref) {var cartId = _ref.cartId,count = _ref.count;
+      var cartItem = state.cart.find(function (cart) {
+        return cart.id === cartId;
+      });
+      // 修改数量
+      cartItem.count = count;
+      // 这里还要修改单个商品总价，只修改数量，价格不能响应更改
+      cartItem.simpleTotal = cartItem.price * cartItem.count;
+    },
+    // 全选
+    checkAll: function checkAll(state, isChecked) {
+      //isChecked===true 全选   isChecked===false 取消全选
+      state.cart.forEach(function (cart) {
+        if (!cart.checked === isChecked) {//排除当时选项与参数相同的情况
+          cart.checked = isChecked;
+        }
+      });
+    },
+    // 选中某一项
+    checkCartOne: function checkCartOne(state, cartId) {
+      var cartItem = state.cart.find(function (cart) {
+        return cart.id === cartId;
+      });
+      cartItem.checked = !cartItem.checked;
+    },
+    // 删除某一项
+    deleteCart: function deleteCart(state, cartId) {
+      for (var i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].id === cartId) {
+          state.cart.splice(i, 1);
+          break;
+        }
+      }
+    },
+    // 选中部分 / 全部删除
+    deleteAllCart: function deleteAllCart(state) {
+      for (var i = 0; i < state.cart.length; i++) {
+        if (state.cart[i].checked) {
+          state.cart.splice(i, 1);
+          i--;
+        }
+      }
+    } },
+
+  getters: {
+    // 所有商品数量
+    checkCount: function checkCount(state) {
+      return state.cart.length;
+    },
+    // 选中商品数量
+    totalCount: function totalCount(state) {
+      return state.cart.reduce(function (pre, cart) {
+        if (cart.checked) {
+          return pre + cart.count;
+        }
+        return pre;
+      }, 0);
+    },
+    // 计算选中商品总价
+    totalPrice: function totalPrice(state) {
+      var sum = state.cart.reduce(function (pre, cart) {
+        if (cart.checked) {
+          return pre + cart.simpleTotal;
+        }
+        return pre;
+      }, 0);
+      return sum * 100;
+    },
+    // 返回全部商品总价
+    allPrice: function allPrice(state) {
+      return state.cart.reduce(function (pre, cart) {
+        return pre + cart.simpleTotal;
+      }, 0);
+    },
+    // 返回商品是否全选 是返回true 否则false
+    isSelectAll: function isSelectAll(state) {
+      if (!state.cart.length) return false;
+      return state.cart.every(function (cart) {
+        return cart.checked;
+      });
+    },
+    // 返回选中的商品
+    checkCart: function checkCart(state) {
+      return state.cart.filter(function (cart) {
+        return cart.checked === true;
+      });
+    } },
+
+  actions: {
+    //获取购物车
+    getCart: function getCart(_ref2) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var commit, _yield$request, _yield$request2, err, res, head_picture, name, price, productid, productType, cart;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:commit = _ref2.commit;_context.next = 3;return (
+                  (0, _request.request)({
+                    url: "http://localhost:7001/api/myCart",
+                    method: 'get' }));case 3:_yield$request = _context.sent;_yield$request2 = _slicedToArray(_yield$request, 2);err = _yield$request2[0];res = _yield$request2[1];
+
+                if (res.data.code === 0) {
+                  if (res.data.data.length > 0) {
+
+
+
+
+
+                    cart = res.data.data.map(function (item) {
+                      if (item['cartitem_models.classMealModelId']) {
+                        productType = 'meal',
+                        productid = item['cartitem_models.classMealModelId'],
+                        head_picture = item['cartitem_models.class_meal_model.head_picture'],
+                        name = item['cartitem_models.class_meal_model.name'],
+                        price = item['cartitem_models.class_meal_model.disc_price'];
+                      } else {
+                        productType = 'single',
+                        productid = item['cartitem_models.classSingleModelId'],
+                        head_picture = item['cartitem_models.class_single_model.head_picture'],
+                        name = item['cartitem_models.class_single_model.name'],
+                        price = item['cartitem_models.class_single_model.disc_price'];
+                      }
+                      return {
+                        id: item['cartitem_models.id'],
+                        count: item['cartitem_models.count'],
+                        productType: productType, //商品类型 单科/套餐
+                        productid: productid, //商品id
+                        head_picture: head_picture, //商品展示图
+                        name: name, //商品名字
+                        price: price, //商品单价
+                        simpleTotal: price * item['cartitem_models.count'], //商品总价
+                        checked: false //是否选中
+                      };
+                    });
+                    commit('getCart', cart);
+                  } else {
+                    commit('getCart', []);
+                  }
+
+
+                }case 8:case "end":return _context.stop();}}}, _callee);}))();
+    },
+    //修改数量
+    changeCount: function changeCount(_ref3, _ref4) {var commit = _ref3.commit;var cartId = _ref4.cartId,count = _ref4.count;
+      commit('changeCount', { cartId: cartId, count: count });
+    },
+    // 全选
+    checkAll: function checkAll(_ref5, isChecked) {var commit = _ref5.commit;
+      commit('checkAll', isChecked);
+    },
+    // 选中某一项
+    checkCartOne: function checkCartOne(_ref6, cartId) {var commit = _ref6.commit;
+      commit('checkCartOne', cartId);
+    },
+    //删除某一项
+    deleteCart: function deleteCart(_ref7, cartId) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var commit, _yield$request3, _yield$request4, err, res;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:commit = _ref7.commit;_context2.next = 3;return (
+                  (0, _request.request)({
+                    url: "http://localhost:7001/api/myCart/".concat(cartId),
+                    method: 'delete' }));case 3:_yield$request3 = _context2.sent;_yield$request4 = _slicedToArray(_yield$request3, 2);err = _yield$request4[0];res = _yield$request4[1];
+
+                if (res.data.code === 0) {
+                  commit('deleteCart', cartId);
+                }case 8:case "end":return _context2.stop();}}}, _callee2);}))();
+    },
+
+    // 删除选中商品或清空购物车
+    deleteAllCart: function deleteAllCart(_ref8) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3() {var commit, getters, URL, cartIds, _yield$request5, _yield$request6, err, res;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:commit = _ref8.commit, getters = _ref8.getters;
+
+                if (getters.isSelectAll) {
+                  URL = "http://localhost:7001/api/myCartAll?isAll='true'";
+                } else {
+                  cartIds = [];
+                  getters.checkCart.forEach(function (item) {
+                    cartIds.push(item.id);
+                  });
+                  console.log(cartIds);
+                  URL = "http://localhost:7001/api/myCartAll?cartIds=".concat(JSON.stringify(cartIds));
+                }_context3.next = 4;return (
+                  (0, _request.request)({
+                    url: URL,
+                    method: 'delete' }));case 4:_yield$request5 = _context3.sent;_yield$request6 = _slicedToArray(_yield$request5, 2);err = _yield$request6[0];res = _yield$request6[1];if (!(
+
+                res.data.code === 0)) {_context3.next = 13;break;}
+                commit('deleteAllCart');return _context3.abrupt("return",
+                true);case 13:return _context3.abrupt("return",
+
+                false);case 14:case "end":return _context3.stop();}}}, _callee3);}))();
+
+    } } };exports.default = _default;
+
+/***/ }),
+
 /***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -9766,7 +9974,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 406:
+/***/ 415:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -11213,11 +11421,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 407)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 416)))
 
 /***/ }),
 
-/***/ 407:
+/***/ 416:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11248,7 +11456,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 408);
+        if (!path) path = __webpack_require__(/*! path */ 417);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11262,7 +11470,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 408:
+/***/ 417:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11572,11 +11780,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 407)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 416)))
 
 /***/ }),
 
-/***/ 458:
+/***/ 467:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11682,7 +11890,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 461:
+/***/ 470:
 /*!*******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio-group/index.js ***!
   \*******************************************************************************************/
@@ -11690,7 +11898,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 462);
+var _component = __webpack_require__(/*! ../common/component */ 471);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11725,7 +11933,7 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 
 /***/ }),
 
-/***/ 462:
+/***/ 471:
 /*!******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/component.js ***!
   \******************************************************************************************/
@@ -11733,7 +11941,7 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 463);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 472);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var relationFunctions = {
   ancestor: {
     linked: function linked(parent) {
@@ -11836,7 +12044,7 @@ function VantComponent() {var vantOptions = arguments.length > 0 && arguments[0]
 
 /***/ }),
 
-/***/ 463:
+/***/ 472:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/mixins/basic.js ***!
   \**************************************************************************************/
@@ -11872,7 +12080,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 
 /***/ }),
 
-/***/ 464:
+/***/ 473:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio/index.js ***!
   \*************************************************************************************/
@@ -11880,7 +12088,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 462);
+var _component = __webpack_require__(/*! ../common/component */ 471);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11929,7 +12137,7 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 
 /***/ }),
 
-/***/ 465:
+/***/ 474:
 /*!****************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox/index.js ***!
   \****************************************************************************************/
@@ -11937,7 +12145,7 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 462);
+var _component = __webpack_require__(/*! ../common/component */ 471);
 function emit(target, value) {
   target.$emit('input', value);
   target.$emit('change', value);
@@ -12012,7 +12220,7 @@ function emit(target, value) {
 
 /***/ }),
 
-/***/ 466:
+/***/ 475:
 /*!**********************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox-group/index.js ***!
   \**********************************************************************************************/
@@ -12020,7 +12228,7 @@ function emit(target, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 462);
+var _component = __webpack_require__(/*! ../common/component */ 471);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -12056,7 +12264,7 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 
 /***/ }),
 
-/***/ 467:
+/***/ 476:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/index.js ***!
   \*************************************************************************************/
@@ -12064,8 +12272,8 @@ var _component = __webpack_require__(/*! ../common/component */ 462);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 462);
-var _props = __webpack_require__(/*! ./props */ 468);
+var _component = __webpack_require__(/*! ../common/component */ 471);
+var _props = __webpack_require__(/*! ./props */ 477);
 (0, _component.VantComponent)({
   field: true,
   classes: ['input-class', 'right-icon-class', 'label-class'],
@@ -12187,7 +12395,7 @@ var _props = __webpack_require__(/*! ./props */ 468);
 
 /***/ }),
 
-/***/ 468:
+/***/ 477:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/props.js ***!
   \*************************************************************************************/
@@ -12259,7 +12467,250 @@ var textareaProps = {
 
 /***/ }),
 
-/***/ 51:
+/***/ 478:
+/*!***************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/stepper/index.js ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _component = __webpack_require__(/*! ../common/component */ 471);
+var _utils = __webpack_require__(/*! ../common/utils */ 479);
+var LONG_PRESS_START_TIME = 600;
+var LONG_PRESS_INTERVAL = 200;
+// add num and avoid float number
+function add(num1, num2) {
+  var cardinal = Math.pow(10, 10);
+  return Math.round((num1 + num2) * cardinal) / cardinal;
+}
+function equal(value1, value2) {
+  return String(value1) === String(value2);
+}
+(0, _component.VantComponent)({
+  field: true,
+  classes: ['input-class', 'plus-class', 'minus-class'],
+  props: {
+    value: {
+      type: null,
+      observer: function observer(value) {
+        if (!equal(value, this.data.currentValue)) {
+          this.setData({ currentValue: this.format(value) });
+        }
+      } },
+
+    integer: {
+      type: Boolean,
+      observer: 'check' },
+
+    disabled: Boolean,
+    inputWidth: null,
+    buttonSize: null,
+    asyncChange: Boolean,
+    disableInput: Boolean,
+    decimalLength: {
+      type: Number,
+      value: null,
+      observer: 'check' },
+
+    min: {
+      type: null,
+      value: 1,
+      observer: 'check' },
+
+    max: {
+      type: null,
+      value: Number.MAX_SAFE_INTEGER,
+      observer: 'check' },
+
+    step: {
+      type: null,
+      value: 1 },
+
+    showPlus: {
+      type: Boolean,
+      value: true },
+
+    showMinus: {
+      type: Boolean,
+      value: true },
+
+    disablePlus: Boolean,
+    disableMinus: Boolean,
+    longPress: {
+      type: Boolean,
+      value: true } },
+
+
+  data: {
+    currentValue: '' },
+
+  created: function created() {
+    this.setData({
+      currentValue: this.format(this.data.value) });
+
+  },
+  methods: {
+    check: function check() {
+      var val = this.format(this.data.currentValue);
+      if (!equal(val, this.data.currentValue)) {
+        this.setData({ currentValue: val });
+      }
+    },
+    isDisabled: function isDisabled(type) {
+      if (type === 'plus') {
+        return (
+          this.data.disabled ||
+          this.data.disablePlus ||
+          this.data.currentValue >= this.data.max);
+
+      }
+      return (
+        this.data.disabled ||
+        this.data.disableMinus ||
+        this.data.currentValue <= this.data.min);
+
+    },
+    onFocus: function onFocus(event) {
+      this.$emit('focus', event.detail);
+    },
+    onBlur: function onBlur(event) {
+      var value = this.format(event.detail.value);
+      this.emitChange(value);
+      this.$emit(
+      'blur',
+      Object.assign(Object.assign({}, event.detail), { value: value }));
+
+    },
+    // filter illegal characters
+    filter: function filter(value) {
+      value = String(value).replace(/[^0-9.-]/g, '');
+      if (this.data.integer && value.indexOf('.') !== -1) {
+        value = value.split('.')[0];
+      }
+      return value;
+    },
+    // limit value range
+    format: function format(value) {
+      value = this.filter(value);
+      // format range
+      value = value === '' ? 0 : +value;
+      value = Math.max(Math.min(this.data.max, value), this.data.min);
+      // format decimal
+      if ((0, _utils.isDef)(this.data.decimalLength)) {
+        value = value.toFixed(this.data.decimalLength);
+      }
+      return value;
+    },
+    onInput: function onInput(event) {var _ref =
+      event.detail || {},_ref$value = _ref.value,value = _ref$value === void 0 ? '' : _ref$value;
+      // allow input to be empty
+      if (value === '') {
+        return;
+      }
+      var formatted = this.filter(value);
+      // limit max decimal length
+      if ((0, _utils.isDef)(this.data.decimalLength) && formatted.indexOf('.') !== -1) {
+        var pair = formatted.split('.');
+        formatted = "".concat(pair[0], ".").concat(pair[1].slice(0, this.data.decimalLength));
+      }
+      this.emitChange(formatted);
+    },
+    emitChange: function emitChange(value) {
+      if (!this.data.asyncChange) {
+        this.setData({ currentValue: value });
+      }
+      this.$emit('change', value);
+    },
+    onChange: function onChange() {var
+      type = this.type;
+      if (this.isDisabled(type)) {
+        this.$emit('overlimit', type);
+        return;
+      }
+      var diff = type === 'minus' ? -this.data.step : +this.data.step;
+      var value = this.format(add(+this.data.currentValue, diff));
+      this.emitChange(value);
+      this.$emit(type);
+    },
+    longPressStep: function longPressStep() {var _this = this;
+      this.longPressTimer = setTimeout(function () {
+        _this.onChange();
+        _this.longPressStep();
+      }, LONG_PRESS_INTERVAL);
+    },
+    onTap: function onTap(event) {var
+      type = event.currentTarget.dataset.type;
+      this.type = type;
+      this.onChange();
+    },
+    onTouchStart: function onTouchStart(event) {var _this2 = this;
+      if (!this.data.longPress) {
+        return;
+      }
+      clearTimeout(this.longPressTimer);var
+      type = event.currentTarget.dataset.type;
+      this.type = type;
+      this.isLongPress = false;
+      this.longPressTimer = setTimeout(function () {
+        _this2.isLongPress = true;
+        _this2.onChange();
+        _this2.longPressStep();
+      }, LONG_PRESS_START_TIME);
+    },
+    onTouchEnd: function onTouchEnd() {
+      if (!this.data.longPress) {
+        return;
+      }
+      clearTimeout(this.longPressTimer);
+    } } });
+
+/***/ }),
+
+/***/ 479:
+/*!**************************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/utils.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.isDef = isDef;exports.isObj = isObj;exports.isNumber = isNumber;exports.range = range;exports.nextTick = nextTick;exports.getSystemInfoSync = getSystemInfoSync;exports.addUnit = addUnit;function isDef(value) {
+  return value !== undefined && value !== null;
+}
+function isObj(x) {
+  var type = typeof x;
+  return x !== null && (type === 'object' || type === 'function');
+}
+function isNumber(value) {
+  return /^\d+(\.\d+)?$/.test(value);
+}
+function range(num, min, max) {
+  return Math.min(Math.max(num, min), max);
+}
+function nextTick(fn) {
+  setTimeout(function () {
+    fn();
+  }, 1000 / 30);
+}
+var systemInfo = null;
+function getSystemInfoSync() {
+  if (systemInfo == null) {
+    systemInfo = wx.getSystemInfoSync();
+  }
+  return systemInfo;
+}
+function addUnit(value) {
+  if (!isDef(value)) {
+    return undefined;
+  }
+  value = String(value);
+  return isNumber(value) ? "".concat(value, "px") : value;
+}
+
+/***/ }),
+
+/***/ 52:
 /*!**********************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
   \**********************************************************************/

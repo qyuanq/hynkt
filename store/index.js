@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Anquestion from './modules/anQuestion.js'
 import myCource from './modules/myCource.js'
 import User from './modules/user.js'
+import Cart from './modules/cart.js'
 Vue.use(Vuex);
 const store = new Vuex.Store({
 	state:{},
@@ -11,7 +12,8 @@ const store = new Vuex.Store({
 	modules:{
 		Anquestion,
 		myCource,
-		User
+		User,
+		Cart
 	}
 })
 export default store;

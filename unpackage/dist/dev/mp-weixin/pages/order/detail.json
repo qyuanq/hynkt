@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "创建订单",
   "usingComponents": {
     "shop-pane": "/components/shop-pane/shop-pane",
     "van-icon": "/static/vant-weapp/icon/index",

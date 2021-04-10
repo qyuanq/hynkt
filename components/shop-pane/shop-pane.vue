@@ -7,7 +7,7 @@
 			<view class="title">{{hotCource.name}}</view>
 			<view class="classes" v-if="hotCource.label">[{{hotCource.label}}]</view>
 			<view class="class-code" v-if="hotCource.classCode">{{hotCource.classCode}}</view>
-			<view class="classes" v-if="hotCource.type">({{hotCource.type}})</view>
+			<view class="classes" v-if="hotCource.productType">({{hotCource.productType === 'meal' ? '套餐班' : '单科班'}})</view>
 			<view class="price clearfix">
 				<view class="num"><text class="sign" v-if="hotCource.retail_price">￥</text><text class="original">{{hotCource.disc_price}}</text><text class="current" v-if="hotCource.retail_price">￥{{hotCource.retail_price}}</text></view>
 				<button class="btn btnA" v-if="audition">点击试听</button>

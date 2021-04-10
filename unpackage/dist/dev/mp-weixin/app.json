@@ -84,6 +84,12 @@
       ]
     },
     {
+      "root": "pages/pay/",
+      "pages": [
+        "success"
+      ]
+    },
+    {
       "root": "pages/myClassVideo/",
       "pages": [
         "myClassVideo",

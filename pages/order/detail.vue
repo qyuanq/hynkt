@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
-		<view class="box product-info">
-			<shop-pane :hotCource="cource"></shop-pane>
+		<view class="box product-info" v-for="info in cource" :key="info.name">
+			<shop-pane :hotCource="info" ></shop-pane>
 			<view class="product-price">
 				<text>商品金额</text>
-				<text>￥{{cource.disc_price}}</text>
+				<text>￥{{info.price}}</text>
 			</view>
 		</view>
 		<view class="box payment clearfix">
@@ -51,10 +51,10 @@
 		data() {
 			return {
 				radio: '1',
-				cource:null,
+				cource:[],
 				date:null,
 				development:this.development,
-				price:3050
+				price:0
 			};
 		},
 		methods:{
@@ -83,11 +83,17 @@
 				})
 			}
 		},
-		created(){
-			this.date = new Date(+new Date()+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
-		},
 		onLoad:async function(option){
-			this.cource = JSON.parse(decodeURIComponent(option.cource));
+			if(option.orderType === 'cart'){	//购物车
+				this.cource = this.$store.getters['Cart/checkCart'];
+				this.price = this.$store.getters['Cart/totalPrice'];
+			}else if(option.cource){	//立即购买
+				const product = JSON.parse(decodeURIComponent(option.cource));
+				this.cource.push(product);
+				this.price = parseInt(product.price) * 100;
+			}
+			
+			this.date = new Date(+new Date()+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
 			console.log('cource:',this.cource);
 		}
 	}

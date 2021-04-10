@@ -252,6 +252,7 @@
 		    {
                     "path" : "detail",
                     "style" : {
+						"navigationBarTitleText" : "创建订单",
 						"usingComponents": {
 						  "van-icon" : "/static/vant-weapp/icon/index",
 						  "van-submit-bar": "/static/vant-weapp/submit-bar/index",
@@ -393,7 +394,14 @@
                 ,{
                     "path" : "shopCart/shopCart",
                     "style" : {
-						"navigationBarTitleText" : "我的购物车"
+						// "navigationStyle":"custom",
+						"navigationBarTitleText" : "我的购物车",
+						"usingComponents": {
+						  "van-submit-bar": "/static/vant-weapp/submit-bar/index",
+						  "van-checkbox": "/static/vant-weapp/checkbox/index",
+						  "van-checkbox-group": "/static/vant-weapp/checkbox-group/index",
+						  "van-nav-bar": "/static/vant-weapp/nav-bar/index"
+						}
 					}
                 }
             ]
@@ -443,6 +451,17 @@
                 }
             ]
         },
+		{
+			"root" : "pages/pay/",
+			"pages" : [
+				{
+                    "path" : "success",
+                    "style" : {
+						"navigationBarTitleText" : "支付成功"
+					}
+                }
+            ]
+		},
         {
             "root" : "pages/myClassVideo/",
             "pages" : [

@@ -1,6 +1,10 @@
 {
   "navigationBarTitleText": "我的购物车",
   "usingComponents": {
+    "van-submit-bar": "/static/vant-weapp/submit-bar/index",
+    "van-checkbox": "/static/vant-weapp/checkbox/index",
+    "van-checkbox-group": "/static/vant-weapp/checkbox-group/index",
+    "van-nav-bar": "/static/vant-weapp/nav-bar/index",
     "cart-pane": "/components/shop-pane/cart-pane"
   }
 }
