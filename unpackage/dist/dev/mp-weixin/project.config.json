@@ -41,6 +41,8 @@
   "libVersion": "",
   "appid": "wx67ebcd3fcd4825e9",
   "projectname": "ketang",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "list": []

@@ -77,8 +77,8 @@
 			},
 			//结算
 			onSettlement(){
-				// 跳转订单页
 				if(this.checkCart.length > 0){
+					// 跳转订单页
 					uni.navigateTo({
 						url:"../../order/detail?orderType=cart"
 					})

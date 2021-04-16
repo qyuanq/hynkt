@@ -321,7 +321,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 12));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/regenerator */ 12));
 
 
 
@@ -396,14 +396,32 @@ var _shopPane = _interopRequireDefault(__webpack_require__(/*! @/components/shop
     },
 
     // 微信支付
-    onSubmit: function onSubmit() {
-      this.request({
-        url: "this.development/pay/wx",
-        method: 'get',
-        sucess: function sucess(res) {
-          console.log('支付成功');
-        } });
+    onPay: function onPay() {
+      //微信还是支付宝
+      if (1) {
+        //微信
+        this.request({
+          url: "".concat(this.development, "/api/pay/wx"),
+          method: 'get',
+          success: function success(res) {
+            if (res.data.code === 0) {
+              uni.showToast({
+                title: '支付成功' });
 
+              setTimeout(function () {
+                uni.navigateTo({
+                  url: '../pay/success' });
+
+              }, 2000);
+            } else {
+              uni.showToast({
+                title: '支付失败',
+                icon: 'none' });
+
+            }
+          } });
+
+      } else {}
     } },
 
   onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(option) {var product;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
@@ -418,6 +436,7 @@ var _shopPane = _interopRequireDefault(__webpack_require__(/*! @/components/shop
 
               this.date = new Date(+new Date() + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '');
               console.log('cource:', this.cource);case 3:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}() };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

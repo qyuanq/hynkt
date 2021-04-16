@@ -12467,7 +12467,90 @@ var textareaProps = {
 
 /***/ }),
 
-/***/ 478:
+/***/ 52:
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(uni) {function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}module.exports = /*#__PURE__*/function () {"use strict";
+  function Mcaptcha(options) {_classCallCheck(this, Mcaptcha);
+    this.options = options;
+    this.fontSize = options.height * 3 / 6;
+    this.init();
+    this.refresh();
+  }_createClass(Mcaptcha, [{ key: "init", value: function init()
+    {
+      this.ctx = uni.createCanvasContext(this.options.el);
+      this.ctx.setTextBaseline("middle");
+      this.ctx.setFillStyle(this.randomColor(180, 240));
+    } }, { key: "refresh", value: function refresh()
+    {var _this = this;
+      var code = '';
+      var txtArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      for (var i = 0; i < 4; i++) {
+        code += txtArr[this.randomNum(0, txtArr.length)];
+      }
+      this.options.createCodeImg = code;
+      var arr = (code + '').split('');
+      if (arr.length === 0) {
+        arr = ['e', 'r', 'r', 'o', 'r'];
+      };
+      var offsetLeft = this.options.width * 0.6 / (arr.length - 1);
+      var marginLeft = this.options.width * 0.2;
+      arr.forEach(function (item, index) {
+        _this.ctx.setFillStyle(_this.randomColor(0, 180));
+        var size = _this.randomNum(24, _this.fontSize);
+        _this.ctx.setFontSize(size);
+        var dis = offsetLeft * index + marginLeft - size * 0.3;
+        var deg = _this.randomNum(-30, 30);
+        _this.ctx.translate(dis, _this.options.height * 0.5);
+        _this.ctx.rotate(deg * Math.PI / 180);
+        _this.ctx.fillText(item, 0, 0);
+        _this.ctx.rotate(-deg * Math.PI / 180);
+        _this.ctx.translate(-dis, -_this.options.height * 0.5);
+      });
+      for (var i = 0; i < 4; i++) {
+        this.ctx.strokeStyle = this.randomColor(40, 180);
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
+        this.ctx.lineTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
+        this.ctx.stroke();
+      }
+      for (var i = 0; i < this.options.width / 4; i++) {
+        this.ctx.fillStyle = this.randomColor(0, 255);
+        this.ctx.beginPath();
+        this.ctx.arc(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height), 1, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+      this.ctx.draw();
+    } }, { key: "validate", value: function validate(
+    code) {
+      var code = code.toLowerCase();
+      var v_code = this.options.createCodeImg.toLowerCase();
+      console.log(code);
+      console.log(v_code.substring(v_code.length - 4));
+      if (code == v_code.substring(v_code.length - 4)) {
+        return true;
+      } else {
+        return false;
+      }
+    } }, { key: "randomNum", value: function randomNum(
+    min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    } }, { key: "randomColor", value: function randomColor(
+    min, max) {
+      var r = this.randomNum(min, max);
+      var g = this.randomNum(min, max);
+      var b = this.randomNum(min, max);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    } }]);return Mcaptcha;}();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 539:
 /*!***************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/stepper/index.js ***!
   \***************************************************************************************/
@@ -12476,7 +12559,7 @@ var textareaProps = {
 
 "use strict";
 var _component = __webpack_require__(/*! ../common/component */ 471);
-var _utils = __webpack_require__(/*! ../common/utils */ 479);
+var _utils = __webpack_require__(/*! ../common/utils */ 540);
 var LONG_PRESS_START_TIME = 600;
 var LONG_PRESS_INTERVAL = 200;
 // add num and avoid float number
@@ -12667,7 +12750,7 @@ function equal(value1, value2) {
 
 /***/ }),
 
-/***/ 479:
+/***/ 540:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/utils.js ***!
   \**************************************************************************************/
@@ -12707,89 +12790,6 @@ function addUnit(value) {
   value = String(value);
   return isNumber(value) ? "".concat(value, "px") : value;
 }
-
-/***/ }),
-
-/***/ 52:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(uni) {function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}module.exports = /*#__PURE__*/function () {"use strict";
-  function Mcaptcha(options) {_classCallCheck(this, Mcaptcha);
-    this.options = options;
-    this.fontSize = options.height * 3 / 6;
-    this.init();
-    this.refresh();
-  }_createClass(Mcaptcha, [{ key: "init", value: function init()
-    {
-      this.ctx = uni.createCanvasContext(this.options.el);
-      this.ctx.setTextBaseline("middle");
-      this.ctx.setFillStyle(this.randomColor(180, 240));
-    } }, { key: "refresh", value: function refresh()
-    {var _this = this;
-      var code = '';
-      var txtArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-      for (var i = 0; i < 4; i++) {
-        code += txtArr[this.randomNum(0, txtArr.length)];
-      }
-      this.options.createCodeImg = code;
-      var arr = (code + '').split('');
-      if (arr.length === 0) {
-        arr = ['e', 'r', 'r', 'o', 'r'];
-      };
-      var offsetLeft = this.options.width * 0.6 / (arr.length - 1);
-      var marginLeft = this.options.width * 0.2;
-      arr.forEach(function (item, index) {
-        _this.ctx.setFillStyle(_this.randomColor(0, 180));
-        var size = _this.randomNum(24, _this.fontSize);
-        _this.ctx.setFontSize(size);
-        var dis = offsetLeft * index + marginLeft - size * 0.3;
-        var deg = _this.randomNum(-30, 30);
-        _this.ctx.translate(dis, _this.options.height * 0.5);
-        _this.ctx.rotate(deg * Math.PI / 180);
-        _this.ctx.fillText(item, 0, 0);
-        _this.ctx.rotate(-deg * Math.PI / 180);
-        _this.ctx.translate(-dis, -_this.options.height * 0.5);
-      });
-      for (var i = 0; i < 4; i++) {
-        this.ctx.strokeStyle = this.randomColor(40, 180);
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
-        this.ctx.lineTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
-        this.ctx.stroke();
-      }
-      for (var i = 0; i < this.options.width / 4; i++) {
-        this.ctx.fillStyle = this.randomColor(0, 255);
-        this.ctx.beginPath();
-        this.ctx.arc(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height), 1, 0, 2 * Math.PI);
-        this.ctx.fill();
-      }
-      this.ctx.draw();
-    } }, { key: "validate", value: function validate(
-    code) {
-      var code = code.toLowerCase();
-      var v_code = this.options.createCodeImg.toLowerCase();
-      console.log(code);
-      console.log(v_code.substring(v_code.length - 4));
-      if (code == v_code.substring(v_code.length - 4)) {
-        return true;
-      } else {
-        return false;
-      }
-    } }, { key: "randomNum", value: function randomNum(
-    min, max) {
-      return Math.floor(Math.random() * (max - min) + min);
-    } }, { key: "randomColor", value: function randomColor(
-    min, max) {
-      var r = this.randomNum(min, max);
-      var g = this.randomNum(min, max);
-      var b = this.randomNum(min, max);
-      return "rgb(" + r + "," + g + "," + b + ")";
-    } }]);return Mcaptcha;}();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

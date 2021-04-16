@@ -37,7 +37,7 @@
 		<van-submit-bar
 		  :price="price"
 		  button-text="立即支付"
-		  @submit="onSubmit"
+		  @submit="onPay"
 		>
 		<van-icon class="iconfont" class-prefix="my-icon" name="kefu" />
 		</van-submit-bar>
@@ -73,14 +73,34 @@
 			},
 			
 			// 微信支付
-			onSubmit(){
-				this.request({
-					url:`this.development/pay/wx`,
-					method:'get',
-					sucess: (res) => {
-						console.log('支付成功');
-					}
-				})
+			onPay(){
+				//微信还是支付宝
+				if(1){
+					//微信
+					this.request({
+						url:`${this.development}/api/pay/wx`,
+						method:'get',
+						success: (res) => {
+							if(res.data.code === 0){
+								uni.showToast({
+									title:'支付成功'
+								})
+								setTimeout(function(){
+									uni.navigateTo({
+										url:'../pay/success'
+									})
+								},2000);
+							}else{
+								uni.showToast({
+									title:'支付失败',
+									icon:'none'
+								})
+							}
+						}
+					})
+				}else{
+					//支付宝
+				}
 			}
 		},
 		onLoad:async function(option){
