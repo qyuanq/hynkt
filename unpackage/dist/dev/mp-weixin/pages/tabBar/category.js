@@ -146,7 +146,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 368));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 375));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var shopPane = function shopPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/shop-pane */ "components/shop-pane/shop-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/shop-pane.vue */ 158));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cateItem = function cateItem() {__webpack_require__.e(/*! require.ensure | components/cate-item/cate-item */ "components/cate-item/cate-item").then((function () {return resolve(__webpack_require__(/*! @/components/cate-item/cate-item.vue */ 382));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniSearchBar = function uniSearchBar() {__webpack_require__.e(/*! require.ensure | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then((function () {return resolve(__webpack_require__(/*! @/components/uni-search-bar/uni-search-bar.vue */ 376));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSegmentedControl = function uniSegmentedControl() {__webpack_require__.e(/*! require.ensure | components/uni-segmented-control/uni-segmented-control */ "components/uni-segmented-control/uni-segmented-control").then((function () {return resolve(__webpack_require__(/*! @/components/uni-segmented-control/uni-segmented-control.vue */ 383));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var shopPane = function shopPane() {__webpack_require__.e(/*! require.ensure | components/shop-pane/shop-pane */ "components/shop-pane/shop-pane").then((function () {return resolve(__webpack_require__(/*! @/components/shop-pane/shop-pane.vue */ 158));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cateItem = function cateItem() {__webpack_require__.e(/*! require.ensure | components/cate-item/cate-item */ "components/cate-item/cate-item").then((function () {return resolve(__webpack_require__(/*! @/components/cate-item/cate-item.vue */ 390));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
 
 
 
@@ -214,10 +216,36 @@ __webpack_require__.r(__webpack_exports__);
       SERVER: this.server,
       active: 0,
       category: [],
-      hotCource: [] };
-
+      hotCource: [],
+      statusBarHeight: 0, //状态栏高度
+      navHeight: 0 //导航栏高度
+    };
   },
-  created: function created() {var _this = this;
+  methods: {
+    onChange: function onChange(event) {
+      uni.showToast({
+        title: "\u5207\u6362\u5230\u6807\u7B7E ".concat(event.detail.name),
+        icon: 'none' });
+
+    },
+    onCourse: function onCourse(type, pid) {
+      // console.log(pid);
+      uni.navigateTo({ url: "../product/product?type=".concat(type, "&id=").concat(pid) });
+    },
+    //跳转搜索页
+    onSearch: function onSearch() {
+      uni.navigateTo({
+        url: '../product/search' });
+
+    } },
+
+  onLoad: function onLoad() {var _this = this;
+    // 获取状态栏高度
+    this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+    // 获取胶囊按钮信息
+    var menuButtonObject = uni.getMenuButtonBoundingClientRect();
+    //导航高度
+    this.navHeight = menuButtonObject.height + (menuButtonObject.top - this.statusBarHeight) * 2;
     this.request({
       url: this.development + '/api/categorys',
       // url:'http://localhost:7001/spe',
@@ -235,18 +263,7 @@ __webpack_require__.r(__webpack_exports__);
       } });
 
 
-  },
-  methods: {
-    onChange: function onChange(event) {
-      uni.showToast({
-        title: "\u5207\u6362\u5230\u6807\u7B7E ".concat(event.detail.name),
-        icon: 'none' });
-
-    },
-    onCourse: function onCourse(type, pid) {
-      // console.log(pid);
-      uni.navigateTo({ url: "../product/product?type=".concat(type, "&id=").concat(pid) });
-    } } };exports.default = _default;
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

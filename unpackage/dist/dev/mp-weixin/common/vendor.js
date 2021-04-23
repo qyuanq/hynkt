@@ -760,7 +760,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -9199,7 +9199,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -9220,14 +9220,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -9303,7 +9303,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9974,7 +9974,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 415:
+/***/ 423:
 /*!***************************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/node_modules/async-validator/dist-web/index.js ***!
   \***************************************************************************************************/
@@ -10094,7 +10094,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof process !== 'undefined' && Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
       if (errors.every(function (e) {
@@ -11421,11 +11421,11 @@ Schema.messages = messages;
 Schema.validators = validators;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 416)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Downloads/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 424)))
 
 /***/ }),
 
-/***/ 416:
+/***/ 424:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -11456,7 +11456,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 417);
+        if (!path) path = __webpack_require__(/*! path */ 425);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -11470,7 +11470,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 417:
+/***/ 425:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -11780,11 +11780,11 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 416)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 424)))
 
 /***/ }),
 
-/***/ 467:
+/***/ 475:
 /*!**********************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/components/uni-icons/icons.js ***!
   \**********************************************************************************/
@@ -11890,7 +11890,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 470:
+/***/ 478:
 /*!*******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio-group/index.js ***!
   \*******************************************************************************************/
@@ -11898,7 +11898,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
+var _component = __webpack_require__(/*! ../common/component */ 479);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -11933,7 +11933,7 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 
 /***/ }),
 
-/***/ 471:
+/***/ 479:
 /*!******************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/component.js ***!
   \******************************************************************************************/
@@ -11941,7 +11941,7 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 472);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.VantComponent = VantComponent;var _basic = __webpack_require__(/*! ../mixins/basic */ 480);function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var relationFunctions = {
   ancestor: {
     linked: function linked(parent) {
@@ -12044,7 +12044,7 @@ function VantComponent() {var vantOptions = arguments.length > 0 && arguments[0]
 
 /***/ }),
 
-/***/ 472:
+/***/ 480:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/mixins/basic.js ***!
   \**************************************************************************************/
@@ -12080,7 +12080,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 
 /***/ }),
 
-/***/ 473:
+/***/ 481:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/radio/index.js ***!
   \*************************************************************************************/
@@ -12088,7 +12088,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.basic = vo
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
+var _component = __webpack_require__(/*! ../common/component */ 479);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -12137,7 +12137,7 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 
 /***/ }),
 
-/***/ 474:
+/***/ 482:
 /*!****************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox/index.js ***!
   \****************************************************************************************/
@@ -12145,7 +12145,7 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
+var _component = __webpack_require__(/*! ../common/component */ 479);
 function emit(target, value) {
   target.$emit('input', value);
   target.$emit('change', value);
@@ -12220,7 +12220,7 @@ function emit(target, value) {
 
 /***/ }),
 
-/***/ 475:
+/***/ 483:
 /*!**********************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/checkbox-group/index.js ***!
   \**********************************************************************************************/
@@ -12228,7 +12228,7 @@ function emit(target, value) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
+var _component = __webpack_require__(/*! ../common/component */ 479);
 (0, _component.VantComponent)({
   field: true,
   relation: {
@@ -12264,7 +12264,7 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 
 /***/ }),
 
-/***/ 476:
+/***/ 484:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/index.js ***!
   \*************************************************************************************/
@@ -12272,8 +12272,8 @@ var _component = __webpack_require__(/*! ../common/component */ 471);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
-var _props = __webpack_require__(/*! ./props */ 477);
+var _component = __webpack_require__(/*! ../common/component */ 479);
+var _props = __webpack_require__(/*! ./props */ 485);
 (0, _component.VantComponent)({
   field: true,
   classes: ['input-class', 'right-icon-class', 'label-class'],
@@ -12395,7 +12395,7 @@ var _props = __webpack_require__(/*! ./props */ 477);
 
 /***/ }),
 
-/***/ 477:
+/***/ 485:
 /*!*************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/field/props.js ***!
   \*************************************************************************************/
@@ -12467,90 +12467,7 @@ var textareaProps = {
 
 /***/ }),
 
-/***/ 52:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(uni) {function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}module.exports = /*#__PURE__*/function () {"use strict";
-  function Mcaptcha(options) {_classCallCheck(this, Mcaptcha);
-    this.options = options;
-    this.fontSize = options.height * 3 / 6;
-    this.init();
-    this.refresh();
-  }_createClass(Mcaptcha, [{ key: "init", value: function init()
-    {
-      this.ctx = uni.createCanvasContext(this.options.el);
-      this.ctx.setTextBaseline("middle");
-      this.ctx.setFillStyle(this.randomColor(180, 240));
-    } }, { key: "refresh", value: function refresh()
-    {var _this = this;
-      var code = '';
-      var txtArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-      for (var i = 0; i < 4; i++) {
-        code += txtArr[this.randomNum(0, txtArr.length)];
-      }
-      this.options.createCodeImg = code;
-      var arr = (code + '').split('');
-      if (arr.length === 0) {
-        arr = ['e', 'r', 'r', 'o', 'r'];
-      };
-      var offsetLeft = this.options.width * 0.6 / (arr.length - 1);
-      var marginLeft = this.options.width * 0.2;
-      arr.forEach(function (item, index) {
-        _this.ctx.setFillStyle(_this.randomColor(0, 180));
-        var size = _this.randomNum(24, _this.fontSize);
-        _this.ctx.setFontSize(size);
-        var dis = offsetLeft * index + marginLeft - size * 0.3;
-        var deg = _this.randomNum(-30, 30);
-        _this.ctx.translate(dis, _this.options.height * 0.5);
-        _this.ctx.rotate(deg * Math.PI / 180);
-        _this.ctx.fillText(item, 0, 0);
-        _this.ctx.rotate(-deg * Math.PI / 180);
-        _this.ctx.translate(-dis, -_this.options.height * 0.5);
-      });
-      for (var i = 0; i < 4; i++) {
-        this.ctx.strokeStyle = this.randomColor(40, 180);
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
-        this.ctx.lineTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
-        this.ctx.stroke();
-      }
-      for (var i = 0; i < this.options.width / 4; i++) {
-        this.ctx.fillStyle = this.randomColor(0, 255);
-        this.ctx.beginPath();
-        this.ctx.arc(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height), 1, 0, 2 * Math.PI);
-        this.ctx.fill();
-      }
-      this.ctx.draw();
-    } }, { key: "validate", value: function validate(
-    code) {
-      var code = code.toLowerCase();
-      var v_code = this.options.createCodeImg.toLowerCase();
-      console.log(code);
-      console.log(v_code.substring(v_code.length - 4));
-      if (code == v_code.substring(v_code.length - 4)) {
-        return true;
-      } else {
-        return false;
-      }
-    } }, { key: "randomNum", value: function randomNum(
-    min, max) {
-      return Math.floor(Math.random() * (max - min) + min);
-    } }, { key: "randomColor", value: function randomColor(
-    min, max) {
-      var r = this.randomNum(min, max);
-      var g = this.randomNum(min, max);
-      var b = this.randomNum(min, max);
-      return "rgb(" + r + "," + g + "," + b + ")";
-    } }]);return Mcaptcha;}();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 539:
+/***/ 486:
 /*!***************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/stepper/index.js ***!
   \***************************************************************************************/
@@ -12558,8 +12475,8 @@ var textareaProps = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _component = __webpack_require__(/*! ../common/component */ 471);
-var _utils = __webpack_require__(/*! ../common/utils */ 540);
+var _component = __webpack_require__(/*! ../common/component */ 479);
+var _utils = __webpack_require__(/*! ../common/utils */ 487);
 var LONG_PRESS_START_TIME = 600;
 var LONG_PRESS_INTERVAL = 200;
 // add num and avoid float number
@@ -12750,7 +12667,7 @@ function equal(value1, value2) {
 
 /***/ }),
 
-/***/ 540:
+/***/ 487:
 /*!**************************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/项目开发/project1/static/vant-weapp/common/utils.js ***!
   \**************************************************************************************/
@@ -12790,6 +12707,89 @@ function addUnit(value) {
   value = String(value);
   return isNumber(value) ? "".concat(value, "px") : value;
 }
+
+/***/ }),
+
+/***/ 52:
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/项目开发/project1/utils/mcaptcha.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(uni) {function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}module.exports = /*#__PURE__*/function () {"use strict";
+  function Mcaptcha(options) {_classCallCheck(this, Mcaptcha);
+    this.options = options;
+    this.fontSize = options.height * 3 / 6;
+    this.init();
+    this.refresh();
+  }_createClass(Mcaptcha, [{ key: "init", value: function init()
+    {
+      this.ctx = uni.createCanvasContext(this.options.el);
+      this.ctx.setTextBaseline("middle");
+      this.ctx.setFillStyle(this.randomColor(180, 240));
+    } }, { key: "refresh", value: function refresh()
+    {var _this = this;
+      var code = '';
+      var txtArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      for (var i = 0; i < 4; i++) {
+        code += txtArr[this.randomNum(0, txtArr.length)];
+      }
+      this.options.createCodeImg = code;
+      var arr = (code + '').split('');
+      if (arr.length === 0) {
+        arr = ['e', 'r', 'r', 'o', 'r'];
+      };
+      var offsetLeft = this.options.width * 0.6 / (arr.length - 1);
+      var marginLeft = this.options.width * 0.2;
+      arr.forEach(function (item, index) {
+        _this.ctx.setFillStyle(_this.randomColor(0, 180));
+        var size = _this.randomNum(24, _this.fontSize);
+        _this.ctx.setFontSize(size);
+        var dis = offsetLeft * index + marginLeft - size * 0.3;
+        var deg = _this.randomNum(-30, 30);
+        _this.ctx.translate(dis, _this.options.height * 0.5);
+        _this.ctx.rotate(deg * Math.PI / 180);
+        _this.ctx.fillText(item, 0, 0);
+        _this.ctx.rotate(-deg * Math.PI / 180);
+        _this.ctx.translate(-dis, -_this.options.height * 0.5);
+      });
+      for (var i = 0; i < 4; i++) {
+        this.ctx.strokeStyle = this.randomColor(40, 180);
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
+        this.ctx.lineTo(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height));
+        this.ctx.stroke();
+      }
+      for (var i = 0; i < this.options.width / 4; i++) {
+        this.ctx.fillStyle = this.randomColor(0, 255);
+        this.ctx.beginPath();
+        this.ctx.arc(this.randomNum(0, this.options.width), this.randomNum(0, this.options.height), 1, 0, 2 * Math.PI);
+        this.ctx.fill();
+      }
+      this.ctx.draw();
+    } }, { key: "validate", value: function validate(
+    code) {
+      var code = code.toLowerCase();
+      var v_code = this.options.createCodeImg.toLowerCase();
+      console.log(code);
+      console.log(v_code.substring(v_code.length - 4));
+      if (code == v_code.substring(v_code.length - 4)) {
+        return true;
+      } else {
+        return false;
+      }
+    } }, { key: "randomNum", value: function randomNum(
+    min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    } }, { key: "randomColor", value: function randomColor(
+    min, max) {
+      var r = this.randomNum(min, max);
+      var g = this.randomNum(min, max);
+      var b = this.randomNum(min, max);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    } }]);return Mcaptcha;}();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ })
 

@@ -15,13 +15,11 @@
         {
             "path" : "pages/tabBar/category",
             "style" : {
-                "navigationBarTitleText" : "",
-                "navigationBarBackgroundColor" : "#ffffff",
-                "navigationBarTextStyle" : "black",
+				"navigationStyle":"custom",
+				"navigationBarTextStyle":"black",
                 "usingComponents" : {
                     "van-tab" : "/static/vant-weapp/tab/index",
-                    "van-tabs" : "/static/vant-weapp/tabs/index",
-                    "van-search" : "/static/vant-weapp/search/index"
+                    "van-tabs" : "/static/vant-weapp/tabs/index"
                 }
             }
         },
@@ -447,6 +445,23 @@
 						"navigationBarTitleText" : "教师详情",
 						"navigationBarBackgroundColor" : "#fff",
 						"navigationBarTextStyle" : "black"
+					}
+                }
+                ,{
+                    "path" : "search",
+                    "style" : {
+						"navigationStyle":"custom",
+						"navigationBarTextStyle":"black",
+						"usingComponents":{
+							"van-search": "/static/vant-weapp/search/index",
+							"van-dropdown-menu": "/static/vant-weapp/dropdown-menu/index",
+							"van-dropdown-item": "/static/vant-weapp/dropdown-item/index",
+							"van-tree-select": "/static/vant-weapp/tree-select/index",
+							"van-index-bar": "/static/vant-weapp/index-bar/index",
+							"van-index-anchor": "/static/vant-weapp/index-anchor/index",
+							"van-cell": "/static/vant-weapp/cell/index",
+							"van-sticky": "/static/vant-weapp/sticky/index"
+						}
 					}
                 }
             ]

@@ -1,10 +1,12 @@
 <template>
 	<view class="container">
-		<view class="top">
-			<image :src="SERVER + '/static/img/logo.png'"></image>
-			<van-search  placeholder="请输入搜索关键词"></van-search>
+		<view class="custom" :style="{height:statusBarHeight + navHeight + 'px',paddingTop:statusBarHeight+'px'}">
+			<div class="content">
+				<image :src="SERVER + '/static/img/logo.png'"></image>
+				<icon type="search" @tap="onSearch" />
+			</div>
 		</view>
-		<view class="banner">
+		<view class="banner" :style="{marginTop:statusBarHeight + navHeight + 'px'}">
 			<view class="uni-padding-wrap">
 				<view class="page-section swiper">
 					<view class="page-section-spacing">
@@ -39,7 +41,7 @@
 			  <van-tab title="热门推荐">
 				    <view class="pane">
 						<shopPane 
-					 v-for="item in hotCource" :audition="true" :hotCource="item" @tap="onCourse(item.label.indexOf('全程') != -1 ? 'meal' : 'single',item.id)">
+					 v-for="item in hotCource" :key="item.id" :audition="true" :hotCource="item" @tap="onCourse(item.label.indexOf('全程') != -1 ? 'meal' : 'single',item.id)">
 					    </shopPane>
 				    </view>
 			  </van-tab>
@@ -66,10 +68,36 @@
 				SERVER:this.server,
 				active:0,
 				category:[],
-				hotCource:[]
+				hotCource:[],
+				statusBarHeight:0,	//状态栏高度
+				navHeight:0,	//导航栏高度
 			}
 		},
-		created(){
+		methods:{
+			onChange(event) {
+			    uni.showToast({
+			      title: `切换到标签 ${event.detail.name}`,
+			      icon: 'none',
+			    });
+			  },
+			onCourse(type,pid){
+				// console.log(pid);
+				uni.navigateTo({url:`../product/product?type=${type}&id=${pid}`})
+			},
+			//跳转搜索页
+			onSearch(){
+				uni.navigateTo({
+					url:'../product/search'
+				})
+			}
+		},
+		onLoad:function(){
+			// 获取状态栏高度
+			this.statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			// 获取胶囊按钮信息
+			const menuButtonObject  = uni.getMenuButtonBoundingClientRect();
+			//导航高度
+			this.navHeight = menuButtonObject.height + (menuButtonObject.top - this.statusBarHeight) * 2;
 			this.request({
 				url:this.development + '/api/categorys',
 				// url:'http://localhost:7001/spe',
@@ -87,18 +115,6 @@
 				}
 			});
 			
-		},
-		methods:{
-			onChange(event) {
-			    uni.showToast({
-			      title: `切换到标签 ${event.detail.name}`,
-			      icon: 'none',
-			    });
-			  },
-			onCourse(type,pid){
-				// console.log(pid);
-				uni.navigateTo({url:`../product/product?type=${type}&id=${pid}`})
-			}
 		}
 	}
 </script>
@@ -106,12 +122,18 @@
 <style lang="scss">
 	page{background-color: #F6F7F8;}
 	.container{
-		.top{
+		.custom{
+			position:fixed;
+			top:0;
+			left:0;
+			z-index:99;
 			display:flex;
-			justify-content: space-between;
-			width:100%;height:50px;background:#fff;
+			width:100%;background:#fff;
+			box-sizing: border-box;
 			image{width:120px;height:29px;}
-			.search{width:550rpx;height:30px;border:1px solid #ccc;border-radius:20px;}
+			.content{
+				padding-top:4px;
+			}
 		}
 		.banner{
 			width:100%;height:340rpx;

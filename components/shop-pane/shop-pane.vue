@@ -48,7 +48,7 @@ export default{
 		margin-top:20rpx;
 		.pic{
 			width:300rpx;height:auto;margin-right:12rpx;
-			image{width:100%;height:100%;border-radius:7px;}
+			image{max-width:100%;height:100%;border-radius:7px;}
 		}
 		.content{
 			flex:1;
