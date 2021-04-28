@@ -452,6 +452,7 @@
                     "style" : {
 						"navigationStyle":"custom",
 						"navigationBarTextStyle":"black",
+						// "onReachBottomDistance":50,
 						"usingComponents":{
 							"van-search": "/static/vant-weapp/search/index",
 							"van-dropdown-menu": "/static/vant-weapp/dropdown-menu/index",
@@ -460,7 +461,8 @@
 							"van-index-bar": "/static/vant-weapp/index-bar/index",
 							"van-index-anchor": "/static/vant-weapp/index-anchor/index",
 							"van-cell": "/static/vant-weapp/cell/index",
-							"van-sticky": "/static/vant-weapp/sticky/index"
+							"van-sticky": "/static/vant-weapp/sticky/index",
+							"van-loading": "/static/vant-weapp/loading/index"
 						}
 					}
                 }
@@ -513,7 +515,10 @@
                         "navigationBarTitleText" : "视频提问",
                         "navigationBarBackgroundColor" : "#2890ff",
                         "navigationBarTextStyle" : "#fff",
-						"enablePullDownRefresh":true
+						"enablePullDownRefresh":true,
+						"usingComponents":{
+							"van-loading": "/static/vant-weapp/loading/index"
+						}
                     }
                 },
                 {

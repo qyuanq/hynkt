@@ -24,6 +24,12 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.van-loading {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  margin: 10px 0;
+}
 .container .custom {
   z-index: 999;
   display: -webkit-box;
@@ -73,5 +79,8 @@
   z-index: 1;
   top: 0;
   left: 0;
+}
+.container .scroll {
+  height: 100%;
 }
 

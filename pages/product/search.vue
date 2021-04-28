@@ -64,8 +64,19 @@
 				  </van-dropdown-item> -->
 				</van-dropdown-menu>
 			</van-sticky>
-			
-			<shopPane v-for="(item,index) in products" :key="item.name" :hotCource="item" @tap="onDetail(item.id,item.label)"/>
+			<!-- 懒加载 + 分页 + 防抖 -->
+			<!-- <VirtualList
+				style="height: 360px; overflow-y: auto;"
+				:data-key="'name'"
+				:data-sources="showProduct"
+				:data-component="shopPane"
+				:estimate-size="50"
+			/> -->
+				<shopPane v-for="(item,index) in showProduct" :key="item.name"  :hotCource="item" @tap="onDetail(item.id,item.label)"/>
+				<view v-show="load">
+					<van-loading size="24px">加载中...</van-loading>
+				</view>
+				<view v-show="noData">没有数据了</view>
 		</view>
 		<view class="noRecord" v-else>
 			没有记录
@@ -87,9 +98,12 @@
 
 <script>
 	import shopPane from "@/components/shop-pane/shop-pane.vue"
+	import lodash from 'lodash'
+	// import VirtualList from 'vue-virtual-scroll-list'
 	export default {
 		components:{
-			shopPane
+			shopPane,
+			// VirtualList,
 		},
 		data() {
 			return {
@@ -118,7 +132,14 @@
 				cityName:'全国地区',		//第三个查询条件
 				region:[],		//地区
 				isIndexBar:false,	//显示城市索引栏
-				indexList:[]	//城市索引列表
+				indexList:[],	//城市索引列表
+				
+				scrollTop:0,		//滚动条滚动距离
+				curPage:1,			//分页当前页码
+				pageSize:20,		//每页显示20个
+				showProduct:[],		//展示的商品
+				loading:false,			//加载中
+				noData:false		//没有数据了
 			}
 		},
 		count:{
@@ -132,6 +153,23 @@
 			}
 		},
 		methods: {
+			//滚动
+			// onScroll(event){
+			// 	// if(this.scrollTop < event.detail.scrollTop){	//向下滚动
+			// 	// 	this.scrollTop = event.detail.scrollTop;
+			// 	// 	this.curPage++;
+			// 	// 	this.showProduct = this.products.slice(0,this.pageSize * this.curPage);
+			// 	// }
+				
+			// 	console.log(event.detail);
+			// },
+			// scrolltolower(){
+			// 	console.log('到底了加载下一页')
+			// 	this.curPage++;
+			// 	this.showProduct = this.products.slice(0,this.pageSize * this.curPage);
+			// }, 
+			// //分页
+			
 			//向后端拉取数据
 			async getData(url){
 				let path = url ? url : `${this.development}/api/searchCource?keyword=${this.keyword}`
@@ -140,23 +178,35 @@
 					method:'get'
 				})
 				if(res.data.code === 0){
+					console.log(res.data.data)
 					this.products = res.data.data;
+					this.showProduct = this.products.slice(0,this.pageSize * this.curPage);
 				}
 			},
 			//搜索内容改变
 			async searchChange(e){
 				this.keyword = e.detail;
-				if(this.keyword !== ''){
-					await this.getData(0);
-				}else{
-					this.products = [];
-				}
+				this.debounceSearch();
 			},
+			//搜索防抖，停止搜索间隔1s再执行
+			debounceSearch:lodash.debounce(async function(){
+					if(this.keyword !== ''){
+						await this.getData(0);
+					}else{
+						this.products = [];
+					}
+			},1000),
+			throttleLoad:lodash.throttle(function(){
+				if(this.noData) return;	//没有数据直接返回
+				console.log('节流上拉加载...');
+				this.curPage++;
+				let end = Math.min(this.pageSize * this.curPage,this.products.length - 1);
+				end === this.products.length - 1 ? this.noData = true : this.noData = false;
+				this.showProduct = this.products.slice(0,end);
+			},300),
 			//点击搜索
 			async onSearch(){
-				if(this.keyword !== ''){
-					await this.getData(0);
-				}
+				this.debounceSearch();
 			},
 			// 取消搜索
 			cancelSearch(){
@@ -274,11 +324,21 @@
 				});
 			}
 			console.log('items',this.items);
+		},
+		onReachBottom:function(){
+			this.loading = true;
+			this.throttleLoad();
+			this.loading = false;
 		}
 	}
 </script>
 
 <style lang="scss">
+// 加载中样式
+.van-loading{
+	display: flex !important;
+	margin: 10px 0;
+}
 .container{
 	.custom{
 		z-index:999;
@@ -327,6 +387,9 @@
 		z-index:1;
 		top:0;
 		left:0;
+	}
+	.scroll{
+		height:100%;
 	}
 }
 </style>

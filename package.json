@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/qyuanq/hynkt#readme",
   "dependencies": {
-    "async-validator": "^3.5.1"
-  }
+    "async-validator": "^3.5.1",
+    "lite-virtual-list": "^0.1.7",
+    "lodash": "^4.17.21",
+    "vue-virtual-scroll-list": "^2.3.2"
+  },
+  "devDependencies": {}
 }

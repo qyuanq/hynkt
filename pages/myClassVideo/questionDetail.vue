@@ -193,14 +193,7 @@
 			}else{
 				console.log('没有数据了');
 			}
-		},
-		//onShow:function() {
-			// this.hackReset = false;
-			// this.$nextTick(() => {
-			// 	this.hackReset = true;
-			// })
-			// console.log('展示了吗question')
-		//}
+		}
 	}
 </script>
 

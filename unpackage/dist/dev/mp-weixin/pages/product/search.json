@@ -10,6 +10,7 @@
     "van-index-anchor": "/static/vant-weapp/index-anchor/index",
     "van-cell": "/static/vant-weapp/cell/index",
     "van-sticky": "/static/vant-weapp/sticky/index",
+    "van-loading": "/static/vant-weapp/loading/index",
     "shop-pane": "/components/shop-pane/shop-pane"
   }
 }

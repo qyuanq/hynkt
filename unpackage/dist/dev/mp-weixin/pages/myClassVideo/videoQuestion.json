@@ -4,6 +4,7 @@
   "navigationBarTextStyle": "white",
   "enablePullDownRefresh": true,
   "usingComponents": {
+    "van-loading": "/static/vant-weapp/loading/index",
     "question": "/components/questions/question"
   }
 }

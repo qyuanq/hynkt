@@ -33,6 +33,12 @@
   height: 100%;
   border-radius: 100%;
 }
+.van-loading {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  margin: 10px 0;
+}
 .container .question-list {
   margin: 20rpx 20rpx 100rpx 20rpx;
 }

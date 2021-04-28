@@ -10,6 +10,9 @@
 			@delete="deleteQuestion"
 			@tap="onDetail(item.id,index)">
 			</Question>
+			<view v-show="load">
+				<van-loading size="24px">加载中...</van-loading>
+			</view>
 		</view>
 		<view class="speack-box">
 			<view class="icon-head">
@@ -32,7 +35,8 @@
 				userInfo:null,
 				courceId:null,	//当前课程id
 				pageSize:1	 ,  //当前分页页码
-				countPage:0		//后端返回的总页码
+				countPage:0,	//后端返回的总页码
+				load:false		//加载中
 			};
 		},
 		methods:{
@@ -108,7 +112,9 @@
 			// 判断pageSize 是不是最后一页
 			if(this.pageSize <= this.countPage){
 				let url = `${this.SERVER}/api/answerQuestions/${this.coureId}/${this.pageSize}`
+				this.load = true;
 				this.question = await this.pageLoad(url,this.pageSize,this.question);
+				this.load = false;
 			}else{
 				console.log('没有数据了');
 			}
@@ -142,10 +148,14 @@
 		border-radius: 100%;
 	}
 }
+//加载中
+.van-loading{
+	display: flex !important;
+	margin: 10px 0;
+}
 .container{
 	.question-list{
 		margin:20rpx 20rpx 100rpx 20rpx;
-		
 	}
 	.speack-box{
 		position:fixed;
